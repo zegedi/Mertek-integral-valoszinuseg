@@ -1,0 +1,264 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+\makeatletter
+\def\biggg{\bBigg@{3}}
+\def\bigggm{\mathrel\biggg}
+\def\bigggl{\mathopen\biggg}
+\def\bigggr{\mathclose\biggg}
+\def\Biggg{\bBigg@{3.5}}
+\def\Bigggm{\mathrel\Biggg}
+\def\Bigggl{\mathopen\Biggg}
+\def\Bigggr{\mathclose\Biggg}
+\makeatother
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\date{2024} % year of defense
+
+% Author's metadata
+\author{Egedi Viktor}
+\degree{programtervező informatikus BSc}
+
+% Superivsor(s)' metadata
+\supervisor{Dr. Simon Péter} % internal supervisor's name
+\affiliation{egyetemi tanár} % internal supervisor's affiliation
+
+% University's metadata
+\university{Eötvös Loránd Tudományegyetem} % university's name
+\faculty{Informatikai Kar} % faculty's name
+\department{Numerikus Analízis Tanszék} % department's name
+\city{Budapest} % city
+\logo{elte_cimer_szines} % logo
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	%\documentlang{english}
+	
+	\begin{theorem}{Lebesgue-kritérium}{}
+		Legyen \( \func{f}{[a, b]}{\R} \) korlátos függvény, valamint
+		\[
+			\mathcal{A}_f \coloneq \setc[\Big]{ x \in [a, b] }{ f \notin \ContAt{x} }.
+		\]
+		Ekkor \( f \in \Riem{[a, b]} \) azzal ekvivalens, 
+		hogy az \( \mathcal{A}_f \) halmaz nullamértékű.
+	\end{theorem}
+	\begin{proof}\,\\[6pt]
+		\Ifstep
+		Tegyük fel, hogy \( f \in \Riem{[a,b]} \). Ekkor az 1. lemma alapján
+		\[
+			\mathcal{A}_f = 
+			\setc[\Big]{ x \in [a, b] }{ o_x(f) > 0 } =
+			\bigcup_{n = 1}^{\infty} \setc[\bigg]{ x \in [a, b] }{ o_x(f) > \frac{1}{n} }
+			\eqcolon \bigcup_{n = 1}^{\infty} A_n.
+		\]
+		Elegendő lenne azt belátni, hogy \( A_n \) nullamértékű%
+		%
+		\sidenote[][0pt]{%
+			Megszámlálhatóan sok nullamértékű halmaz uniója szintén nullamértékű.
+		}.
+		%
+		Sőt azt igazoljuk, hogy
+		\[
+			A_\delta \coloneq \setc[\Big]{ x \in [a, b] }{ o_x(f) > \delta }
+			\qquad (\delta > 0)
+		\]
+		nullamértékű. 
+		A továbbiak szempontjából legyen \( \delta > 0 \) egy tetszőlegesen rögzített érték.
+		Mivel az \( f \) Riemann-integrálható, ezért bármely \( \varepsilon > 0 \)-hoz
+		\[
+			\exists \tau \subset [a, b] \text{ felosztás} \colon \quad
+			\omega(f, \tau) < \varepsilon.
+		\]
+		Legyen \( \mathcal{I} \) azon \( \tau \) felosztás szerinti osztásintervallumoknak a halmaza, amik a belsejükben tartalmaznak \( A_\delta \)-beli pontot, azaz
+		\[
+			\mathcal{I} \coloneq
+			\setc[\Big]{ J \in \mathcal{F}(\tau) }{ \inter(J) \cap A_\delta \neq \emptyset }.
+		\]
+		Világos, hogy ekkor \( \tau \cup \mathcal{I} \) lefedi az \( A_\delta \) halmazat%
+		%
+		\sidenote[][0pt]{%
+			Mivel adott \( J \in \mathcal{I} \) intervallumhoz 
+			van olyan \( z \in A_\delta \) pont, hogy
+			\[
+				z \in \inter(J)
+				\quad \text{ és } \quad
+				o_z(f) > \delta,
+			\]
+			ezért elmondható az alábbi becslés:
+			\[
+				O_J(f) = 
+				\sup \mathcal{O}(f, J) \geq 
+				o_z(f) > 
+				\delta.
+			\]
+		%	\begin{align*}
+		%		O_J(f) 
+		%		&=    \sup \Bigl\{ \abs\big{ f(u) - f(v)} \,\colon\ u, v \in J \Bigr\} \\
+		%		&\geq \inf \Bigl\{ \abs\big{ f(u) - f(v)} \,\colon\ u, v \in J \Bigr\} \\
+		%		&\geq  o_x(f) > \delta.
+		%	\end{align*}
+		}.
+		Továbbá
+		\[
+			\varepsilon	>
+			\omega(f, \tau) =
+			\sum_{I \in \mathcal{F}(\tau)} O_I(f) {\cdot} \abs{I} \geq
+			\sum_{J \in \mathcal{I}} O_J(f) {\cdot} \abs{J} \geq
+			\sum_{J \in \mathcal{I}} \delta {\cdot} \abs{J}.
+		\]
+		Következésképpen az \( \mathcal{I} \)-beli intervallumok hosszösszege így becsülhető:
+		\[
+		%	\sum_{J \in \mathcal{I}} \delta {\cdot} \abs{J} < \varepsilon
+		%	\quad \iff \quad
+			\sum_{J \in \mathcal{I}} \abs{J} < \frac{\varepsilon}{\delta}.
+		\]
+		Mivel \( \tau \) véges halmaz, ezért nullamértékű. 
+		Következésképpen minden \( z \in \tau \) osztóponthoz hozzárendelhető 
+		egy olyan \( J_z \subset \R \) intervallum, amellyel
+		\[
+			\tau \subset \bigcup_{z \in \tau} J_z
+			\quad \text{ és } \quad
+			\sum_{z \in \tau} \abs{J_z} < \varepsilon.
+		\]
+		Összességében elmondható, hogy
+		\[
+			A_\delta \,\subseteq\,
+			\mathcal{I} \cup
+		%	\mathopen{\raisebox{-0.9ex}{$ \biggl( $}}\,
+			\bigcup_{z \in \tau} J_z
+		%	\mathopen{\raisebox{-0.9ex}{$ \biggr) $}} 
+			\quad \text{ és } \quad
+		%	\sum_{z \in \tau} \abs{J_z}
+			\sum_{z \in \tau} \abs{J_z} + \sum_{J \in \mathcal{I}} \abs{J} <
+			\varepsilon + \frac{\varepsilon}{\delta} =
+			\varepsilon \biggl( 1 + \frac{1}{\delta} \biggr).
+		\]
+		Ez pedig pontosan azt jelenti, hogy az \( A_\delta \) halmaz nullamértékű.
+		
+		\newpage
+		
+		\Backifstep
+		Most legyen az \( \mathcal{A}_f \) halmaz nullamértékű. 
+	%	Ekkor tetszőleges \( \delta > 0 \) esetén \( A_\delta \) is nullamértékű.
+		Ekkor tetszőleges \( \varepsilon > 0 \)-hoz van olyan 
+		\( I_n \subset \R \) korlátos és zárt intervallumsorozat \( (n \in \N) \), amellyel%
+		%
+		\sidenote[][0pt]{%
+			Emlékeztetés gyanánt, ha \( x \in [a, b] \):
+			\[
+				x \in \mathcal{A}_f
+				\quad \iff \quad
+				f \notin \ContAt{x}.
+			\]
+		}
+		\[
+			\mathcal{A}_f \subseteq \bigcup_{n=0}^{\infty} \inter( I_n )
+			\quad \text{ és } \quad
+			\sum_{n = 0}^{\infty} \abs{ I_n } < \varepsilon.
+		\]
+		Ha pedig \( x \in [a, b] \) folytonossági pontja \( f \)-nek, 
+		akkor az 1. lemma alapján
+		\[
+			f \in \ContAt{x} \quad \iff \quad o_x(f) = 0.
+		\]
+		Így a lokális oszcilláció jelentése miatt van olyan \( J_x \subset \R \) intervallum, hogy
+		\[\label{eq:oszcilláció-felső-becslése}
+			x \in \inter(J_x), \quad
+		%	\qquad \text{ és } \quad
+			O_{J_x} (f) = 
+			\sup \Bigl\{ \abs\big{ f(u) - f(v) } \,\colon\, u, v \in J_x \cap [a, b] \Bigr\}
+			< \varepsilon.
+			\tag{\( * \)}
+		\]
+		Ezek alapján könnyen megadhatunk egy lefedését az \( [a, b] \) intervallumra:
+		%
+		\marginnote{
+			\[
+				\mathcal{A}^c_f = [a, b] \setminus \mathcal{A}_f
+			\]
+		}[2\baselineskip]
+		\[
+			[a, b] \subset 
+			\Biggl(\, \bigcup_{n=0}^{\infty} \inter I_n  \Biggr) \cup
+			\bigggl(\, \bigcup_{x \in \mathcal{A}_f^c} \inter J_x \bigggr).
+		\]
+		Ugyanakkor a Borel-lemma alapján az előbbi nyílt lefedésből kiválasztatunk
+		olyan véges \( A \subset \N \) és \( B \subset \mathcal{A}_f^c \) halmazokat, 
+		amelyekkel szintén lefedhetjük az \( [a, b] \) intervallumot:
+		\[
+			[a, b] \subset 
+			\mathopen{\raisebox{-0.9ex}{$ \biggl( $}}\,
+			\bigcup_{n \in A} \inter I_n
+			\mathopen{\raisebox{-0.9ex}{$ \biggr) $}} 
+			\ \cup \
+			\mathopen{\raisebox{-0.9ex}{$ \biggl( $}}\,
+			\bigcup_{x \in B} \inter J_x
+			\mathopen{\raisebox{-0.9ex}{$ \biggr) $}}.
+		\]
+		Most vezessük be azt a \( \tau \subset [a, b] \) felosztást, 
+		ami az \( I_n, J_x \ (n \in A,\, x \in B) \) intervallumok végpontjait 
+		és az \( a, b \) számokat tartalmazza. Ekkor az
+		\begin{alignat*}{6}
+			U &\coloneq \Bigl\{ 
+				&& & I &\in \mathcal{F}(\tau) \ \Big\vert \ && & I &\subseteq I_n &&\quad (n \in A) 
+			\Bigr\} \\[3pt]
+			%		
+			V &\coloneq 
+			\Bigl\{ 
+				&& & J &\in \mathcal{F}(\tau) \ \Big\vert \ && & J &\subseteq J_x &&\quad (x \in B) 
+			\Bigr\}
+		\end{alignat*}
+		osztásintervallumoknak (a nem feltétlenül diszjunkt) szétosztását tekintve
+		\[
+			\omega(f, \tau) = 
+			\sum_{I \in \mathcal{F}(\tau)} O_I (f) {\cdot} \abs{I} \leq
+			\sum_{I \in U} O_I (f) {\cdot} \abs{I} + \sum_{J \in V} O_J (f) {\cdot} \abs{J}.
+		\]
+		Mivel feltettük, hogy az \( f \) korlátos, ezért egy alkalmas \( C \geq 0 \) számmal%
+		%
+		\sidenote[][0pt]{%
+			Minden \( I \subseteq [a, b] \) intervallum esetén
+			\begin{align*}
+				O_I(f) 
+				&=    \sup \Bigl\{ \abs\big{f(x) - f(y)} \,\colon\, x, y \in I \Bigr\} \\
+				&\leq \sup \Bigl\{ \abs\big{f(x)} + \abs\big{f(y)} \,\colon\, x, y \in I \Bigr\} \\
+			%	&\leq \sup \Bigl\{ 2C \,\colon\, x, y \in I \Bigr\} \\
+				&\leq 2C.
+			\end{align*}
+		}
+		\[
+			\abs\big{f(x)} \leq C \quad \bigl( x \in [a, b] \bigr)
+			\qquad \Longrightarrow \qquad
+			\smash{\uwave{O_I(f) \leq 2C}}.
+		\]
+		Ennek és a \eqref{eq:oszcilláció-felső-becslése}-os becslésnek a felhasználásával kapjuk, hogy
+		\begin{align*}
+			\omega(f, \tau) &\leq 
+		%	\sum_{I \in U} O_I (f) {\cdot} \abs{I} + 
+		%	\sum_{J \in V} O_J (f) {\cdot} \abs{J} \leq
+			\sum_{I \in U} 2C          {\cdot} \abs{I} + 
+			\sum_{J \in V} \varepsilon {\cdot} \abs{J}   \leq
+			2C          \cdot \sum_{n=0}^{\infty} \abs{I_n} + 
+			\varepsilon \cdot \sum_{\mathclap{J \in \mathcal{F}(\tau)}} \abs{J} \\[3pt] &<
+			2C \varepsilon + \varepsilon (b - a) =
+			\smash{\uwave{\varepsilon ( 2C + b - a )}}.
+		\end{align*}
+		Következésképpen \( f \in \Riem{[a, b]} \).
+	\end{proof}
+\end{document}

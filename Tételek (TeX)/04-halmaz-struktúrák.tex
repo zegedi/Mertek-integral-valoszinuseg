@@ -1,0 +1,222 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+\makeatletter
+\def\biggg{\bBigg@{3}}
+\def\bigggm{\mathrel\biggg}
+\def\bigggl{\mathopen\biggg}
+\def\bigggr{\mathclose\biggg}
+\def\Biggg{\bBigg@{3.5}}
+\def\Bigggm{\mathrel\Biggg}
+\def\Bigggl{\mathopen\Biggg}
+\def\Bigggr{\mathclose\Biggg}
+\makeatother
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\date{2024} % year of defense
+
+% Author's metadata
+\author{Egedi Viktor}
+\degree{programtervező informatikus BSc}
+
+% Superivsor(s)' metadata
+\supervisor{Dr. Simon Péter} % internal supervisor's name
+\affiliation{egyetemi tanár} % internal supervisor's affiliation
+
+% University's metadata
+\university{Eötvös Loránd Tudományegyetem} % university's name
+\faculty{Informatikai Kar} % faculty's name
+\department{Numerikus Analízis Tanszék} % department's name
+\city{Budapest} % city
+\logo{elte_cimer_szines} % logo
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	A továbbiakban \( X \) egy tetszőleges halmazt jelöl, aminek
+	\[
+		\powerset{X} \coloneq \setc[\big]{A \text{ halmaz}}{A \subseteq X}
+	\]
+	az úgynevezett \emph{hatványhalmaza}.
+	
+	\begin{definition}{Szigma-algebra}{}
+		Azt mondjuk, hogy \( \Omega \subseteq \powerset{X} \) egy \emph{szigma-algebra} 
+		(\emph{\( \boldsymbol{\sigma} \)-algebra}), ha
+		\begin{enumerate}[label=\( \Sigma \)\arabic*.]
+			\item\label{ax:sigma-algebra-01}
+			\( X \in \Omega \),
+			
+			\item\label{ax:sigma-algebra-02}
+			\( A \in \Omega \quad \Longrightarrow \quad A^c \in \Omega \),
+			\marginnote{
+				Itt \( A^c = X \setminus A \) jelöli a komplementert.
+			}
+			
+			\item\label{ax:sigma-algebra-03}
+			\( A_n \in \Omega \ \ (n \in \N) 
+			   \quad \Longrightarrow \quad 
+			   \bigcup_{n=0}^{\infty} A_n \in \Omega 
+			\).
+		\end{enumerate}
+	\end{definition}
+	
+	\begin{stat*}
+		Amennyiben \( \Omega \subseteq \powerset{X} \) egy \( \sigma \)-algebra, akkor
+		\begin{enumerate}
+			\item
+			\( \emptyset \in \Omega \),
+			
+			\item
+			\( A, B \in \Omega \quad \Longrightarrow \quad A \cup B,\ A \cap B,\ A \setminus B \in \Omega \),
+			
+			\item
+			 tetszőleges \( A_0, \dots, A_n \in \Omega \) véges halmazsorozat és 
+			\( B_n \in \Omega \ (n \in \N) \) esetén
+			\[
+				\bigcup_{k=0}^{n}      A_k \in \Omega, \qquad
+				\bigcap_{k=0}^{n}      A_k \in \Omega, \qquad
+				\bigcap_{n=0}^{\infty} B_n \in \Omega.
+			\]
+		\end{enumerate}
+	\end{stat*}
+	\begin{proof*}\,
+		\begin{enumerate}
+			\item 
+			A \ref{ax:sigma-algebra-01} és \ref{ax:sigma-algebra-02} axióma alapján
+			\( \emptyset = X \setminus X = X^c \in \Omega \).
+			
+			\item Az unióra való zártság bizonyításához alkalmazzuk a
+			\ref{ax:sigma-algebra-03} axiómát az
+			\marginnote{
+				Ugyanis
+				\[
+					A \cup B = 
+					A \cup B \cup \emptyset \cup \emptyset \cup \cdots \in \Omega.
+				\]
+			}
+			\[
+				A_1 \coloneq A, \ A_2 \coloneq B, \ A_n \coloneq \emptyset
+				\qquad (2 \leq n \in \N)
+			\]
+			halmazsorozaton. Ezt, valamint a De Morgan-azonosság felhasználva
+			\[
+				(A \cap B)^c = A^c \cup B^c \in \Omega
+				\quad \xLongrightarrow{\ \text{\ref{ax:sigma-algebra-02}} } \quad
+				A \cap B \in \Omega.
+			\]
+			Végül a különbség képzést a komplementerrel és metszettel kifejezve
+			\[
+				A \setminus B = A \cap B^c \in \Omega.
+			\]
+		\end{enumerate}
+	\end{proof*}
+	
+	\begin{example}
+		\item Amennyiben \( A \in \powerset{X} \) egy tetszőleges halmaz, akkor az
+		\[
+			\{ \emptyset, X \}, \qquad \{ \emptyset, A, A^c, X \}, \qquad \powerset{X}
+		\]
+		halmazrendszerek nyilván mind \( \sigma \)-algebrák. Az elsőt \emph{triviális}, 
+		a másodikat pedig az \( A \) halmazt tartalmazó \emph{legszűkebb \( \sigma\)-algebrának} szokás nevezni.
+	\end{example}
+	
+	\begin{definition}{Generált szigma-algebra}{}
+		Legyen \( Y \subseteq \powerset{X} \) egy halmazrendszer, és tekintsük az
+		\[
+			\Sigma \coloneq \Sigma_Y \coloneq 
+			\setc[\big]{ \Omega \subseteq \powerset{X} }
+					   { \Omega \text{ szigma-algebra}, Y \subseteq \Omega }
+		\]
+		rendszert. Ekkor az \( Y \) halmazrendszer által \emph{generált szigma-algebra}
+		\[
+			\Omega(Y) \coloneq \bigcap_{\Omega \in \Sigma} \Omega.
+		\]
+	\end{definition}
+	
+	Könnyen belátható, hogy \( \Omega(Y) \) valóban szigma-algebra. 
+	Továbbá az is elmondható, hogy \( \Omega(Y) \) a legszűkebb olyan szigma-algebra, ami tartalmazza az \( Y \) halmazrendszer minden elemét, azaz
+	\[
+		\Omega \subseteq \powerset{X} \text{ szigma-algebra}
+		\quad \Longrightarrow \quad
+		\Omega(Y) \subseteq \Omega.
+	\]
+	
+	\begin{definition}{Halmazgyűrű}{}
+		Azt mondjuk, hogy \( \ring{G} \subseteq \powerset{X} \) egy \emph{halmazgyűrű} (röviden \emph{gyűrű}), ha
+		%
+		\begin{enumerate}[label=\( \ring{G} \)\arabic*.]
+			\item\label{ax:halmazgyűrű-01}
+			\( \ring{G} \neq \emptyset \),
+			
+			\item\label{ax:halmazgyűrű-02}
+			\( A, B \in \ring{G} \quad \Longrightarrow \quad A \cup B \in \ring{G} \),
+			
+			\item\label{ax:halmazgyűrű-03}
+			\( A, B \in \ring{G} \quad \Longrightarrow \quad A \setminus B \in \ring{G} \).
+		\end{enumerate}
+	\end{definition}
+	
+	\begin{stat*}
+		Amennyiben \( \ring{G} \subseteq \powerset{X} \) egy halmazgyűrű, akkor
+		\begin{enumerate}
+			\item
+			\( \emptyset \in \ring{G} \),
+			
+			\item
+			tetszőleges \( A_0, \dots, A_n \in \ring{G} \) véges halmazsorozat esetén
+			\[
+				\bigcup_{k=0}^{n} A_k \in \ring{G} \qquad \text{és} \qquad
+				\bigcap_{k=0}^{n} A_k \in \ring{G}.
+			\]
+		\end{enumerate}
+	\end{stat*}
+	\begin{proof*}\,
+		\begin{enumerate}
+			\item Mivel \ref{ax:halmazgyűrű-01} alapján \( \ring{G} \) nem üres, 
+			ezért egy \( A \in \ring{G} \) halmazra alkalmazva a \ref{ax:halmazgyűrű-03} axiómát.
+			\[
+				\emptyset = A \setminus A \in \ring{G}.
+			\]
+			
+			\item Elég azt igazolni, hogy \( \ring{G} \) zárt a metszetképzésre.
+			Ez valóban így van, ugyanis
+			\[
+				A, B \in \ring{G}
+				\quad \xLongrightarrow{\ \text{\ref{ax:halmazgyűrű-03}} } \quad
+				A \cap B = A \setminus (A \setminus B) \in \ring{G}.
+			\]
+			Innen teljes indukcióval könnyen belátható mindkét állítás.
+		\end{enumerate}
+	\end{proof*}
+	
+	Tehát a halmazgyűrű egy olyan halmazrendszer
+	
+	\begin{definition}{Generált halmazgyűrű}{}
+		Legyen \( Y \subseteq \powerset{X} \) egy halmazrendszer, és tekintsük a
+		\[
+			G \coloneq G_Y \coloneq 
+			\setc[\big]{ \ring{G} \subseteq \powerset{X} }
+			{ \ring{G} \text{ gyűrű}, Y \subseteq \ring{G} }
+		\]
+		rendszert. Ekkor az \( Y \) halmazrendszer által \emph{generált halmazgyűrű}
+		\[
+			\ring{G}(Y) \coloneq \bigcap_{\ring{G} \in G} \ring{G}.
+		\]
+	\end{definition}
+\end{document}
