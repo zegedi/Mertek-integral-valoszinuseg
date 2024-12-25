@@ -1,0 +1,223 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{12. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Borel--mérhető leképezések}
+	
+	Emlékezzünk arra, hogy egy \( A \subseteq \R \) halmazt \emph{Borel-halmaznak} nevezünk, ha
+	\[
+		A \in \Omega_1 \coloneq \Omega( \mathcal{I} ) = \Omega( \mathbf{I} ).
+	\]
+	Az itt szereplő \( \mathbf{I} \) halmazrendszer az üres halmazt, 
+	valamint az \( \R \) balról zárt, jobbról nyílt intervallumait tartalmazza, tehát
+	\[
+		\mathbf{I} \coloneq 
+		\setc[\Big]{ \emptyset, [a, b) \subseteq \R }{ a, b \in \R, \ a < b }.
+	\]
+	Továbbá \( \mathcal{I} \) pedig az \( \mathbf{I} \) félgyűrű által generált gyűrű, vagyis
+	\[
+		\mathcal{I} \coloneq
+		\mathcal{G}( \mathbf{I} ) = 
+		\setc[\Bigg]{ \bigcup_{k=0}^{n} I_k }
+		            { I_0, \dots, I_n \in \mathbf{I} \text{ diszjunktak } (n \in \N) }.
+	\]
+	Vezessük be a \emph{kibővített valós számok} halmazát
+	\[
+		\overline{ \R } \coloneq \R \cup \{ -\infty, +\infty \}.
+	\]
+	\begin{definition}{Borel--mérhető halmaz}{}
+		Egy \( A \subseteq \overline{\R} \) halmaz 
+		kibővített értelemben \emph{Borel--mérhető}, ha
+		\[
+			A \cap \R \in \Omega_1.
+		\]
+		Legyen az ilyen tulajdonságú halmazoknak a rendszere \( \overline{\Omega}_1 \).
+%		\[
+%			\overline{\Omega}_1 \coloneq
+%			\setc[\big]{ A \subseteq \overline{\R} }{ A \text{ kibővített Borel--halmaz}}
+%		\]
+	\end{definition}
+	
+	\begin{note}
+		Világos, hogy minden \( A \subseteq \R \) Borel-mérhető halmaz egyben kibővített 
+		értelemben is Borel-mérhető. Továbbá valóban az említett fogalom kibővítéséről beszélhetünk, ugyanis az
+		\[
+			\{ -\infty \}, \{ +\infty \}, \{ -\infty, +\infty \} \subseteq \overline{ \R }
+		\]
+		halmazok minden .
+		Tehát egy \( A \subseteq \overline{ \R } \) halmaz pontosan akkor Borel--mérhető, ha
+		\[
+			A = B \cup C
+		\]
+		módon bontható fel, ahol \( B \in \Omega_1 \) és 
+		\( C \in \bigl\{ \emptyset, \{ -\infty \}, \{ +\infty \}, \{ -\infty, +\infty \} \bigr\} \).
+	\end{note}
+	
+	\begin{definition}{Borel--mérhető függvény}{}
+%		Legyen \( X \neq \emptyset \) egy adott halmaz, 
+%		\( \Omega \subseteq \powerset{X} \) szigma-algebra.
+%		
+		Legyen \( (X, \Omega) \) mérhető tér, 
+		valamint \( \func{f}{X}{\overline{\R}} \) egy függvény.\\
+		Azt mondjuk, hogy az \( f \) függvény \emph{mérhető} (vagy \emph{Borel--mérhető}), ha
+		\[
+			f^{-1}[A] \coloneq
+			\setc[\big]{ x \in X }{ f(x) \in A } \in \Omega
+			\qquad \bigl( A \in \overline{\Omega}_1 \bigr).
+		\]
+	\end{definition}
+	\begin{note}
+		Szóban, az \( f \) függvény pontosan akkor mérhető, 
+		ha minden kibővített értelemben Borel-mérhető \( A \)
+		halmaz \( f^{-1}[A] \) ősképe az \( \Omega \)-ban van.
+	\end{note}
+	
+	\newpage
+	\begin{theorem}{Mérhető függvények tulajdonságai}{}
+		Legyen \( (X, \Omega) \) egy mérhető tér, 
+		valamint \( \func{f, f_n, g}{X}{\overline{\R}} \ (n \in \N) \).
+		\begin{enumerate}
+			\item 
+			Ha \( * \in \{ \geq, >, \leq, < \} \),
+			akkor \( f \) mérhető \( \iff \) 
+			\( \forall \alpha \in \R \colon \{ f * \alpha \} \in \Omega \).
+			
+			\item
+			Ha \( f, g \) mérhető és \( * \in \{ \geq, >, \leq, <, =, \neq \} \), 
+			akkor \( \{ f * g \} \in \Omega \).
+			
+			\item
+			Ha \( f, g \) mérhető, akkor \( (f \cdot g) \) és \( \abs{f} \) is mérhető függvény.
+			\marginnote{
+				Innentől: \( 0 \cdot (\pm \infty) \coloneq (\pm \infty) \cdot 0 \coloneq 0 \).
+			}
+			
+			\item
+			Ha \( f, g \) mérhető és létezik az \( (f \pm g) \) függvény, akkor az is mérhető.
+			\marginnote{
+				Például, ha \( f,g \) véges, akkor ez teljesül.
+			}
+			
+			\item
+			Ha \( (f_n) \) mérhető függvényeknek a sorozata, akkor a
+			\[
+			%	\limsup (f_n) \coloneq \lim \Bigl( \inf_{k \geq n} f_k \Bigr)
+				\sup_{n \in \N}(f_n), \quad
+				\inf_{n \in \N}(f_n), \quad
+				\limsup(f_n), \quad
+				\liminf(f_n)
+			\]
+			függvények is mérhetőek.
+			
+			\item
+			Ha \( (f_n) \) mérhető függvényeknek a sorozata pontonként konvergál az
+			\[
+				f(x) \coloneq \lim_{n \to \infty} f_n(x) \qquad (x \in X)
+			\]
+			határfüggvényhez, akkor az \( f \) is mérhető.
+		\end{enumerate}
+	\end{theorem}
+	
+	\newpage
+	
+	\begin{theorem}{Jegorov--tétel}{}
+		Legyen \( (X, \Omega, \mu) \) egy mértéktér, ahol a \( \mu \) mérték véges.\\
+		Ha a mérhető függvényekből álló \( \func{f_n}{X}{\R} \ (n \in \N) \) sorozata pontonként tart az
+		\[
+			f(x) \coloneq \lim_{n \to \infty} f_n(x) \in \R \qquad (x \in X)
+		\]
+		határfüggvényhez, 
+		akkor tetszőleges \( \varepsilon > 0 \) számhoz megadható olyan 
+		\( X_\varepsilon \in \Omega \) halmaz, hogy
+		\begin{enumerate}
+			\item az \( (f_n) \) sorozat az \( X_\varepsilon \) halmazon 
+			egyenletesen konvergál az \( f \)-hez;
+			\item \( \mu( X \setminus X_\varepsilon ) < \varepsilon \).
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		Tekintsük egy \( 1 \leq k \in \N \) index esetén az
+		\[
+			X_{n,k} \coloneq \bigcup_{i=n}^{\infty} \Bigl\{ \abs\big{f_i - f} \geq 1 / k \Bigr\}
+			\quad \Longrightarrow \quad
+			X_{n,k} \in \Omega \qquad (n \in \N)
+		\]
+		halmazsorozatot.
+		Mivel az \( (f_n) \) függvénysorozat \( f \)-hez tart, 
+		ezért az említett halmazok monoton szűkülő módon tartanak az üres halmazhoz, azaz
+		\marginnote{
+			Ugyanis, indirekt tegyük fel, hogy
+			\[
+				\exists x \in X \,\colon \quad
+				x \in \bigcap_{n=0}^{\infty} X_{n, k}.
+			\]
+			Ez csak akkor lehetséges, ha
+			\[
+				\abs\big{ f_i(x) - f(x) } \geq \frac{1}{k}
+			\]
+			végtelen sok \( i \in \N \) indexre igaz, tehát
+			\[
+				\abs\big{ f_i(x) - f(x) } \centernot{\longrightarrow} 0.
+			\]
+		}
+		\[
+			X_{n+1, k} \subseteq X_{n, k} \quad (n \in \N)
+			\qquad \text{és} \qquad
+			\emptyset = \bigcap_{n=0}^{\infty} X_{n, k}.
+		\]
+		Mivel feltettük, hogy \( \mu \) véges mérték, 
+		ezért \( \mu(X_{n, k}) \longrightarrow 0 \ (n \to \infty) \). Vagyis
+		\[
+			\exists	n_k \in \N \colon \quad
+			\mu(X_{n, k}) < \frac{\varepsilon}{2^{k + 1}}.
+		\]
+		Ez alapján tekintsük a következő halmazat:
+		\[
+			X_\varepsilon \coloneq
+			X \setminus \Biggl( \, \bigcup_{k=1}^{\infty} X_{n_k, k} \Biggr).
+		\]
+		Mivel \( \Omega \) szigma-algebra, ezért \( X_\varepsilon \in \Omega \) .
+		Továbbá minden \( x \in X_\varepsilon \) helyen
+		\[
+			\abs\big{ f_i(x) - f(x) } < \frac{1}{k} \qquad (n_k \leq i \in \N).
+		\]
+		Tehát az \( (f_n) \) sorozat egyenletesen konvergens \( X_\varepsilon \)-on.
+		Végül
+		\marginnote{
+			Hiszen az itt szereplő mértani sorösszeg
+			\[
+				\sum_{k = 1}^{\infty} \frac{1}{2^k} = \frac{1/2}{1 - 1/2} = 1.
+			\]
+		}
+		\[
+			\mu( X \setminus X_\varepsilon ) \leq 
+		%	\mu \Biggl( \, \bigcup_{k=1}^{\infty} \mu(X_{n_k}, k) \Biggr) \leq
+			\sum_{k = 1}^{\infty} \mu(X_{n_k}, k) <
+			\varepsilon \cdot \sum_{k = 1}^{\infty} \frac{1}{2^k} =
+			\varepsilon.
+		\]
+	\end{proof}
+	
+\end{document}

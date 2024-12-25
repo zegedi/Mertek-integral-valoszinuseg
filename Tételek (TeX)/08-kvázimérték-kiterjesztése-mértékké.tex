@@ -1,0 +1,395 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+\makeatletter
+\def\biggg{\bBigg@{3}}
+\def\bigggm{\mathrel\biggg}
+\def\bigggl{\mathopen\biggg}
+\def\bigggr{\mathclose\biggg}
+\def\Biggg{\bBigg@{3.5}}
+\def\Bigggm{\mathrel\Biggg}
+\def\Bigggl{\mathopen\Biggg}
+\def\Bigggr{\mathclose\Biggg}
+\makeatother
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{\circled{8} Vizsgatétel}
+%\date{2024} % year of defense
+%
+%% Author's metadata
+%\author{Egedi Viktor}
+%\degree{programtervező informatikus BSc}
+%
+%% Superivsor(s)' metadata
+%\supervisor{Dr. Simon Péter} % internal supervisor's name
+%\affiliation{egyetemi tanár} % internal supervisor's affiliation
+%
+%% University's metadata
+%\university{Eötvös Loránd Tudományegyetem} % university's name
+%\faculty{Informatikai Kar} % faculty's name
+%\department{Numerikus Analízis Tanszék} % department's name
+%\city{Budapest} % city
+%\logo{elte_cimer_szines} % logo
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Kiterjesztési tételek}
+	
+	\begin{theorem}{Kvázimérték kiterjesztése mértékké}{}
+		Legyen \( X \) egy halmaz, 
+		\( \ring{G} \subseteq \powerset{X} \) gyűrű, 
+		\( \func{ \widetilde{\mu} }{ \ring{G} }{ [0, +\infty] } \) kvázimérték.\\
+		Ekkor van olyan \( \Omega \subseteq \powerset{X} \) szigma-algebra és 
+		\( \func{ \mu }{ \Omega }{ [0, +\infty] } \) mérték, 
+		hogy \( \widetilde{\mu} = \restr{\mu}{\ring{G}} \).
+	\end{theorem}
+	\begin{proof}
+		Legyen tetszőleges \( A \in \powerset{X} \) halmaz esetén
+		\[
+			\Sigma_A \coloneq 
+			\setc[\Bigg]{ \func{(\sigma_n)}{ \N }{ \ring{G} }}{ A \subseteq \bigcup_{n=0}^\infty \sigma_n }
+		\]
+		valamint az \( \inf \emptyset \coloneq +\infty \) megállapodás mellett
+		\[
+			\func{ \mu^* }{ \powerset{X} }{ \overline{\R} }, \quad
+			\mu^*(A) \coloneq
+			\inf \setc[\Bigg]{ \sum_{n=0}^{\infty} \widetilde{\mu}( \sigma_n ) }
+                { (\sigma_n) \in \Sigma_A }
+		\]
+		\begin{tcolorbox}[colback=green!10, colframe=green!80]
+			\begin{lem*}
+				Az így definiált \( \mu^* \) halmazfüggvényre a következők igazak.
+				\begin{enumerate}
+					\item 
+					\textbf{Nemnegatív}, azaz \( \mu^* \geq 0 \).
+					
+					\item 
+					\textbf{Eltűnik \( \boldsymbol{\emptyset} \)-ban}, azaz
+					\( \mu^*(\emptyset) = 0 \).
+					
+					\item 
+					\textbf{Monoton}, 
+					azaz minden \( B \subseteq A \) esetén \( \mu^*(B) \leq \mu^*(A) \).
+					
+					\item\label{eq:mu-csillag-szubadditív}
+					\textbf{Szubadditív}, 
+					azaz minden \( A_n \ (n \in \N ) \) halmazsorozat esetén
+					\[
+						\mu^* \Biggl( \, \bigcup\limits_{n=0}^\infty A_n \Biggr) \leq 
+						\sum\limits_{n=0}^{\infty} \mu^*(A_n).
+					\]
+				\end{enumerate}
+			\end{lem*}
+		\end{tcolorbox}
+		\begin{proof*}\,
+			\begin{enumerate}
+				\item 
+				Nyilvánvalóan igaz, hiszen \( \widetilde{\mu} \) nemnegatív.
+				
+				\item 
+				Mivel \( \mu^*(\emptyset) \geq 0 \), és a konstans üres halmazból képzett \( (\emptyset) \in \Sigma_\emptyset \), ezért
+				\[
+					\mu^*(\emptyset) \leq \sum_{n=0}^{\infty} \widetilde{\mu}( \emptyset ) = 0
+					\qquad \Longrightarrow \qquad
+					\mu^*(\emptyset) = 0.
+				\]
+				
+				\item
+				A feltétel miatt \( \Sigma_A \subseteq \Sigma_B \), 
+				plusz az infimum tulajdonságaiból adódik.
+				
+				\item Két esetet különböztetünk meg.
+				\begin{enumerate}
+					\item 
+					Ha valamilyen \( n \in \N \) indexre \(  \mu^*(A_n) = +\infty \), akkor igaz.
+					
+					\item 
+					Ha minden \( n \in \N \) index esetén \( \mu^*(A_n) \) véges, 
+					akkor az infimum tulajdonság szerint
+					\[
+						\forall \varepsilon_n > 0 \text{-hoz}, \
+						\exists ( \sigma_{nk} ) \in \Sigma_{A_n} \ \colon \quad
+						\sum_{n=0}^{\infty} \widetilde{ \mu }( \sigma_{nk} ) < \mu^*(A_n) + \varepsilon_n.
+					\]
+					Ugyanakkor
+					\[
+						\bigcup_{n=0}^{\infty} A_n \subseteq 
+						\bigcup_{n=0}^{\infty} \bigcup_{k=0}^{\infty} \sigma_{nk}
+						(\sigma_{nk}) \in \Sigma_{\cup A_n }
+					\]
+					\[
+						\mu^* \Biggl( \bigcup_{n=0}^{\infty} A_n \Biggr) \leq
+						\sum_{n=0}^{\infty} \sum_{k=0}^{\infty} \mu^*( \sigma_{nk} ) < 
+						\sum_{n=0}^{\infty} \mu^*( A_n ) + 
+						\sum_{n=0}^{\infty} \varepsilon_n < 
+						\sum_{n=0}^{\infty} \mu^*( A_n ) + \varepsilon.
+					\]
+				\end{enumerate}
+			\end{enumerate}
+		\end{proof*}
+		
+		\begin{tcolorbox}[colback=yellow!30, colframe=yellow!80]
+			\begin{def*}
+				Egy \( A \in \powerset{X} \) halmaz \emph{\( \boldsymbol{\mu^*} \)-mérhető}, amennyiben
+				\[
+					\forall B \in \powerset{X} \ \colon \quad
+					\mu^*(B) = \mu^*(B \cap A) + \mu^*(B \setminus A).
+				\]
+			\end{def*}
+		\end{tcolorbox}
+		
+		\begin{tcolorbox}[colback=green!10, colframe=green!80]
+			\begin{lem*}\phantomsection\label{lem:mu-csillag-merheto}
+				Egy \( A \in \powerset{X} \) halmaz pontosan akkor \( \mu^* \)-mérhető, ha
+				\[
+					\forall B \in \powerset{X} \ \colon \quad
+					\mu^*(B) \geq \mu^*(B \cap A) + \mu^*(B \setminus A).
+				\]
+			\end{lem*}
+		\end{tcolorbox}
+		\begin{proof*}
+			Ugyanis \hyperref[eq:mu-csillag-szubadditív]{\( \mu^* \) szubadditív} tulajdonsága miatt a
+			\[
+				\mu^*( B ) =
+				\mu^* \bigl( (B \cap A) \cup (B \setminus A) \bigr) \leq
+				\mu^*( B \cap A ) + \mu^*( B \setminus A )
+			\]
+			fordított irányú egyenlőtlenség minden \( B \in \powerset{X} \) halmazra fennáll.
+			\null\hfill \( \blacksquare \)
+		\end{proof*}
+		
+		\noindent\rule{\linewidth}{0.4pt}\\
+		
+		Vezessük be a következő halmazrendszert
+		\[
+			\Omega \coloneq \setc[\big]{ A \in \powerset{X} }{ A \ \mu^* \text{-mérhető}}.
+		\]
+		Ekkor \( \ring{G} \subseteq \Omega \), 
+		valamint \( \mu^*(G) = \widetilde{\mu}(G) \) minden \( G \in \ring{G} \) esetén.
+		
+		Ehhez azt kell belátni, hogy minden \( G \in \ring{G}, \ B \in \powerset{X} \) halmazra
+		\[
+			\mu^*(B) \geq
+			\mu^*(B \cap G) + \mu^*(B \setminus G).
+		\]
+		Ha \( \mu^*(B) = +\infty \), akkor az állítás teljesül, 
+		különben \( \Sigma_B \neq \emptyset \) miatt
+		\[
+			\exists (\sigma_n) \in \Sigma_B \, \colon \
+			\sum_{n=0}^{\infty} \widetilde{\mu}( \sigma_n ) < \mu^*(B) + \varepsilon.
+		\]
+		Ugyanakkor \( \widetilde{\mu} \) additív, ezért
+		\marginnote{
+			Kihasználjuk, hogy
+			\[
+				\sigma_n = 
+				(\sigma_n \cap G) \cup (\sigma_n \setminus G)
+				\quad (n \in \N)
+			\]
+			diszjunkt felbontás.
+		}
+		\[
+			\sum_{n=0}^{\infty} \widetilde{\mu}( \sigma_n ) =
+%			\sum_{n=0}^{\infty} \widetilde{\mu} 
+%			\bigr( (\sigma_n \cap G) \cup (\sigma_n \setminus G) \bigr) =
+			\sum_{n=0}^{\infty} \widetilde{\mu}( \sigma_n \cap G ) +
+			\sum_{n=0}^{\infty} \widetilde{\mu}( \sigma_n \setminus G ).
+		\]
+		Világos, hogy
+		\[
+			(\sigma_n \cap G) \in \Sigma_{B \cap G}
+			\quad \text{és} \quad
+			(\sigma_n \setminus G) \in \Sigma_{B \setminus G}.
+		\]
+		Innen \( \mu^* \) definíciója alapján
+		\[
+			\sum_{n=0}^{\infty} \widetilde{\mu}( \sigma_n \cap G ) \geq \mu^*( B \cap G ), \qquad
+			\sum_{n=0}^{\infty} \widetilde{\mu}( \sigma_n \setminus G ) \geq \mu^*( B \setminus G ).
+		\]
+		Összefoglalva
+		\[
+			\mu^*(B) + \varepsilon >
+			\mu^*( B \cap G ) + \mu^*( B \setminus G ).
+		\]
+		Tekintsük a ``kvázi-konstans'' halmazsorozatot
+		\[
+			(G, \emptyset, \emptyset, \dots, \emptyset, \dots) \in \Sigma_G
+			\qquad \Longrightarrow \qquad
+			\mu^*( G ) \leq \widetilde{\mu}( G ).
+		\]
+		Továbbá minden \( (\sigma)_n \in \Sigma_B \) halmazsorozat esetén
+		\[
+			G \subseteq \bigcup_{n=0}^{\infty} \sigma( A_n )
+			\quad \Longrightarrow \quad
+			\widetilde{\mu}( G ) \leq \sum_{n=0}^{\infty} \widetilde{\mu}( \sigma_n )
+			\quad \Longrightarrow \quad
+			\widetilde{\mu}( G ) \leq \mu^*( G ).
+		\]
+		Összefoglalva \( \mu^*( G ) = \widetilde{\mu}( G ) \).
+		
+		\noindent\rule{\linewidth}{0.4pt}\\
+		
+		Már csak azt kéne bebizonyítani, hogy egy \( \Omega \) szigma-algebra.
+		\marginnote{
+			Ugyanis minden \( B \in \powerset{X} \) esetén
+			\begin{align*}
+				\mu^*(B) 
+				&= \mu^*(B \cap X) + \mu^*(B \setminus X) \\
+				&= \mu^*(B) + \mu^*(\emptyset) \\
+				&= \mu^*(B).
+			\end{align*}
+			Amennyiben \( A \in \Omega \), akkor
+			\begin{align*}
+				\mu^*(B) 
+				&= \mu^*( B \cap A^c ) + \mu^*( B \setminus A^c) \\
+				&= \mu^*( B \setminus A ) + \mu^*( B \cap A).
+			\end{align*}
+		}
+		\begin{enumerate}
+			\item Az \( X \in \Omega \) tartalmazás teljesül. \checkmark
+			\item A komplementerképzésre való zártság is teljesül. \checkmark
+			\item Azt kell igazolni, hogy \( \Omega \) zárt a megszámlálható unióra, vagyis
+			\[
+				A_n \in \Omega \ (n \in \N)
+				\qquad \Longrightarrow \qquad
+				\bigcup_{n=0}^{\infty} A_n \in \Omega.
+			\]
+		\end{enumerate}
+		Először megmutatjuk, 
+		hogy bármely \( A_0, A_1 \in \Omega \) esetén \( A_0 \cup A_1 \in \Omega \). Ugyanis
+		\begin{align*}
+			\mu^*(B) 
+			&\geq \mu^*(B \cap A_0) + \mu^*(B \setminus A_0) \\
+			&\geq \mu^* \bigl( (B \cap A_0) \cap A_1 \bigr) + 
+				  \mu^* \bigl( (B \cap A_0) \setminus A_1 \bigr) +
+				  \mu^* \bigl( (B \setminus A_0) \cap A_1 \bigr) \\
+			&+    \mu^* \bigl( (B \setminus A_0) \setminus A_1 \bigr)
+		\end{align*}
+		Ugyanis vegyük észre, 
+		hogy \( (B \setminus A_0) \setminus A_1 = B \cap (A_0 \cup A_1) \), valamint
+		\begin{align*}
+			B \cap (A_0 \cup A_1)
+			&= \bigl( (B \cap A_0) \cap A_1 \bigr) \cup
+			   \bigl( (B \cap A_0) \setminus A_1 \bigr) \cup
+			   \bigl( (B \cap A_1) \setminus A_0 \bigr) \\
+			&= \bigl( (B \cap A_0) \cap A_1 \bigr) \cup
+			   \bigl( (B \cap A_0) \setminus A_1 \bigr) \cup
+			   \bigl( (B \setminus A_0) \cap A_1 \bigr).
+		\end{align*}
+		Alkalmazva a \hyperref[eq:mu-csillag-szubadditív]{\( \mu^* \) szubadditív} 
+		tulajdonságát kapjuk, hogy 
+		\[
+			\mu^*(B) \geq 
+			\mu^* \bigl( B \cap (A_0 \cap A_1) \bigr) + 
+			\mu^* \bigl( B \setminus (A_0 \cap A_1) \bigr)
+		\]
+		azaz \( \Omega \) valóban zárt a kételemű unióra. 
+		Ugyanakkor (lásd \hyperref[lem:mu-csillag-merheto]{\( \mu^*\)-mérhető lemma})
+		\[
+			\mu^*(B) = 
+			\mu^* \bigl( B \cap (A_0 \cap A_1) \bigr) + 
+			\mu^* \bigl( B \setminus (A_0 \cap A_1) \bigr)
+		\]
+		Speciálisan \( A_0 \cap A_1 = \emptyset \), 
+		valamint a \( B \leftrightarrow B \cap (A_0 \cup A_1) \) szerepcsere után
+		\[
+			\mu^* \bigl( B \cap (A_0 \cup A_1) \bigr) =
+			\mu^*( B \cap A_0 ) + \mu^*( B \cap A_1 ).
+		\]
+		Innen teljes indukcióval adódik, hogy
+		\[
+			\bigcup_{k=0}^n A_k \in \Omega
+		\]
+		valamint ha az \( A_n \ (n \in \N) \) halmazok páronként diszjunktak, akkor
+		\[
+			\mu^* \Biggl( B \cap \bigcup_{k=0}^n A_k \Biggr) = 
+			\sum_{k=0}^{n} \mu^*(B \cap A_k).
+		\]
+		Legyenek tehát az \( A_n \ (n \in \N) \) halmazok páronként diszjunktak. Ekkor
+		\begin{align*}
+			\mu^*(B)
+			&\geq \mu^* \Biggl( B \cap      \bigcup_{k=0}^n A_k \Biggr) +
+			      \mu^* \Biggl( B \setminus \bigcup_{k=0}^n A_k \Biggr) \\[3pt]
+			&\geq \sum_{k=0}^{n} \mu^*(B \cap A_k) +
+			      \mu^* \Biggl( B \setminus \bigcup_{k=0}^n A_k \Biggr) \\
+		\end{align*}
+		Véve az \( n \to \infty \) határátmenetet, 
+		majd kihasználva \hyperref[eq:mu-csillag-szubadditív]{\( \mu^* \) szubadditivitását} 
+		\[
+			\mu^*(B) \geq
+			\sum_{k=0}^{\infty} \mu^*(B \cap A_k) +
+			\mu^* \Biggl( B \setminus \bigcup_{k=0}^{\infty} A_k \Biggr) \geq
+			\mu^* \Biggl( B \cap \bigcup_{k=0}^{\infty} A_k \Biggr) +
+			\mu^* \Biggl( B \setminus \bigcup_{k=0}^{\infty} A_k \Biggr)
+		\]
+		Innen rögtön következik, hogy \( \Omega \) zárt a megszámlálható unióra, vagyis
+		\marginnote{
+			Ez akkor is igaz, amikor az \( A_n \ (n \in \N) \) halmazok nem páronként diszjunktak.
+		}
+		\[
+			\bigcup_{n=0}^{\infty} A_n \in \Omega.
+		\]
+		Tehát \( \Omega \) valóban szigma-algebra, továbbá speciális választásként
+		\[
+			B \coloneq \bigcup_{n=0}^{\infty} A_n
+			\qquad \Longrightarrow \qquad
+			\mu^* \Biggl( \,\bigcup_{n=0}^{\infty} A_n \Biggr) =
+			\sum_{n=0}^{\infty} \mu^*( A_n ).
+		\]
+		Vagyis \( \restr{\mu^*}{\Omega} \) szigma-additív, 
+		ezért minden eddigi alapján \( \restr{\mu^*}{\Omega} \) egy mérték.
+	\end{proof}
+	
+	\begin{definition}{Külső mérték}{}
+		Legyen \( X \) egy halmaz, 
+		valamint \( \func{\mu^*}{ \powerset{X} }{ \overline{\R} } \) olyan halmazfüggvény, ami
+			\begin{enumerate}
+			\item 
+			\textbf{nemnegatív}, azaz \( \mu^* \geq 0 \);
+			
+			\item 
+			\textbf{eltűnik \( \boldsymbol{\emptyset} \)-ban}, azaz
+			\( \mu^*(\emptyset) = 0 \);
+			
+			\item 
+			\textbf{monoton}, 
+			azaz minden \( B \subseteq A \) esetén \( \mu^*(B) \leq \mu^*(A) \);
+			
+			\item
+			\textbf{szubadditív}, 
+			azaz minden \( A_n \ (n \in \N ) \) halmazsorozat esetén
+			\[
+				\mu^* \Biggl( \, \bigcup\limits_{n=0}^\infty A_n \Biggr) \leq 
+				\sum\limits_{n=0}^{\infty} \mu^*(A_n).
+			\]
+		\end{enumerate}
+		Ekkor azt mondjuk, hogy \( \mu^* \) egy \emph{külső mérték}.
+	\end{definition}
+	
+	\begin{theorem}{Caratheodory-tétel}{}
+		Legyen \( X \) egy halmaz, 
+		\( \func{\mu^*}{ \powerset{X} }{ \overline{\R} } \) külső mérték, valamint
+		\[
+			\Omega \coloneq \setc[\big]{ A \in \powerset{X} }{ A \ \mu^* \text{-mérhető} }.
+		\]
+		Ekkor \( \Omega \) szigma-algebra és \( \mu \coloneq \restr{\mu^*}{\Omega} \) mérték.
+	\end{theorem}
+	
+\end{document}

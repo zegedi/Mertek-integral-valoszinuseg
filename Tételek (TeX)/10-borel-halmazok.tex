@@ -1,0 +1,122 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{10. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Borel--halmazok}
+	
+	\begin{definition}{Borel--halmaz, Lebesgue--halmaz}{}
+		Az \( \R^p \)-beli \emph{Borel--halmazok} rendszere az alábbi szigma-algebra:
+		\[
+			\Omega_p \coloneq \Omega( \mathcal{I}^p ) = \Omega( \mathbf{I}^p ).
+		\]
+		Az \( \R^p \)-beli \emph{Lebesgue--halmazok} rendszere az alábbi szigma-algebra:
+		\[
+			\Omega_p \coloneq \Omega( \mathcal{I}^p ) = \Omega( \mathbf{I}^p ).
+		\]
+	\end{definition}
+	
+	Vezessük be a soron következő \( \R^p \)-beli halmazrendszereket:
+	\[
+		\mathcal{T}_p \coloneq \setc[\big]{ A \subseteq \R^p }{ A \text{ nyílt} }, \quad
+		\mathcal{C}_p \coloneq \setc[\big]{ B \subseteq \R^p }{ B \text{ zárt} }, \quad
+		\mathcal{K}_p \coloneq \setc[\big]{ K \subseteq \R^p }{ K \text{ kompakt} }.
+	\]
+	\begin{alignat*}{2}
+		\mathcal{T}_p &\coloneq \Bigl\{ A &&\subseteq \R^p \ \colon A \text{ nyílt} \Bigr\}, \\
+		\mathcal{C}_p &\coloneq \Bigl\{ B &&\subseteq \R^p \ \colon B \text{ zárt} \Bigr\}, \\
+		\mathcal{K}_p &\coloneq \Bigl\{ K &&\subseteq \R^p \ \colon K \text{ kompakt} \Bigr\}.
+	\end{alignat*}
+	
+	\begin{statement}{}{}
+		A \( p \)-dimenziós Borel--halmazok rendszerére az alábbi egyenlőségek igazak:
+		\[
+			\Omega_p = 
+			\Omega( \mathcal{T}_p ) = 
+			\Omega( \mathcal{C}_p ) = 
+			\Omega( \mathcal{K}_p ).
+		\]
+	\end{statement}
+	\begin{proof}
+		Mivel minden \( \R^p \)-beli kompakt halmaz korlátos és zárt, ezért
+		\marginnote{
+			\( A \subseteq \R^p \) kompakt \( \iff \) \( A \) korlátos és zárt.
+		}
+		\[
+			\mathcal{K}_p \subset \mathcal{C}_p \subseteq \Omega( \mathcal{C}_p )
+			\qquad \Longrightarrow \qquad
+			\Omega( \mathcal{K}_p ) \subseteq \Omega( \mathcal{C}_p ).
+		\]
+		Ha \( B \in \mathcal{C}_p \) zárt halmaz, 
+		akkor alk \( (B_n) \) kompakt halmazokból képzett
+		\marginnote{
+			Hiszen \( A_n \subset A \ (n \in \N) \) korlátos és zárt.
+		}
+		\[
+			B_n \coloneq \setc[\big]{ \x \in B }{ \norm{\x} \leq n } \quad (n \in \N)
+			B = \bigcup_{n=0}^{\infty} B_n
+			\qquad \Longrightarrow \qquad
+			B \in \Omega( \mathcal{K}_p )
+		\]
+		Mivel minden szigma-algebra zárt a megszámlálható unióra, ezért
+		\[
+			B \in \Omega( \mathcal{K}_p )
+			\quad \Longrightarrow \quad
+			\mathcal{C}_p \subseteq \Omega( \mathcal{K}_p )
+			\quad \Longrightarrow \quad
+			\Omega( \mathcal{C}_p ) \subseteq \Omega( \mathcal{K}_p ).
+		\]
+		
+		Ha \( A \in \mathcal{T}_p \) nyílt halmaz, akkor a komplementere zárt.
+		\marginnote{
+			Itt az \( \R^p \)-re vonatkozó komplementer
+			\[
+				A^c = \R^p \setminus A.
+			\]
+		}
+		Tehát
+		\[
+			A^c \in \mathcal{C}_p \subseteq \Omega( \mathcal{C}_p ).
+		\]
+		Mivel minden szigma-algebra zárt a komplementer képzésre, ezért
+		\[
+			A \in \Omega( \mathcal{C}_p )
+			\quad \Longrightarrow \quad
+			\mathcal{T}_p \subseteq \Omega( \mathcal{C}_p )
+			\quad \Longrightarrow \quad
+			\Omega( \mathcal{T}_p ) \subseteq \Omega( \mathcal{C}_p ).
+		\]
+		Fordítva hasonló gondolatmenettel
+		\marginnote{
+			Ha \( B \in \mathcal{C}_p \) zárt, akkor \( B^c \in \mathcal{T}_p \) nyílt.
+		}
+		látható be, hogy
+		\[
+			\Omega( \mathcal{C}_p ) \subseteq \Omega( \mathcal{T}_p )
+			\quad \Longrightarrow \quad
+			\smash{\uwave{\Omega( \mathcal{C}_p ) = \Omega( \mathcal{T}_p )}}.
+		\]
+	\end{proof}
+	
+\end{document}

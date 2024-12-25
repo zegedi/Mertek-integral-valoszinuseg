@@ -26,6 +26,7 @@
 
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
+\subtitle{1. Vizsgatétel}
 \date{2024} % year of defense
 
 % Author's metadata
@@ -50,7 +51,7 @@
 	\documentlang{hungarian}
 	%\documentlang{english}
 	
-	\section{Függvények lokális oszcillációja és a folytonosság kapcsolata}
+	\section{Függvények lokális oszcillációja}
 	
 	\begin{definition}{Oszcilláció halmazon, lokális oszcilláció}{oszcilláció}
 		Legyen \( \funcin{f}{\R}{\R} \), és
@@ -58,7 +59,7 @@
 		Ekkor
 		\[
 			\mathcal{O}(f, A) \coloneq
-			\Bigl\{ \abs\big{f(x) - f(y)} \ \colon\, x, y \in A \cap \dom{f} \Bigr\}
+			\sup \Bigl\{ \abs\big{f(x) - f(y)} \ \colon\, x, y \in A \cap \dom{f} \Bigr\}
 		\]
 		az \( f \) függvény \emph{oszcillációja} az \( A \) halmazon.
 		Továbbá egy \( z \in \dom{f} \) helyen
@@ -71,7 +72,6 @@
 		az \( f \) függvény \emph{lokális oszcillációja} a \( z \) pontban.
 	\end{definition}
 	
-	\newpage
 	\begin{lemma}{Lokális oszcilláció és a folytonosság kapcsolata}{}
 		Legyen \( \funcin{f}{\R}{\R} \), valamint \( z \in \dom{f} \) egy adott pont.
 		Ekkor
@@ -133,26 +133,28 @@
 		\]
 	\end{proof}
 	
-	\chapter{A határátmenet és a Riemann-integrál kapcsolata}
+	\newpage
+	\section{Konvergencia}
 	
-	Az \( f \) függvényt sorozatnak nevezzük, amennyiben \( \dom{f} = \N \). Ekkor a sorozat
-	\[
-		f_n \coloneq f(n) \qquad (n \in \N)
-	\]
-	helyettesítési értékét az \( f \) sorozat \( n \)-edik (vagy \( n \) indexű) tagjának nevezzük, és a sorozat jelölésére a függvényeknél használt \( f \) szimbólum helyett az \( (f_n) \) jelölés használjuk.
+%	Az \( f \) függvényt sorozatnak nevezzük, amennyiben \( \dom{f} = \N \). Ekkor a sorozat
+%	\[
+%		f_n \coloneq f(n) \qquad (n \in \N)
+%	\]
+%	helyettesítési értékét az \( f \) sorozat \( n \)-edik (vagy \( n \) indexű) tagjának nevezzük, és a sorozat jelölésére a függvényeknél használt \( f \) szimbólum helyett az \( (f_n) \) jelölés használjuk.
+%	
+%	Attól függően, hogy az egyes tagok milyen halmazból vannak, különböző jelzőket használunk a sorozat megnevezésekor. Például azt mondjuk, hogy \( (f_n) \) számsorozat, ha minden tagja szám. Vagy azt mondjuk, hogy \( (f_n) \) halmazsorozat, ha minden tagja halmaz.
+%	Hasonló elv szerint értelmezzük a függvénysorozatokat.
 	
-	Attól függően, hogy az egyes tagok milyen halmazból vannak, különböző jelzőket használunk a sorozat megnevezésekor. Például azt mondjuk, hogy \( (f_n) \) számsorozat, ha minden tagja szám. Vagy azt mondjuk, hogy \( (f_n) \) halmazsorozat, ha minden tagja halmaz.
-	Hasonló elv szerint értelmezzük a függvénysorozatokat.
-	
-	A továbbiakban feltesszük, hogy \( a, b \in \R \) tetszőleges és \( a < b \).
+	A továbbiakban legyen \( [a, b] \subset \R \) egy korlátos és zárt intervallum.
 	
 	\begin{definition}{Függvénysorozat, pontonkénti konvergencia}{}
 		Azt mondjuk, hogy az \( (f_n) \) egy \emph{függvénysorozat}, ha
 		\[
 			\func{f_n}{[a, b]}{\R} \qquad (n \in \N).
 		\]
-		Valamint az \( (f_n) \) függvénysorozat \emph{pontonként konvergens}, 
-		ha minden \( x \in [a,b] \) helyen az \( \bigl( f_n(x) \bigr) \) számsorozat konvergens. Ekkor az \( f \) \emph{határfüggvénye}
+		Az \( (f_n) \) függvénysorozat \emph{pontonként konvergens}, 
+		ha minden \( x \in [a,b] \) helyen az \( \bigl( f_n(x) \bigr) \) számsorozat konvergens. 
+		Ekkor az \( f \) \emph{határfüggvénye}
 		\[
 			f(x) \coloneq \lim_{n \to \infty} f_n(x) \qquad \bigl( x \in [a, b] \bigr).
 		\]
@@ -173,7 +175,11 @@
 		\]
 	\end{notes}
 	
-	Tegyük fel, hogy adott az \( f_n \in \Riem{[a, b]} \) függvényeknek a sorozata \( (n \in \N) \).
+	\noindent 
+	Legyen adott az \( f_n \in \Riem{[a, b]} \ (n \in \N) \) függvényeknek a konvergens sorozata.\\
+	
+	\noindent
+	\underline{\textbf{Kérdések:}}
 	
 	\begin{enumerate}
 		\item Konvergens-e az integrálokból képzett \( \left( \int_a^b f_n \right) \) számsorozat?
@@ -192,7 +198,8 @@
 		egyenlőség?
 	\end{enumerate}
 	
-	A válasz az előbbi kérdésekre az, hogy minden további feltétel nélkül ezek nem teljesülnek.
+	\noindent
+	\underline{\textbf{Válaszok:}} Minden további feltétel nélkül ezek nem teljesülnek.
 	
 	Megmutatjuk, hogy egy Riemann-integrálható tagokból álló \( (f_n) \) függvénysorozat pontonkénti konvergenciája nem elégséges a határfüggvény Riemann-integrálhatóságához.
 	
@@ -263,7 +270,7 @@
 		\end{cases}
 	\]
 	
-	\begin{definition}{Egyenletes konvergencia}
+	\begin{definition}{Egyenletes konvergencia}{}
 		Azt mondjuk, hogy az \( (f_n) \) függvénysorozat \emph{egyenletesen konvergál} az
 		\[
 			\func{f}{[a, b]}{\R}
@@ -408,7 +415,7 @@
 		\]
 	\end{proof}
 	
-	\chapter{Teljesség}
+	\section{A teljesség kérdése}
 	
 	Legyen \( f, g \in \Riem{[a, b]} \) és értelmezzük az \( f \) és \( g \) függvények ``távolságát'' a
 	\[
@@ -460,4 +467,4 @@
 		\int_0^1 \abs\big{f_n - f} \nrightarrow 0 
 		\qquad (n \to \infty).
 	\]
-c
+\end{document}

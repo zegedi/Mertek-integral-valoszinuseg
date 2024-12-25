@@ -1,0 +1,138 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{12. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Emlékeztető}
+	
+	Emlékezzünk arra, hogy egy \( A \subseteq \R \) halmazt \emph{Borel-halmaznak} nevezünk, ha
+	\[
+		A \in \Omega_1 \coloneq \Omega( \mathcal{I} ) = \Omega( \mathbf{I} ).
+	\]
+	Az itt szereplő \( \mathbf{I} \) halmazrendszer az üres halmazt, 
+	valamint az \( \R \) balról zárt, jobbról nyílt intervallumait tartalmazza,
+	\( \mathcal{I} \) pedig az \( \mathbf{I} \) félgyűrű által generált gyűrű, azaz
+	\[
+		\mathbf{I} \coloneq 
+		\setc[\Big]{ \emptyset, [a, b) \subseteq \R }{ a, b \in \R, \ a < b }, \qquad
+		\mathcal{I} \coloneq
+		\mathcal{G}( \mathbf{I} ).
+	\]
+	\begin{definition}{Borel--mérhető halmaz}{}
+		Egy \( A \subseteq \overline{\R} \) halmaz 
+		kibővített értelemben \emph{Borel--mérhető}, ha
+		\[
+			A \cap \R \in \Omega_1.
+		\]
+		Legyen az ilyen tulajdonságú halmazoknak a rendszere \( \overline{\Omega}_1 \).
+	\end{definition}
+	
+	\begin{note}
+		Tehát egy \( A \subseteq \overline{ \R } \) halmaz pontosan akkor Borel--mérhető, ha
+		\[
+			A = B \cup C
+		\]
+		módon bontható fel, ahol \( B \in \Omega_1 \) és 
+		\( C \in \bigl\{ \emptyset, \{ -\infty \}, \{ +\infty \}, \{ -\infty, +\infty \} \bigr\} \).
+	\end{note}
+	
+	\begin{definition}{Borel--mérhető függvény}{}
+		%		Legyen \( X \neq \emptyset \) egy adott halmaz, 
+		%		\( \Omega \subseteq \powerset{X} \) szigma-algebra.
+		%		
+		Legyen \( (X, \Omega) \) mérhető tér, 
+		valamint \( \func{f}{X}{\overline{\R}} \) egy függvény.\\[3pt]
+		Azt mondjuk, hogy az \( f \) függvény \emph{mérhető} (vagy \emph{Borel--mérhető}), ha
+		\[
+		f^{-1}[A] \coloneq
+		\setc[\big]{ x \in X }{ f(x) \in A } \in \Omega
+		\qquad \bigl( A \in \overline{\Omega}_1 \bigr).
+		\]
+	\end{definition}
+	\begin{note}
+		Szóban, az \( f \) függvény pontosan akkor mérhető, 
+		ha minden kibővített értelemben Borel-mérhető \( A \)
+		halmaz \( f^{-1}[A] \) ősképe az \( \Omega \)-ban van.
+	\end{note}
+	
+	\newpage
+	\section{Lépcsősfüggvények}
+	
+	\begin{definition}{Lépcsősfüggvény}{}
+		Legyen \( (X, \Omega, \mu) \) egy mértéktér, 
+		valamint \( \func{f}{X}{\R} \) egy függvény.\\[3pt]
+		Azt mondjuk, hogy \( f \) egy \emph{lépcsősfüggvény}, 
+		ha mérhető és \( \rng{f} \) véges.
+	\end{definition}
+	
+	Egy \( f \) leképezés pontosan akkor lépcsősfüggvény, ha
+	\[
+		f = \sum_{i=0}^{n} \alpha_i {\cdot} \chi_{A_i}
+	\]
+	módon írható fel, 
+	valamilyen \( \alpha_0, \dots, \alpha_n \in \R \) 
+	és \( A_0, \dots, A_n \in \Omega \) esetén.
+	Speciálisan az
+	\[
+		f = \sum_{y \in \rng{f}} y {\cdot} \chi_{\{ f = y \}}
+	\]
+	alakot \emph{kanonikus előállításnak} nevezzük. Továbbá legyen
+	\[
+		\StepFunc \coloneq \setc[\big]{ \func{f}{X}{\R} }{ f \text{ lépcsős}}, \qquad
+		\StepFuncPlus \coloneq \setc[\big]{ f \in \StepFunc }{ f \geq 0 }. 
+	\]
+	
+	\begin{statement}{Lépcsősfüggvények alaptulajdonságai}{lépcsősfüggvény-műveletek}
+		Legyenek \( f,g \in \StepFunc \) lépcsősfüggvények, valamint \( \alpha \in \R \). Ekkor az
+		\[
+			f + g, \ \alpha \cdot g, \ f \cdot g, \ \max\{ f, g \}, \ \min\{ f, g \}
+		\]
+		függvények valamennyien az \( \StepFunc \) osztályban vannak.
+	\end{statement}
+	
+	\noindent 
+	A továbbiakban nemnegatív lépcsősfüggvényeket fogunk tekinteni.
+	Nyilvánvaló módon \aref{st:lépcsősfüggvény-műveletek} állítás ekkor is igaz marad, 
+	midőn az \( \alpha \geq 0 \).
+	
+	\begin{definition}{Nemnegatív lépcsősfüggvény integrálja}{}
+		Egy \( f \in \StepFuncPlus \) függvény (\( \mu \) mérték szerinti) \emph{integrálja} alatt az
+		\[
+			\int f \dd{\mu} \coloneq
+			\sum_{y \in \rng{f}} y {\cdot} \mu \bigl( \{ f = y \} \bigr)
+		\]
+		nemnegatív számot (vagy a \( +\infty \)-t) értjük.
+	\end{definition}
+	
+	\begin{theorem}{Az integrál alaptulajdonságai}{}
+		Tekintsük az \( f, g \in \StepFuncPlus \) függvényeket és az \( \alpha \geq 0 \) számot. Ekkor
+		\begin{enumerate}
+			\item \( \displaystyle \int (\alpha \cdot f) \dd{\mu} = \alpha \cdot \int f \dd{\mu} \);
+			\item \( \displaystyle \int (f + g) \dd{\mu} = \int f \dd{\mu} + \int g \dd{\mu} \);
+			\item \( \displaystyle f \leq g \quad \Longrightarrow \quad \int f \dd{\mu} \leq \int g \dd{\mu} \);
+		\end{enumerate}
+	\end{theorem}
+
+	
+\end{document}

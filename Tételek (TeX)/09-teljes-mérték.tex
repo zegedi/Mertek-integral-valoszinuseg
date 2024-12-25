@@ -1,0 +1,188 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+\makeatletter
+\def\biggg{\bBigg@{3}}
+\def\bigggm{\mathrel\biggg}
+\def\bigggl{\mathopen\biggg}
+\def\bigggr{\mathclose\biggg}
+\def\Biggg{\bBigg@{3.5}}
+\def\Bigggm{\mathrel\Biggg}
+\def\Bigggl{\mathopen\Biggg}
+\def\Bigggr{\mathclose\Biggg}
+\makeatother
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{9. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Emlékeztető}
+	
+	
+	
+	\begin{theorem}{Kvázimérték kiterjesztése mértékké}{}
+		Legyen \( X \) egy halmaz, 
+		\( \ring{G} \subseteq \powerset{X} \) gyűrű, 
+		\( \func{ \widetilde{\mu} }{ \ring{G} }{ [0, +\infty] } \) kvázimérték.\\[3pt]
+		Ekkor van olyan \( \Omega \subseteq \powerset{X} \) \( \sigma \)-algebra és 
+		\( \func{ \mu }{ \Omega }{ [0, +\infty] } \) mérték, hogy 
+		\[
+			\ring{G} \subseteq \Omega
+			\qquad \text{és} \qquad
+			\widetilde{\mu} = \restr{\mu}{\ring{G}}.
+		\]
+	\end{theorem}
+	
+	\section{A kiterjesztés egyértelműsége}
+	
+	Ha egy \( X \) halmaz és \( \ring{G} \subseteq \powerset{X} \) gyűrű mellett
+	\( \func{\widetilde{\mu}}{\ring{G}}{[0, +\infty]} \) kvázimérték, és a
+	\[
+		\func{\mu}{\Omega}{[0, +\infty]}
+	\]
+	mérték kiterjesztése az \( \widetilde{\mu} \)-nek, akkor az minden esetben kijelenthető, hogy
+	\[
+		\ring{G} \subseteq \Omega( \ring{G} ) \subseteq \Omega.
+	\]
+	Felmerül a kérdés, hogy vajon a \( \ring{G} \) gyűrű által generált \( \Omega( \ring{G} ) \) szigma-algebrára hányféleképpen terjeszthetjük ki \( \widetilde{\mu} \)-t?
+	Teljesül az egyértelmű kiterjeszthetőség?
+	
+	\begin{example}
+		Legyen \( X \neq \emptyset \) tetszőleges halmaz,
+		és tekintsük a \( \ring{G} = \{ \emptyset \} \) triviális gyűrűt,
+		\[
+			\func{\widetilde{\mu}}{\ring{G}}{[0, +\infty]}, \qquad
+			\widetilde{\mu}(\emptyset) = 0, \qquad
+			\Omega( \ring{G} ) = \{ \emptyset, X \}.
+		\]
+		Ekkor \( \widetilde{ \mu } \) kvázimérték, valamint legyen
+		\[
+		%	\func{\mu_1, \mu_2}{\Omega(G)}{[0, +\infty]}, \qquad
+			\mu_1( \emptyset ) = \mu_2( \emptyset ) = 0, \qquad
+			\mu_1( X ) = 0, \qquad
+			\mu_2( X ) = +\infty.
+		\]
+		Világos, hogy \( \mu_1 \) és \( \mu_2 \) mérték a triviális szigma-algebrán, ugyanakkor
+		\[
+			\mu_1 \neq \mu_2, \qquad 
+			\restr{ \mu_1 }{ \ring{G} } = \restr{ \mu_2 }{ \ring{G} }.
+		\]
+		\null\hfill \( \blacksquare \)
+	\end{example}
+	
+	\begin{definition}{Szigma-véges halmazfüggvény}{}
+		Legyen \( X \) adott halmaz, 
+		valamint \( \funcin{\varphi}{\powerset{X}}{[0, +\infty]} \) halmazfüggvény.\\[3pt]
+		Azt mondjuk, hogy \( \varphi \) \emph{szigma-véges} 
+		(röviden \emph{\( \boldsymbol{\sigma} \)-véges}), amennyiben
+		\[
+			X = \bigcup_{n=0}^{\infty} A_n 
+			\quad \text{és} \quad
+			\varphi(A_n) < +\infty \qquad (n \in \N)
+		\]
+		igaz, valamilyen \( A_n \in \dom{\varphi} \) páronként diszjunkt halmazokból álló sorozatra.
+	\end{definition}
+	
+	\begin{theorem}{Szigma-véges kvázimérték kiterjesztése}{}
+		Legyen \( \ring{G} \subseteq \powerset{X} \) gyűrű, 
+		valamint \( \func{ \widetilde{\mu} }{ \ring{G} }{ [0, +\infty] } \) egy kvázimérték.\\[3pt]
+		Amennyiben \( \widetilde{\mu} \) szigma-véges, akkor egyértelműen létezik olyan
+		\[
+			\func{ \mu }{ \Omega(\ring{G}) }{ [0, +\infty] }
+		\]
+		mérték, ami kiterjesztése \( \widetilde{\mu} \)-nak.
+	%	vagyis \( \widetilde{\mu} = \restr{ \mu }{ \ring{G} } \).
+	\end{theorem}
+	
+	\newpage
+	\section{Lebesgue-mérték}
+	
+	A továbbiakban legyen \( p \in \posN \) egy rögzített kitevő, valamint az
+	\[
+		\x = (x_1, \dots, x_p), \ \y = (y_1, \dots, y_p) \in \R^p
+	\]
+	vektorok körében definiáljuk a komponensenkénti rendezést az alábbi módon:
+	\[
+		\begin{alignedat}{3}
+			\x &\leq \y \quad &&\ratio \Longleftrightarrow \quad x_i &&\leq y_i \\[3pt]
+			\x &<    \y \quad &&\ratio \Longleftrightarrow \quad x_i &&<    y_i
+		\end{alignedat}
+		\qquad (i = 1,\dots, p).
+	\]
+	Amennyiben \( \x < \y \), akkor az
+	\[
+		[\x, \y) \coloneq 
+		\setc[\big]{ \vb{z} \in \R^p }{ \x \leq \vb{z} < \y } =
+		[ x_1, y_1 ) \times \cdots \times [x_p, y_p )
+	\]
+	halmazt az \( \x, \y \) végpontú, balról zárt és jobbról nyílt (\( p \)-dimenziós) intervallumnak nevezzük. Könnyen belátható ilyenkor, hogy az
+	\[
+		\mathbf{I}^p \coloneq 
+		\setc[\Big]{ \emptyset,\, [\x, \y) }{ \x, \y \in \R^p \,\text{ és }\, \x < \y }
+	\]
+	halmazrendszer egy félgyűrű. Tekintsük az \( \mathbf{I}^p \) által generált gyűrűt, vagyis az
+	\[
+		\mathcal{I}^p \coloneq 
+		\mathcal{G}( \mathbf{I}^p ) =
+		\setc[\Bigg]{ A \coloneq \bigcup_{k=0}^n I_k }
+		{ I_0, \dots, I_n \in \mathbf{I}^p \text{ diszjunktak } (n \in \N) }
+	\]
+	halmazt.
+	
+	\begin{theorem}{}{}
+		Definiáljuk a
+		\[
+			m_p( \emptyset ) \coloneq 0, \qquad
+			m_p \bigl( [\x, \y) \bigr) \coloneq \prod_{i=1}^{p} (y_i - x_i)
+		\]
+		Ekkor egyértelműen létezik olyan 
+		\( \func{ \widetilde{\mu}_p }{\mathcal{I}^p}{[0, +\infty]} \) kvázimérték, hogy
+		\[
+			m_p = \restr{ \widetilde{\mu}_p }{ \mathbf{I}^p }
+		\]
+	\end{theorem}
+	
+	\begin{theorem}{}{}
+		Tekintsük az alábbi külső mértéket.
+		\[
+			\mu_p^*( A ) \coloneq
+			\inf \setc[\Bigg]{ \sum_{n=0}^{\infty} A_n }
+			                 { \func{(A_n)}{\N}{\mathcal{I}^p}, \ A \subseteq \bigcup_{n=0}^{\infty} A_n }
+			\qquad (A \subseteq \R^p)
+		\]
+		Ekkor
+		\[
+			\widehat{\Omega}_p \coloneq
+		%	\setc[\Big]{ A \subseteq \R^p }
+		%	           { \mu_p^*( B ) = \mu_p^*( B \cap A ) + \mu_p^*( B \setminus A ) \ (B \subseteq \R^p) }
+			\setc[\Big]{ A \subseteq \R^p }
+			           { \text{az } A \ \mu_p^* \text{-mérhető} }
+		\]
+		halmaz szigma-algebra, 
+		valamint \( \widehat{ \mu }_p \coloneq \restr{ \mu_p^* }{ \widehat{\Omega}_p } \) mérték.
+	\end{theorem}
+	
+	\begin{definition}{Lebesgue-mérték}{}
+		
+	\end{definition}
+	
+\end{document}

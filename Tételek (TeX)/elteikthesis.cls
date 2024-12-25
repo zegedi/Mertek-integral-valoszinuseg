@@ -42,6 +42,11 @@
 \RequirePackage{caption}
 \RequirePackage[normalem]{ulem} % Underlines
 
+% Tikz tools
+\RequirePackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{%
+		\node[shape=circle,draw,inner sep=1.5pt] (char) {#1};}}
+
 % LaTeX programming tools
 \RequirePackage{etoolbox}
 \RequirePackage{xparse}
@@ -110,6 +115,7 @@
 \NewDocumentCommand{\logo}{m}{\newcommand{\logofilename}{#1}}
 
 \DeclareDocumentCommand{\title}{m}{\newcommand{\thesistitle}{#1}\renewcommand{\@title}{#1}}
+\DeclareDocumentCommand{\subtitle}{m}{\newcommand{\thesissubtitle}{#1}}
 \DeclareDocumentCommand{\date}{m}{\newcommand{\thesisyear}{#1}\renewcommand{\@date}{#1}}
 % ------------------------------
 
@@ -214,7 +220,9 @@
 \fancyhead{}
 % Set new header style
 \iftoggle{oneside}{ % one sided format
-	\fancyhead[C]{\slshape \leftmark}
+	%\fancyhead[C]{\thesistitle}
+	\fancyhead[L]{\thesistitle}
+	\fancyhead[R]{\thesissubtitle}
 }{ % double sided format
 	\fancyhead[EC]{\slshape \leftmark}
 	\fancyhead[OC]{\slshape \rightmark}
@@ -359,7 +367,7 @@
 %%---------------------------------------------------%%
 %| Define environments that use the definition style |%
 %%---------------------------------------------------%%
-\theoremstyle{definition}%
+\theoremstyle{definition}%  
 
 % \theoremstyle{definition}
 % \newtheorem{definition}{\deflabel}[section]
@@ -376,7 +384,7 @@
 
 \newtheorem*{proof*}{\prooflabel}
 
-\newtheorem{example}{\examplelabel}
+\newtheorem*{example}{\examplelabel}
 \AddToHook{env/example/end}{\pushQED{\qed}\def\qedsymbol{$\blacksquare$}\popQED}
 
 \newenvironment{notes}{
@@ -421,6 +429,7 @@
 
 \newtcbtheorem[
 	number within=section,
+	use counter from=definition,
 	number freestyle={\noexpand\thesection.\noexpand\arabic{\tcbcounter}.}]{theorem}{\theolabel}{
 	enhanced,
 	parbox=false,
@@ -436,8 +445,26 @@
 }{th}
 
 \newtcbtheorem[
-	number within=chapter,
-	number freestyle={\noexpand\thechapter.\noexpand\arabic{\tcbcounter}.}]{lemma}{\lemmalabel}{
+	number within=section,
+	use counter from=definition,
+	number freestyle={\noexpand\thesection.\noexpand\arabic{\tcbcounter}.}]{statement}{\statlabel}{
+	enhanced,
+	parbox=false,
+	drop shadow=gray,
+	colback=green!10,
+	coltitle=black,
+	colbacktitle=green!40,
+	colframe=green!40,
+	fonttitle=\bfseries,
+	attach boxed title to top text left={yshift*=-\tcboxedtitleheight/2},
+	boxed title style={colback=green!95!black},
+	theorem number and name, % Először tételszám, majd cím
+}{st}
+
+\newtcbtheorem[
+	number within=section,
+	use counter from=definition,
+	number freestyle={\noexpand\thesection.\noexpand\arabic{\tcbcounter}.}]{lemma}{\lemmalabel}{
 	enhanced,
 	parbox=false,
 	drop shadow=gray,
@@ -470,6 +497,7 @@
 % Feladat kitűzése környezet.
 % \theoremstyle{definition}
 % \newtheorem{excercise}{\excerlabel}[chapter]
+
 
 \tcolorboxenvironment{excercise}{
 	enhanced,
@@ -583,6 +611,8 @@
 \NewDocumentCommand \Diff     { o    } { \mathfrak{D} \IfValueT {#1} { ^#1 } } 		% Differenciálhatóság jele.
 \NewDocumentCommand \DiffAt   { o m  } { \IfValueTF {#1} { \Diff[#1] } { \Diff } \{ #2 \} }	% Differenciálhatóság jele adott pontban.
 
+
+
 \NewDocumentCommand \Cont     {      } { \mathfrak{C} } 	% Folytonosság jele.
 \NewDocumentCommand \ContAt   { m    } { \Cont \{ #1 \} }	% Folytonosság jele adott pontban.
 \NewDocumentCommand \ContDiff { O{1} } { \Cont ^#1 }		% Folytonosan differenciálhatóság jele adott pontban.
@@ -613,11 +643,15 @@
 % \newcommand{\ContDiff}[1][1]{ \Cont^#1}		   % Folytonosan differenciálhatóság jele.
 % \newcommand{\ContDiffAt}[2][1]{ \Cont^#1 \{ #2 \}}% Folytonosan differenciálhatóság jele.
 \newcommand{\Riem}{\mathfrak{R}}               % Riemann-integrálhatóság jele.
+\newcommand{\Step}{L}               % Lépcsősfüggvények jele.
 \newcommand{\Part}{\mathcal{F}}               % Egy intervallum felosztása
 \newcommand{\RiemOn}[1]{\Riem( #1 )}               % Riemann-integrálhatóság jele.
 \newcommand{\Subint}[1]{\mathcal{F}( #1 )}		% Felosztás részintervallumainak jele.
 \newcommand{\powerset}[1]{\mathcal{P}( #1 )}		% Hatványhalmaz jele
 \newcommand{\ring}[1]{\mathcal{#1}}					% Halmazgyűrű
+
+\NewDocumentCommand \StepFunc     { O{0} } { \Step_#1   }	% Lépcsősfüggvény
+\NewDocumentCommand \StepFuncPlus { O{0} } { \Step_#1^+ }	% Lépcsősfüggvény +.
 
 \newcommand{\LinearTransform}[1]{\mathcal{L}(#1)}					% Lineáris transzformáció.
 \newcommand{\Linear}[3][]{\mathcal{L}#1(#2, #3 #1)}					% Lineáris leképezés.
