@@ -1,0 +1,351 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{\circled{18} Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Emlékeztető}
+	
+	asdf
+	
+	\begin{theorem}{Lebesgue-tétel}{lebesgue}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, \( p \in [1, +\infty] \), 
+		valamint az \( f_n \in \Lebesgue[p] \ (n \in \N) \) olyan függvénysorozat, 
+		amelyre a következők igazak:
+		\begin{enumerate}[label=\roman*)]
+			\item\label{eq:lebesgue-01}
+			majdnem mindenhol létezik a \( \lim(f_n) \) pontonkénti limesz;
+			
+			\item\label{eq:lebesgue-02}
+			alkalmas \( F \in \StepFuncPlus, \ \norm{F}_p < +\infty \) függvénnyel
+			minden \( n \in \N \) indexre
+			\[
+			%	\abs{f_n} \leq F \qquad \mu \text{-m.m.}
+				\abs\big{f_n(x)} \leq F(x) \qquad (\mu \text{-m.m. } x \in X).
+			\]
+		\end{enumerate}
+		Ekkor
+		\begin{enumerate}[label=\alph*)]
+			\item\label{th:lebesgue-01}
+			van olyan \( \func{f}{X}{\R} \) mérhető függvény, hogy
+			\[
+				f = \lim_{n \to \infty} f_n \quad \mu \text{-m.m.};
+			\]
+			
+			\item\label{th:lebesgue-02}
+			minden \ref{th:lebesgue-01}-beli \( f \) függvényre \( f \in \Lebesgue[p] \), 
+			továbbá \( p \in [1, +\infty) \) esetén
+			\[
+				\lim\limits_{n \to \infty} \norm{f_n - f}_p = 0.
+			\]
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		\Aref{eq:lebesgue-01} és \ref{eq:lebesgue-02} feltétel figyelembe vételével
+		van olyan \( A \in \Omega \), hogy
+		\[
+			\mu(A) = 0, \qquad
+			\lim_{n \to \infty} f_n(x) \in \R, \qquad
+			\abs\big{ f_n(x) } \leq F(x) < +\infty
+		\]
+		fennáll minden \( x \in X \setminus A \) helyen és \( n \in \N \) indexre. 
+		\marginnote{
+			Tehát az \( f \) függvény nem más, mint a
+			\[
+			%	f = \lim_{n \to \infty} \bigl( f_n \cdot \chi_{X \setminus A} \bigr)
+				g_n \coloneq f_n \cdot \chi_{X \setminus A} \quad (n \in \N)
+			\]
+			mérhető függvényekből álló sorozat
+			\[
+				f = \lim(g_n)	
+			\]
+			határfüggvénye, ami szintén mérhető.
+		}
+		Legyen
+		\[
+			f(x) \coloneq 
+		%	\lim_{n \to \infty} \Bigl( f_n(x) \cdot \chi_C(x) \Bigr) =
+			\left\{
+			\begin{alignedat}{2}
+				&\lim_{n \to \infty} f_n(x), \quad && \text{ha } x \in X \setminus A, \\[3pt]
+				&0,                          \quad && \text{ha } x \in A.
+			\end{alignedat}
+			\right.
+		\]
+		Ekkor az \( f = \lim(f_n) \) majdnem mindenhol, és az \( f \) mérhető és véges, mert
+		\[
+			\abs\big{f(x)} \leq F(x) < +\infty \qquad (x \in X).
+		\]
+		
+		Ha az \( \func{f}{X}{\R} \) függvény eleget tesz \aref{th:lebesgue-01}-nak,
+		akkor \aref{eq:lebesgue-02} feltétel alapján
+		\[
+			\abs\big{f(x)} \leq F(x) \qquad (\mu \text{-m.m. } x \in X).
+		\]
+		Ekkor az integrál monotonitása miatt
+		\[
+			\norm{f}_p \leq \norm{F}_p < +\infty
+			\qquad \Longrightarrow \qquad
+			f \in \Lebesgue[p].
+		\]
+		
+		Azt kell már csak megmutatnunk, 
+		hogy \( \lim\limits_{n \to \infty} \norm{f - f_n}_p = 0\). Legyen ehhez
+		\[
+			g_n \coloneq \abs{f - f_n}^p \qquad (n \in \N).
+		\]
+		Mivel \( g_n \) nemnegatív és mérhető minden \( n \in \N \) indexre, 
+		ezért \( g_n \in \StepFuncPlus \), és
+		\[
+			g_n = 
+			\abs{f - f_n}^p \leq
+			\bigl( \abs{f} + \abs{f_n} \bigr)^p \leq
+			2^p \cdot F^p
+			\qquad \mu \text{-m.m.}
+		\]
+		\newpage
+		Alkalmazva a Fatou-lemma második állítását
+		\marginnote{
+			\begin{theo*}[Fatou-lemma II.] Ha egy
+				\[
+					\func{(h_n)}{\N}{\StepFuncPlus}
+				\]
+				sorozathoz van olyan \( G \in \StepFuncPlus \), hogy
+				\[
+					\int G \dd{\mu} < +\infty, \quad
+					h_n \leq G \ \mu \text{-m.m.},
+				\]
+				akkor
+				\[
+					\limsup_{n \to \infty} \int h_n \dd{\mu} \leq
+					\int \limsup_{n \to \infty} h_n \dd{\mu}
+				\]
+				akkor
+			\end{theo*}
+		}
+		\[
+			\limsup_{n \to \infty} \int g_n \dd{\mu} \leq
+			\int \limsup_{n \to \infty} g_n \dd{\mu} =
+			\int \lim_{n \to \infty} g_n \dd{\mu} = 0.
+		\]
+		Tehát
+		\[
+			\limsup_{n \to \infty} \norm{f_n - f}_p = 
+			\liminf_{n \to \infty} \norm{f_n - f}_p = 
+			\lim_{n \to \infty} \norm{f_n - f}_p = 0.
+		\]
+	\end{proof}
+	
+	\begin{notes}
+		\item Speciálisan \( p = 1 \) esetén a Lebesgue-tétel következménye, hogy
+		\[
+			\int f \dd{\mu} = \lim_{n \to \infty} \int f_n \dd{\mu}.
+		\]
+		Ugyanis figyelembe véve az
+		\[
+			\abs\bigg{ \int f \dd{\mu} - \int f_n \dd{\mu} } \leq
+			\int \abs\big{ f - f_n } \dd{\mu} =
+			\norm{ f - f_n }_1 \longrightarrow 0 
+			\qquad (n \to \infty).
+		\]
+		
+		\item
+		Speciálisan tegyük fel, hogy a \( \mu \) véges és az \( (f_n) \) függvénysorozat egyenletesen korlátos majdnem minden pontban, vagyis tetszőleges \( n \in \N \) indexre
+		\[
+			\abs\big{f_n(x)} \leq C \qquad (\mu \text{-m.m. } x \in X).
+		\]
+		Ekkor teljesül a Lebesgue tétel második feltétele, ugyanis \( F \equiv C \) mellett
+		\[
+			\norm{F}_p = 
+			\biggl( \int C^p \dd{\mu} \biggr)^{\! 1/p} =
+			C \cdot \bigl( \mu( X ) \bigr)^{1/p} < 
+			+\infty.
+		\]
+	\end{notes}
+	
+	\begin{theorem}{Kis Lebesgue-tétel}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, \( \mu \) véges, 
+		valamint az \( f_n \in \Lebesgue \ (n \in \N) \) olyan függvénysorozat, 
+		amelyre a következők igazak:
+		\begin{enumerate}[label=\roman*)]
+			\item
+			majdnem mindenhol létezik a \( \lim(f_n) \) pontonkénti limesz;
+			
+			\item
+			megadható olyan \( C \) konstans, hogy minden \( n \in \N \) indexre
+			\[
+			%	\abs{f_n} \leq F \qquad \mu \text{-m.m.}
+				\abs\big{f_n(x)} \leq C \qquad (\mu \text{-m.m. } x \in X).
+			\]
+		\end{enumerate}
+		Ekkor van olyan \( f \in \Lebesgue \) függvény, 
+		hogy majdnem mindenhol \( f = \lim(f_n) \) és
+		\[
+		%	f = \lim_{n \to \infty} f_n \quad \mu \text{-m.m.}
+		%	\qquad \text{és} \qquad
+			\int f \dd{\mu} = \lim_{n \to \infty} \int f_n \dd{\mu}.
+		\]
+	\end{theorem}
+	
+	\newpage
+	\section{Teljesség}
+	
+	\begin{theorem}{Az \( \Lebesgue[p] \) teljessége}{lp-teljes}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		valamint \( 1 \leq p \leq +\infty \) esetén \( f_n \in \Lebesgue[p] \ (n \in \N) \).
+		Ekkor van olyan \( f \in \Lebesgue[p] \) függvény,
+		hogy \( \lim\limits_{n \to \infty} \norm{f - f_n}_p = 0 \).
+	\end{theorem}
+	\begin{proof}
+		A Cauchy-kritérium miatt van olyan \( (n_k) \) indexsorozat, hogy
+		\marginnote{
+			\( \func{(n_k)}{\N}{\N} \) szigorúan monoton növő.
+		}
+		\begin{equation}\label{eq:lp-teljes-cauchy-becslés}
+			\norm\big{ f_{n_{k + 1}} - f_{n_k} }_p < \frac{1}{2^k} 
+			\qquad (k \in \N).
+			\tag{\( * \)}
+		\end{equation}
+		Ekkor a Beppo Levi-tétel alapján létezik az \( \StepFuncPlus \)-beli
+%		\marginnote{
+%			\begin{theo*}[Beppo Levi-tétel]\phantomsection\label{th:beppo-levi}\,\\
+%				Minden \( \func{(h_n)}{\N}{\StepFuncPlus} \) sorozatra
+%				\[
+%					\sum_{n=0}^{\infty} h_n \in \StepFuncPlus,
+%				\]
+%				valamint
+%				\[
+%					\int \sum_{n=0}^{\infty} h_n \dd{\mu} =
+%					\sum_{n=0}^{\infty} \int h_n \dd{\mu}.
+%				\]
+%			\end{theo*}
+%		}
+		\[
+			g_k \coloneq f_{n_{k + 1}} - f_{n_k} \quad (k \in \N), \qquad
+			g \coloneq \sum_{k=0}^{\infty} \abs{ g_k }
+		\]
+		összegfüggvény, amelyre
+		\marginnote{
+			Lásd \hyperref[th:minkowski]{Minkowski-egyenlőtlenség} és \eqref{eq:lp-teljes-cauchy-becslés}.
+		}
+		\[
+			\norm{g}_p \leq
+		%	\norm{ \sum_{k=0}^{\infty} \abs{g_k} }_p \leq
+			\sum_{k=0}^{\infty} \norm{ g_k }_p <
+			\sum_{k=0}^{\infty} \frac{1}{2^k} =
+		%	\frac{1}{1 - 1/2} =
+			2.
+		\]
+		Következésképpen \( g \) majdnem mindenhol véges, 
+		így a \( \sum( g_k ) \) teleszkopikus összegfüggvény \( \mu \)-m.m. abszolút konvergens.
+		Ugyanakkor
+		\[
+			\sum_{k=0}^{\ell - 1} \bigl( f_{n_{k + 1}} - f_{n_k} \bigr) =
+			f_{n_\ell} - f_{n_0}
+			\qquad (1 \leq \ell \in \N),
+		\]
+		tehát az \( (f_{n_\ell}) \) részsorozat majdnem mindenhol konvergens. Innen
+		\[
+			\abs\big{ f_{n_\ell} } =
+			\abs\Bigg{ \sum_{k=0}^{\ell - 1} g_k + f_{n_0} } \leq g + \abs{ f_{n_0} }
+			\qquad (1 \leq \ell \in \N)
+		\]
+		majdnem mindenhol igaz,
+		\marginnote{
+			\begin{theo*}[Minkowski-egyenlőtlenség]\phantomsection\label{th:minkowski}
+				\[
+					\norm{ f + h }_p \leq \norm{ f }_p + \norm{ h }_p
+				\]
+				bármilyen \( f, h \in \Lebesgue[p] \) függvényre.
+			\end{theo*}
+		}[-1.4\baselineskip]
+		továbbá a \hyperref[th:minkowski]{Minkowski-egyenlőtlenség} miatt
+		\[
+			\norm\big{ \abs{ f_{n_0} } + g }_p \leq 
+			\norm{ f_{n_0} }_p + \norm{g}_p < +\infty.
+		\]
+		Teljesülnek a \hyperref[th:lebesgue]{Lebesgue-tétel} feltételei.
+		Ekkor van olyan	\( f \in \Lebesgue[p] \), hogy
+		\[
+			f = \lim_{\ell \to \infty} f_{n_\ell} \quad \mu \text{-m.m.}
+		\]
+		Jól ismert, hogy amennyiben egy Cauchy-sorozatnak van konvergens részsorozata, 
+		akkor maga a teljes sorozat is konvergens, továbbá a határértékeik azonosak.
+		Ennél fogva az \( (f_n) \) függvénysorozat is konvergens és
+		\[
+			f = \lim_{n \to \infty} f_n \quad \mu \text{-m.m.}
+		\]
+		Eddig a pontig \( p \) értéke tetszőleges lehetett.
+		
+		
+		\begin{enumerate}
+			\item Ha \( p < +\infty \), 
+			akkor szintén a \hyperref[th:lebesgue]{Lebesgue-tétel} alapján
+			\[
+				\lim_{n \to \infty} \norm{ f_n - f}_p = 0.
+			\]
+			
+			\item Ha \( p = +\infty \),
+			\marginnote{A \hyperref[th:lebesgue]{Lebesgue-tétel} nem alkalmazható!}
+			akkor \eqref{eq:lp-teljes-cauchy-becslés} alapján tetszőleges \( m < k \) indexre
+			\[
+				\abs\big{ f_{n_m} - f_{n_k} } =
+				\abs{ \sum_{i=m}^{k - 1} \bigl( f_{n_i} - f_{n_{i + 1}} \bigr) } \leq
+				\sum_{i=m}^{k - 1} \norm\big{ f_{n_i} - f_{n_{i + 1}} }_\infty \leq
+				\sum_{i=m}^{k - 1} \frac{1}{2^i}.
+			\]
+			Ekkor a határérték és a rendezés kapcsolata miatt
+			\marginnote{
+				Az itt szereplő mértani sorösszeg
+				\[
+					\sum_{i=m}^{\infty} \frac{1}{2^i} =
+					\frac{1}{2^m} \cdot \frac{1}{1 - 1/2} = 
+					\frac{2}{2^m}.
+				\]
+			}
+			\[
+				\abs\big{ f_{n_m} - f } =
+				\lim_{k \to \infty} \abs\big{ f_{n_m} - f_{n_k} } \leq
+				\sum_{i=m}^{\infty} \frac{1}{2^i} =
+				2^{1-m}
+				\quad (m \in \N).
+			\]
+			Tehát a végtelen-norma definíciója, majd a közrefogási elv-miatt
+			\marginnote{
+				Hiszen \( m \to \infty \) mellett
+				\[
+					0 \leq
+					\abs\big{ f_{n_m} - f } \leq
+					\norm\big{ f_{n_m} - f }_\infty \longrightarrow 0.
+				\]
+			}
+			\[
+				\lim_{m \to \infty} \norm{ f - f_{n_m} }_\infty =
+				\lim_{n \to \infty} \norm{ f - f_n }_\infty =
+				0.
+			\]
+		\end{enumerate}
+		
+	\end{proof}
+	
+\end{document} 

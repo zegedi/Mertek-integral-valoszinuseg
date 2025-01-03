@@ -1,0 +1,403 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{3. Vizsgatétel}
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Borel-lefedés}
+	
+	A \hyperref[lem:borel]{Borel-lemma} azt állítja, 
+	hogy egy korlátos és zárt valós intervallum tetszőleges lefedéséből kiválasztható véges lefedés is.
+	
+	\begin{lemma}{Borel-féle lefedési lemma}{borel}
+		Legyen \( [a, b] \subset \R \) egy korlátos és zárt intervallum, 
+		vagyis \( a, b \in \R, \ a < b \).\\[6pt]
+		Ha van olyan \( \Gamma \neq \emptyset \) indexhalmaz, hogy az
+		\( I_\gamma \ (\gamma \in \Gamma) \) nyílt intervallumokra
+		\[
+			[a, b] \subseteq \bigcup_{\gamma \in \Gamma} I_\gamma
+		\]
+		teljesül, akkor kiválasztható olyan \( \Gamma_0 \subseteq \Gamma \) véges indexhalmaz, amellyel
+		\[
+			[a, b] \subseteq \bigcup_{\gamma \in \Gamma_0} I_\gamma.
+		\]
+	\end{lemma}	
+	\begin{proof}
+		Indirekt tegyük fel, hogy nincs ilyen \( \Gamma_0 \subseteq \Gamma \) véges halmaz.
+		\\[6pt]
+		%
+		Felezzük meg az \( [a, b] \) intervallumot. 
+		Ekkor valamelyik félintervallumot nem tudjuk lefedi véges sok \( I_\gamma \) felhasználásával, 
+		mert ha mindkét rész lefedhető lenne, 
+		akkor a lefedések egyesítése lefedné az \( [a, b] \) intervallumot.\\[6pt]
+		%
+		Hasonlóan, ezt a nem lefedhető félintervallumot újból megfelezve kapjuk, hogy
+		legalább az egyik negyedintervallum nem fedhető le véges sok \( I_\gamma \)-val.\\[6pt]
+		%
+		Ezen konstruktív módon definiált \( (J_n) \) zárt intervallumsorozatra
+		\[
+			J_{n + 1} \subset J_n \subset [a, b], \qquad
+			\abs{J_n} = \frac{b - a}{2^n} \qquad (n \in \N).
+		\]
+		Ekkor a \hyperref[th:cantor]{Cantor-tétel} alapján egyetlen 
+		olyan \( \alpha \in [a, b] \) szám létezik, hogy
+		\marginnote{
+			\begin{theo*}[Cantor-tétel]\phantomsection\label{th:cantor}
+				Amennyiben a
+				\[
+					J_{n + 1} \subseteq J_n, \quad
+					\abs{J_n} \to 0
+					\quad (n \to \infty)
+				\]
+				egy korlátos és zárt intervallumsorozat,
+				akkor létezik olyan \( A \in \R \) szám, hogy
+				\[
+					\bigcap_{n = 0}^{\infty} J_n = \{ A \}.
+				\]
+			\end{theo*}
+		}[-1.5\baselineskip]
+		\[
+			\bigcap_{n=0}^{\infty} J_n = \{ \alpha \}.
+		\]
+		Mivel az \( [a, b] \) intervallum lefedhető, ezért van olyan \( \delta \in \Gamma \) index, hogy
+		\[
+			\alpha \in I_\delta, \quad
+		%	\qquad \text{és} \qquad 
+			\alpha \in J_n \qquad (n \in \N).
+		\]
+		Viszont a \( (J_n) \) intervallumok hossza nullához tart, ezért
+		\[
+			\exists n \in \N \ \colon \, J_n \subset I_\delta.
+		\]
+		Ez pedig ellentmondás, hiszen a konstrukciója miatt \( J_n \) nem lefedhető 
+		véges sok \( I_\gamma \) segítségével, 
+		ennek ellenére az egyetlen \( I_\delta \) intervallum lefedi.
+	\end{proof}
+	
+	\section{A Riesz-féle felépítés}
+	
+	\indent 
+	Bizonyos szempontból a legsúlyosabb hiányossága a Riemann-integrálnak
+	a határátmenettel szembeni ``nehézkes'' viselkedése. 
+	Ezt a szempontot helyezte a középpontba Riesz Frigyes, 
+	amikor a Lebesgue-féle gondolat egy új interpretálását fogalmazta meg. 
+	Az alábbiakban röviden vázoljuk a Riesz-féle felépítés alapgondolatát.
+	
+	\newpage
+	\begin{definition}{Lépcsősfüggvény}{}
+		Legyen \( [a,b] \subseteq \R \) korlátos és zárt intervallum, az
+		 \( \func{f}{[a, b]}{\R} \) korlátos.\\[6pt]		
+		Azt mondjuk, hogy az \( f \) egy \emph{lépcsősfüggvény}, ha van olyan
+		\[
+			a = x_0 < x_1 < \cdots < x_n = b
+		\]
+		felosztás, valamint \( c_0, \dots, c_n \in \R \) konstansok, 
+		hogy minden \( k = 0,\dots,n \)-ra
+		\[
+			f(x) = c_k \qquad ( x_k < x < x_{k+1} ).
+		\]
+		Ekkor az előbbi \( f \) lépcsősfüggvény \emph{integrálja} legyen
+		\[
+			\int_a^b f \coloneq \sum_{k=0}^{s-1} c_k {\cdot} (x_{k + 1} - x_k) \in \R.
+		\]
+	\end{definition}
+	
+	\begin{notes}
+		\item 
+		Az osztópontokban felvett \( h(x_k) \) helyettesítési értékek tetszőlegesek lehetnek.
+		
+		\item
+		Világos, hogy minden lépcsősfüggvény Riemann-integrálható és az integrál definíciója megegyezik a Riemann-integrál értékével.
+	\end{notes}
+
+	\noindent	
+	A továbbiakban legyen a lépcsősfüggvények halmaza
+	\[
+		C_0 \coloneq
+		\setc[\big]{ \func{f}{[a,b]}{\R} }{ f \text{ lépcsősfüggvény} }.
+	\]
+	
+	\begin{lemma}{A-lemma}{riesz-a}
+		Legyen \( (h_n) \) egy olyan \( C_0 \)-beli függvénysorozat, amelyre
+		\begin{enumerate}[label=\roman*)]
+			\item\label{eq:riesz-a-lemma-01}
+			minden \( x \in [a, b] \) helyen és \( n \in \N \) indexre
+			\( 0 \leq h_{n+1}(x) \leq h_n(x) \);
+%			\item nemnegatív és monoton csökken, azaz minden \( n \in \N \) indexre
+%			\[
+%				0 \leq h_{n+1}(x) \leq h_n(x) \qquad \bigl( x \in [a, b] \bigr).
+%			\]
+
+			\item\label{eq:riesz-a-lemma-02}
+			valamilyen nullamértékű \( \mathcal{N} \subset [a,b] \) halmazzal
+			\[
+				\lim_{n \to \infty} h_n(x) = 0 
+				\qquad \bigl( x \in [a, b] \setminus \mathcal{N} \bigr).
+			\]
+		\end{enumerate}
+		Ekkor létezik 
+		\[
+			\lim_{n \to \infty} \int_a^b h_n = 0.
+		\]
+	\end{lemma}
+	\begin{proof}
+		Mivel a \( (h_n) \) tagok osztópontjai legfeljebb megszámlálhatóan sokan vannak, 
+		így ezek nullamértékű halmazt alkotnak.
+		Egyesítsük ezeket a pontokat \( \mathcal{N} \)-el.
+		Az így kapott nullamértékű halmazt a továbbiakban \( \mathcal{R} \) jelöli.
+		Vagyis amennyiben az \( \varepsilon > 0 \) rögzített, 
+		akkor létezik olyan \( (I_n) \) nyílt intervallumsorozat, hogy
+		\[
+			\mathcal{R} \subseteq \bigcup_{n=0}^{\infty} I_n
+			\qquad \text{és} \qquad
+			\sum_{n=0}^{\infty} \abs{I_n} < \varepsilon.
+		\]		
+		Ekkor \aref{eq:riesz-a-lemma-02} feltétel szerint 
+		minden \( x \in [a,b] \setminus \mathcal{R} \) helyen
+		\[
+			\lim_{n \to \infty} h_n(x) = 0.
+%			\qquad \Longrightarrow \qquad
+%			\exists N_x \in \N \ \colon \,
+%			h_n(x) < \varepsilon
+%			\qquad (\N \ni n \geq N_x).
+		\]
+		A konvergencia definíciója alapján van olyan \( N_x \in \N \) küszöbindex, hogy
+		\[
+			h_n(x) < \varepsilon
+			\qquad (N_x \leq n \in \N).
+		\]
+		Ugyanakkor az \( x \) nem osztópontja \( h_{N_x} \)-nek, 
+		ezért van olyan \( J_x \subset [a, b] \) nyílt intervallum, 
+		ahol a \( \restr{h_{N_x}}{J_x} \) függvény konstans.
+		Továbbá \aref{eq:riesz-a-lemma-01} feltétel miatt
+		%
+		\begin{equation}\label{eq:riesz-a-lemma-03}
+			h_n(t) \leq h_{N_x}(t) < \varepsilon \qquad (n > N_x, \ t \in J_x).
+			\tag{\( * \)}
+		\end{equation}
+		%
+		is feltehető. Világos, hogy ekkor
+		\[
+			[a, b] \subseteq
+			\mathopen{\raisebox{-0.9ex}{$ \biggl( $}}\,
+			\bigcup_{n \in \N} I_n
+			\mathopen{\raisebox{-0.9ex}{$ \biggr) $}}
+			\, \cup \,
+			\mathopen{\raisebox{-0.9ex}{$ \biggl( $}}\,
+			\bigcup_{x \in \mathcal{R}^c} J_x
+			\mathopen{\raisebox{-0.9ex}{$ \biggr) $}}.
+		\]
+		ezért a \hyperref[lem:borel]{Borel-lemma} szerint vannak olyan
+		\[
+			A \subset \N, \quad
+			B \subset [a, b] \setminus \mathcal{R}
+		\]
+		véges halmazok, amelyekkel
+		\[
+			[a, b] \subseteq
+			\mathopen{\raisebox{-0.9ex}{$ \biggl( $}}\,
+			\bigcup_{n \in A} I_n
+			\mathopen{\raisebox{-0.9ex}{$ \biggr) $}}
+			\, \cup \,
+			\mathopen{\raisebox{-0.9ex}{$ \biggl( $}}\,
+			\bigcup_{x \in B} J_x
+			\mathopen{\raisebox{-0.9ex}{$ \biggr) $}}.
+		\]
+		Az előbbi véges lefedésében szereplő intervallumok \( [a, b] \)-beli végpontjai 
+		(ha	szükséges, akkor az \( a, b \) pontok hozzátételével) egy
+		\[
+			a = z_0 < z_1 < \cdots < z_s = b
+		\]
+		felosztást határoznak meg valamilyen \( s \in \N \) mellett. Legyen
+		\[
+			\mathcal{I} \coloneq 
+			\setc[\big]{ k = 0,\dots,s-1 }
+			           { \exists n \in A \ \colon \, (z_i, z_{i+1}) \subseteq I_n }, \quad
+			\mathcal{J} \coloneq
+			\{ 0, \dots, s-1 \} \setminus \mathcal{I}.
+		\]
+		Végül legyenek
+		\[
+			N \coloneq \max \{ N_x \ \colon \, x \in B \}, \quad
+			N < n \in \N, \quad
+			h_n \leq C \in \R.
+		\]
+		Ekkor a soron következő becslés van érvényben
+		\begin{align*}
+			0 \leq \int_a^b h_n
+			&= \sum_{i=0}^{s-1} \int_{z_i}^{z_{i+1}} h_n 
+			 = \sum_{i \in \mathcal{I}} \int_{z_i}^{z_{i+1}} h_n 
+			 + \sum_{j \in \mathcal{J}} \int_{z_j}^{z_{j+1}} h_n \\[3pt]
+			&\leq C \cdot \sum_{i \in \mathcal{I}} (z_{i + 1} - z_i)
+			+ \varepsilon \cdot \sum_{j \in \mathcal{J}} (z_{j + 1} - z_j) \\
+			&< C \cdot \sum_{n=0}^{\infty} \abs{I_n}
+			+ \varepsilon \cdot (b - a) \\
+			&= \varepsilon \cdot (C + b - a).
+		\end{align*}
+		Mindez azt jelenti, hogy valóban létezik 
+		a \( \lim \Bigl( \int_a^b h_n \Bigr) = 0 \) határérték.
+	\end{proof}
+	
+	\begin{lemma}{B-lemma}{riesz-b}
+		Legyen \( (h_n) \) egy olyan \( C_0 \)-beli függvénysorozat, amelyre
+		\begin{enumerate}[label=\roman*)]
+			\item
+			minden \( x \in [a, b] \) helyen és \( n \in \N \) indexre
+			\( h_n(x) \leq h_{n + 1}(x) \);
+			
+			\item
+			az integrálok \( \Bigl( \int_a^b h_n \Bigr) \) sorozata korlátos.
+		\end{enumerate}
+		Ekkor van olyan nullamértékű \( \mathcal{M} \subset [a, b] \) halmaz, hogy
+		\[
+			\lim_{n \to \infty} h_n(x) < +\infty
+			\qquad \bigl( x \in [a, b] \setminus \mathcal{M} \bigr).
+		\]
+	\end{lemma}
+	
+%	\begin{notes}
+%		\item 
+%		A Riemann-integrál monotonitása alapján világos, hogy az
+%		\[
+%			\biggl( \int_a^b h_n \biggr)
+%		\]
+%		integrálsorozat monoton növekedő, ezért a
+%		\[
+%			\sup_{n \in \N} \int_a^b h_n = \lim_{n \to \infty} \int_a^b h_n 
+%		\]
+%		
+%		\item
+%		Belátható, hogy amennyiben a \hyperref[lem:riesz-b]{B-lemma} feltételeinek
+%		\[
+%			\lim_{n \to \infty} h_n(x) =
+%			\lim_{n \to \infty} \widetilde{h}_n(x)
+%			\qquad \bigl( \text{m.m. } x \in [a, b] \bigr),
+%		\]
+%		akkor az
+%		\[
+%			\lim_{n \to \infty} \int_a^b h_n =
+%			\lim_{n \to \infty} \int_a^b \widetilde{h}_n.
+%		\]
+%	\end{notes}
+
+	\newpage\noindent
+	Legyen \( C_1 \) azoknak a \( \func{h}{[a, b]}{\R} \) függvényeknek a halmaza, 
+	amelyek majdnem mindenhol előállíthatóak egy alkalmas
+	\hyperref[lem:riesz-b]{B-lemmabeli} \( (h_n) \) függvénysorozat \( \lim(h_n) \) határfüggvényeként.
+	
+	\begin{definition}{}{}
+		Ha a \( (h_n) \) függvénysorozat eleget tesz a \hyperref[lem:riesz-b]{B-lemma} feltételeinek, akkor legyen
+		\[
+			C_1 \coloneq
+			\setc[\Big]{ \func{h}{[a, b]}{\R} }
+	    			   { h(x) = \lim_{n \to \infty} h_n(x) \ 
+	    			   	 \bigl(\text{m.m. } x \in [a,b] \bigr) }.
+		\]
+		Továbbá egy ilyen \( h \in C_1 \) függvény \emph{integrálja} legyen
+		\[
+			\int_a^b h \coloneq \lim_{n \to \infty} \int_a^b h_n.
+		\]
+	\end{definition}
+	\begin{notes}
+		\item
+		Az integrál értéke nem függ a \( h \)-t közelítő sorozat megválasztástól.
+		
+		\item 
+		Világos, hogy \( C_0 \subseteq C_1 \) fennáll, 
+		valamint az integrál értéke változatlan.
+	\end{notes}
+	
+%	A \hyperref[lem:riesz-b]{B-lemma} alapján tekintsük azoknak 
+%	
+%	Legyen
+%	\[
+%		C_1 \coloneq
+%		\setc[\big]{ \func{f}{[a, b]}{\R} }
+%		           { f(x) \coloneq \lim_{n \to \infty} f_n(x) \ (\text{m.m. } x \in [a,b])}
+%	\]
+%	Belátható, hogy amennyiben \( (\widetilde{f}_n) \) egy \( C_0 \)-beli olyan függvénysorozat, ami
+	
+	\begin{definition}{}{}
+		Legyen a \emph{Lebesgue-integrálható} függvények halmaza
+		\[
+			C_2 \coloneq
+			\setc[\big]{ f \coloneq g - h }{ g, h \in C_1 },
+		\]
+		valamint az ilyen függvények \emph{Lebesgue-integrálja} legyen
+		\[
+			\int_a^b f \coloneq \int_a^b g - \int_a^b h.
+		\]
+	\end{definition}
+	
+	\begin{notes}
+		\item
+		A Lebesgue-integrál értéké független az \( f \in C_2 \) előállításától, azaz ha
+		\[
+			f = g - h = G - H
+		\]
+		fennáll valamilyen \( g,h \in C_1 \) illetve \( G,H \in C_1 \) függvényekre, akkor
+		\[
+			\int_a^b f =
+			\int_a^b g - \int_a^b h =
+			\int_a^b G - \int_a^b H.
+		\]
+		
+		\item 
+		Világos, hogy \( C_1 \subseteq C_2 \) fennáll, 
+		valamint az integrál értéke változatlan.
+		
+		\item
+		Nem minden Lebesgue-integrálható függvény Riemann-integrálható, hiszen
+		\[
+			\func{f}{[0, 1]}{\R}, \qquad
+			f(x) \coloneq
+			\left\{
+			\begin{aligned}
+				1, & \quad \text{ha } x \in \Q, \\
+				0, & \quad \text{ha } x \notin \Q
+			\end{aligned}
+			\right.
+		\]
+		nem Riemann-integrálható.
+		Ugyanakkor, 
+		ha tekintjük a \( [0, 1] \)-beli racionális számoknak egy \( (r_n) \) sorozatát, 
+		akkor az
+		\[
+		%	\func{f_n}{[0, 1]}{\R}, \qquad
+			f_n(x) \coloneq
+			\left\{
+			\begin{aligned}
+				1, & \quad \text{ha } x \in \{ r_0, \dots, r_n \}, \\
+				0, & \quad \text{ha } x \notin \{ r_0, \dots, r_n \}
+			\end{aligned}
+			\right.
+			\qquad \bigl( x \in [0, 1], \ n \in \N \bigr)
+		\]
+		függvénysorozat eleget tesz a \hyperref[lem:riesz-b]{B-lemma} feltételeinek és
+		\( f = \lim(f_n) \), ezért
+		\[
+			\int_a^b f = \lim_{n \to \infty} \int_a^b f_n = 0.
+		\]
+		\qed
+	\end{notes}
+	
+\end{document}

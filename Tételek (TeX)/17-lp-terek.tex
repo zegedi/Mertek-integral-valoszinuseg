@@ -1,0 +1,461 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{\circled{17} Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{\( \Lebesgue[p] \)-tér normája}
+	
+	\begin{definition}{\( \Lebesgue[p] \)-térbeli normák}{lp-norma}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		valamint \( \func{f}{X}{\overline{\R}} \) egy mérhető függvény.\\[6pt]
+		Ekkor egy rögzített \( 0 < p < +\infty \) kitevő esetén
+		\marginnote{
+			Szükség esetén legyen
+			\[
+				(+\infty)^{\frac{1}{p}} \coloneq +\infty.
+			\]
+		}
+		\[
+			\norm{f}_p \coloneq
+			\biggl( \int \abs{f}^p \dd{\mu} \biggr)^{\footnotesize \tfrac{1}{p}}
+		\]
+		az \( f \) függvény \emph{\( \boldsymbol{p} \)-normája}.
+		Továbbá \( p = +\infty \) esetén
+		\marginnote{
+			Megállapodás szerint legyen
+			\[
+				\inf \emptyset \coloneq +\infty.
+			\]
+		}
+		\[
+			\norm{f}_\infty \coloneq
+			\inf \bigl\{ \alpha \geq 0 \ \colon \, \abs{f} \leq \alpha \ \mu \text{-m.m.} \bigr\}
+		%	\inf \setc[\big]{ \alpha \geq 0 }{ \abs{f} \leq \alpha \ \mu \text{-m.m.}}
+		\]
+		az \( f \) függvény \emph{\( \boldsymbol{\infty} \)-normája}.
+	\end{definition}
+	
+	\begin{stat*}
+		\Aref{def:lp-norma} definícióban foglalt jelölésekkel 
+		az alábbiak igazak \( \norm{\xcdot}_p \)-re.
+		\begin{enumerate}
+			\item 
+			\emph{Nemnegatív}, azaz
+			\( 0 \leq \norm{f}_p \leq +\infty \).
+			
+			\item 
+			\emph{Pozitív szemidefinit}, mert
+			\( \norm{f}_p = 0 \ \iff \ f = 0 \ \mu \)-m.m.
+			
+			\item
+			\emph{Abszolút homogén}, azaz
+			\( \norm{\lambda {\cdot} f}_p = \abs{\lambda} {\cdot} \norm{f}_p \quad (\lambda \in \R) \).
+		\end{enumerate}
+	\end{stat*}
+	
+	\newpage
+	\begin{theorem}{Normák határértéke}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		valamint \( \func{f}{X}{\overline{\R}} \) mérhető függvény.
+		\begin{enumerate}
+			\item\label{eq:lp-norma-határérték-01}
+			Ha \( \norm{f}_\infty = +\infty \),
+			akkor \( \lim\limits_{p \to \infty} \norm{f}_p = +\infty \).
+			
+			\item\label{eq:lp-norma-határérték-02}
+			Ha van olyan \( 0 < p < +\infty \) kitevő, amivel \( \norm{f}_p < +\infty \), akkor
+			\[
+				\lim\limits_{q \to \infty} \norm{f}_q = \norm{f}_\infty.
+			\]
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		A feltétel alapján bármilyen \( K > 0 \) választása esetén
+		\[
+			\mu \Bigl( \bigl\{ \abs{f} > K \bigr\} \Bigr) > 0.
+		\]
+		Ezért tetszőleges \( 0 < p < +\infty \) kitevő mellett és majdnem minden pontban
+		\[
+			\abs{f} \geq 
+			K \cdot \chi_{\{ \abs{f} > K \}}.
+		\]
+		Innen az integrál monotonitása alapján
+		\marginnote{
+			Hiszen tetszőleges \( A \in \Omega \) mellett
+			\[
+				\int \chi_A \dd{\mu} = \mu(A).
+			\]
+		}
+		\[
+			\norm{f}_p^p = 
+			\int \abs{f}^p \dd{\mu} \geq
+			\int K {\cdot} \chi_{\{ \abs{f} > K \}} \dd{\mu} =
+			K^p \cdot \mu \Bigl( \bigl\{ \abs{f} > K \bigr\} \Bigr) \geq 
+			K^p.
+		\]
+		Mivel a \( K \) értéke tetszőlegesen nagy lehet, ezért
+		\marginnote{
+			Azt mutattuk meg, hogy 
+			\[
+				\liminf_{p \to \infty} \norm{f}_p \geq K.
+			\]
+		}
+		\[
+%			\liminf_{p \to \infty} \norm{f}_p \geq K
+%			\quad \Longrightarrow \quad
+			\liminf_{p \to \infty} \norm{f}_p = +\infty
+			\quad \Longrightarrow \quad
+			\limsup_{p \to \infty} \norm{f}_p = +\infty
+			\quad \Longrightarrow \quad
+			\lim_{p \to \infty} \norm{f}_p = +\infty.
+		\]
+		Mivel \aref{eq:lp-norma-határérték-01} állítást már igazoltuk,
+		ezért a továbbiakban feltehető, hogy
+		\marginnote{
+			Különben minden \( q \) kitevőre
+			\[
+				\norm{f}_q = 0 \ \iff \ f = 0 \ \mu \text{-m.m.}
+			\]
+		}
+		\[
+			0 < C < \norm{f}_\infty < +\infty
+			\qquad \text{és} \qquad
+			0 < \norm{f}_p.
+		\]
+		Ekkor a soron következő becslések teljesülnek:
+		\[
+			\abs{f} \geq C \cdot \chi_{\{ \abs{f} > C \}}
+			\qquad \text{és} \qquad
+			\mu \Bigl( \bigl\{ \abs{f} > C \bigr\} \Bigr) > 0.
+		\]
+		Innen \aref{eq:lp-norma-határérték-01} állítás bizonyításában használt 
+		becslés mintájára kapható, hogy
+		\[
+			+\infty > 
+			\norm{f}_q \geq 
+			C \cdot \biggl( \mu \Bigl( \bigl\{ \abs{f} > C \bigr\} \Bigr) \biggr)^{\tfrac{1}{q}}
+			> 0.
+		%	0 < \mu \Bigl( \bigl\{ \abs{f} > C \bigr\} \Bigr) < +\infty.
+		\]
+		Innen
+		\marginnote{
+			Kihasználva, hogy minden \( A > 0 \) esetén
+			\[
+				\lim_{q \to \infty} A^{\frac{1}{q}} = 1.
+			\]
+		}
+		\[
+			\liminf_{q \to \infty} \norm{f}_q \geq \norm{f}_\infty.
+		\]
+		Továbbá
+		\[
+			\norm{f}_q = 
+			\biggl( \int \abs{f}^{q-p} \abs{f}^p \dd{\mu} \biggr)^{\tfrac{1}{q}} \leq
+			\biggl( \int \norm{f}_\infty^{q-p} \abs{f}^p \dd{\mu} \biggr)^{\tfrac{1}{q}} =
+			\norm{f}_{\infty}^{1 - p/q} \cdot \norm{f}_p^{p/q}.
+		\]
+		Ekkor szintén véve a \( q \to \infty \) határátmenetet
+		\marginnote{
+			Ammennyiben \( q \to \infty \), akkor
+			\[
+				\norm{f}_{\infty}^{1 - p/q} \longrightarrow \norm{f}, \quad
+				\norm{f}_p^{p/q} \longrightarrow 1.			
+			\]
+		}
+		\[
+			\limsup_{q \to \infty} \norm{f}_q \leq \norm{f}_\infty
+			\qquad \Longrightarrow \qquad
+			\lim_{q \to \infty} \norm{f}_q = \norm{f}_\infty.
+		\]
+	\end{proof}
+	
+	\newpage
+	
+	\section{Egyenlőtlenségek}
+	
+	\begin{lemma}{Young-egyenlőtlenség}{young}
+		Legyenek \( 1 < p, q < +\infty \). 
+		Ekkor minden \( a, b \in [0, +\infty) \) esetén
+		\[
+			\frac{1}{p} + \frac{1}{q} = 1 
+			\qquad \Longrightarrow \qquad
+			ab \leq \frac{a^p}{p} + \frac{b^q}{q}.
+		\]
+	\end{lemma}
+	\begin{proof}
+		Mivel a logaritmusfüggvény szigorúan monoton, ezért
+		\[
+			\ln( a \cdot b ) \leq
+			\ln \biggl( \frac{a^p}{p} + \frac{b^q}{q} \biggr)
+		\]
+		ekvivalens a bizonyítandó állítással.
+		Viszont az \( \ln \) függvény konkáv, ezért
+		\marginnote{
+			Ugyanis az alábbi egy konvex kombiácó:
+			\[
+				\frac{a^p}{p} + \frac{b^q}{q}.
+			\]
+		}
+		\[
+			\ln \biggl( \frac{a^p}{p} + \frac{b^q}{q} \biggr) \geq
+			\frac{1}{p} \ln a^p + \frac{1}{q} \ln b^q =
+			\ln a + \ln b =
+			\ln( a \cdot b ). \ \checkmark
+		\]
+	\end{proof}
+	
+	\newpage
+	\begin{theorem}{Hölder--egyenlőtlenség}{hölder}
+		Legyenek az \( 1 \leq p, q \leq +\infty \) számok konjugált kitevők, azaz
+		\[
+			\frac{1}{p} + \frac{1}{q} = 1.
+		\]
+		Ekkor minden \( \func{f, g}{X}{\overline{\R}} \) mérhető függvény esetén
+		\[
+			\norm{f \cdot h}_1 \leq \norm{f}_p \cdot \norm{h}_q.
+		\]
+	\end{theorem}
+	\begin{proof}
+		Válasszuk külön a lehetséges eseteket!
+		\begin{enumerate}
+			\item 
+			Ha \( \norm{f}_p = 0 \) vagy \( \norm{h}_q = 0 \), 
+			akkor igaz az állítás. \checkmark
+			
+			\item
+			Ha \( \norm{f}_p = +\infty \) vagy \( \norm{h}_q = +\infty \), 
+			akkor szintén igaz az állítás. \checkmark
+			
+			\item
+			Ha \( p = 1 \), akkor \( q = +\infty \).
+			Mivel ilyenkor
+			\[
+				\abs{f \cdot h} = 
+				\abs{f} \cdot \abs{h} \leq
+				\abs{f} \cdot \norm{h}_\infty
+			\]
+			\( \mu \)-majdnem mindenhol igaz, ezért a monotonitás alapján
+			\[
+				\norm{f \cdot h}_1 =
+				\int \abs{f \cdot h} \dd{\mu} \leq
+				\norm{h}_\infty \cdot \int \abs{f} \dd{\mu} = 
+				\norm{f}_1 \cdot \norm{h}_\infty.
+			\]
+			
+			\item
+			Ha \( q = 1 \), akkor \( p = +\infty \). Ez megegyezik az előző esettel. \checkmark
+			
+			\item
+			Ott tartunk, hogy \( 0 < \norm{f}_p, \norm{h}_q < +\infty \), 
+			valamint \( 1 < p, q < +\infty \).
+			
+			Mivel ilyenkor majdnem minden \( x \in X \) esetén az
+			\[
+				a \coloneq \frac{\abs{f(x)}}{\norm{f}_p}
+				\qquad \text{és} \qquad
+				b \coloneq \frac{\abs{h(x)}}{\norm{h}_q}
+			\]
+			értékek végesek, ezért a \hyperref[lem:young]{Young--egyenlőtlenség} alkalmazásával
+			\[
+				ab = 
+				\frac{\abs\big{f(x) \cdot h(x)}}{\norm{f}_p \cdot \norm{h}_q} \leq
+				\frac{\abs\big{f(x)}^p}{p \cdot \norm{f}_p^p} + 
+				\frac{\abs\big{h(x)}^q}{q \cdot \norm{h}_q^q}
+			\]
+			majdnem mindenhol igaz. Innen az integrál monotonitása alapján
+			\begin{align*}
+				\frac{\norm{f \cdot h}_1}{\norm{f}_p \cdot \norm{h}_q} &\leq
+			%	\int \frac{\abs\big{f \cdot h}}{\norm{f}_p \cdot \norm{h}_q} \dd{\mu} \leq
+				\frac{1}{p \cdot \norm{f}_p^p} \int \abs{f}^p \dd{\mu} +
+				\frac{1}{q \cdot \norm{h}_q^q} \int \abs{h}^q \dd{\mu} \\[6pt] &=
+				\frac{1}{p} + \frac{1}{q} = 1.
+			\end{align*}
+			Ebből átrendezéssel adódik a bizonyítandó állítás. \checkmark
+			
+		\end{enumerate}
+	\end{proof}
+	
+	\newpage
+	
+	\begin{theorem}{Minkowski-egyenlőtlenség}{minkowski}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		valamint \( 1 \leq p \leq +\infty \) egy adott kitevő.\\[6pt]
+		Ha \( \func{f, g}{X}{\overline{\R}} \) mérhető, 
+		és létezik az \( \func{(f + g)}{X}{\overline{\R}} \) összeg, akkor
+		\[
+			\norm{f + g}_p \leq \norm{f}_p + \norm{g}_p.
+		\]
+	\end{theorem}
+	\begin{proof}
+		Három esetet különböztetünk meg.
+		\begin{enumerate}
+			\item Legyen \( p = 1 \). Mivel a háromszög-egyenlőtlenség miatt
+			\[
+				\abs{f + g} \leq
+				\abs{f} + \abs{g},
+			\]
+			ezért a monotonitás kihasználva
+			\[
+				\norm{f + g}_1 =
+				\int \abs{f + g} \dd{\mu} \leq
+				\int \abs{f} \dd{\mu} + \int \abs{g} \dd{\mu} =
+				\norm{f}_1 + \norm{g}_1.
+			\]
+			
+			\item Legyen \( p = +\infty \). Ekkor a végtelen-norma értelmezése miatt
+			\[
+				\abs{f + g} \leq
+				\abs{f} + \abs{g} \leq
+				\norm{f}_\infty + \norm{f}_\infty
+			\]
+			majdnem mindenhol igaz, ahonnan a definíció szerint
+			\[
+				\norm{f + g}_\infty \leq
+				\norm{f}_\infty + \norm{f}_\infty.
+			\]
+			
+			\item
+			Különben feltehetjük, hogy
+			\marginnote{
+				Mivel a \( 0 \leq t \mapsto t^p \) függvény konvex:
+				\begin{align*}
+					\abs{f + g}^p 
+					&\leq \bigl( \abs{f} + \abs{g} \bigr)^p \\
+					&=    2^p \cdot \biggl( \frac{\abs{f} + \abs{g}}{2} \biggr)^p \\
+				%	&\leq 2^p \cdot \frac{\abs{f}^p + \abs{g}^p}{2}.
+					&\leq 2^{p-1} \cdot \bigl( \abs{f}^p + \abs{g}^p \bigr).
+				\end{align*}
+				Innen az integrál monotonitása alapján
+				\[
+					\norm{f + g}_p^p \leq 
+					2^{p - 1} \Bigl( \norm{f}_p^p + \norm{g}_p^p \Bigr).
+				\]
+			}
+			\[
+				\norm{f}_p + \norm{g}_p < +\infty
+				\qquad \Longrightarrow \qquad
+				\norm{f + g}_p < +\infty.
+			\]
+			Ekkor a háromszög-egyenlőtlenség alapján
+			\[
+				\abs{f + g}^p =
+				\abs{f + g}^{p-1} \abs{f + g} \leq
+				\abs{f + g}^{p-1} \abs{f} + \abs{f + g}^{p-1} \abs{g}.
+			\]
+			adódik, ahonnan az integrál monotonitása miatt
+			\begin{align*}
+				\norm{f + g}_p^p
+			%	&=    \int \abs{f + g}^p \dd{\mu} \\
+			%	&=    \int \abs{f + g}^{p-1} \abs{f + g} \dd{\mu} \\
+				&\leq \int \abs{f + g}^{p-1} {\cdot} \abs{f} \dd{\mu}
+				 +    \int \abs{f + g}^{p-1} {\cdot} \abs{g} \dd{\mu} \\
+				&=    \norm\big{ \abs{f + g}^{p-1} {\cdot} \abs{f} }_1 
+				 +    \norm\big{ \abs{f + g}^{p-1} {\cdot} \abs{g} }_1.
+			\end{align*}
+			Válasszuk meg az \( r \)-et a \( p \) konjugált kitevőjének, vagyis legyen
+			\[
+				\frac{1}{r} + \frac{1}{p} = 1
+				\qquad \Longrightarrow \qquad
+				\frac{1}{r} = \frac{p - 1}{p}
+				\quad \text{és} \quad
+				(p-1) \cdot r = p.
+			\]
+			Ekkor a \hyperref[th:hölder]{Hölder-egyenlőtlenséget} alkalmazva
+			\begin{align*}
+				\norm{f + g}_p^p
+			%	&\leq \norm\big{ \abs{f + g}^{p-1} {\cdot} \abs{f} }_1 
+			%	+     \norm\big{ \abs{f + g}^{p-1} {\cdot} \abs{g} }_1 \\
+				&\leq \norm\big{ \abs{f + g}^{p-1} }_r 
+				\cdot \bigl( \norm{f}_p + \norm{g}_p \bigr) \\
+				&=    \biggl( \int \abs{f + g}^{(p-1) {\cdot} r} \dd{\mu} \biggr)^{1 / r}
+				\cdot \bigl( \norm{f}_p + \norm{g}_p \bigr) \\
+				&=    \biggl( \int \abs{f + g}^p \dd{\mu} \biggr)^{1 / r}
+				\cdot \bigl( \norm{f}_p + \norm{g}_p \bigr) \\
+				&=    \norm{f + g}_p^{p / r}
+				\cdot \bigl( \norm{f}_p + \norm{g}_p \bigr).
+			\end{align*}
+			Innen átrendezés, majd egyszerűsítés után adódik az állítás.
+		\end{enumerate}
+	\end{proof}
+	
+	\newpage
+	\section{\( \Lebesgue[p] \) terek}
+	
+	\begin{definition}{Az \( \Lebesgue[p] \) tér}{lp}
+		Legyen \( (X, \Omega, \mu) \) egy mértéktér, valamint \( 1 \leq p \leq +\infty \). Ekkor
+		\[
+			\Lebesgue[p] \coloneq \Lebesgue[p](\mu) \coloneq
+			\setc[\big]{ \func{f}{X}{\R} }{ f \text{ mérhető és } \norm{f}_p < +\infty }.
+		\]
+	\end{definition}
+	
+	\begin{theorem}{\( \Lebesgue[p] \) terek alaptulajdonságai}{}
+		Legyenek \( 1 \leq p \leq q \leq +\infty \).
+		\begin{enumerate}
+			\item Az \( (\Lebesgue[p], \norm{\xcdot}_p) \) egy félnormált tér \( \R \) felett.
+			\item 
+			Amennyiben \( \mu \) véges mérték, akkor 
+			\( \Lebesgue[\infty] \subseteq \Lebesgue[q] \subseteq \Lebesgue[p] \subseteq \Lebesgue[1] \).
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}\,
+		\begin{enumerate}
+			\item 
+			Nyilvánvaló, hogy \( \Lebesgue[p] \) lineáris tér 
+			(más néven vektortér) az \( \R \) felett.
+			
+			Továbbá elmondható, hogy az \( \Lebesgue[p] \) terek definíciója miatt a
+			\[
+				\func{ \norm{\xcdot}_p }{ \Lebesgue[p] }{ \R }
+			\]
+			függvény pozitív szemidefinit és abszolút homogén, továbbá
+			\[
+				\norm{f + g}_p \leq \norm{f}_p + \norm{g}_p \qquad (f, g \in \Lebesgue[p])
+			\]
+			is fennáll a \hyperref[th:minkowski]{Minkowski-egyenlőtlenség} alapján.
+			
+			\item
+			Nyilván feltehető, hogy \( 1 < p < q < +\infty \).
+			Legyen \( f \in \Lebesgue[\infty] \). Ekkorű
+			\[
+				\norm{f}_q^q =
+				\int \abs{f}^q \dd{\mu} \leq
+				\norm{f}_\infty^q \cdot \int 1 \dd{\mu} =
+				\norm{f}_\infty^q \cdot \mu(X).
+			\]
+			Tehát \( f \in \Lebesgue[q] \).
+			
+			Ha most \( f \in \Lebesgue[q] \), 
+			akkor a \hyperref[th:hölder]{Hölder-egyenlőtlenség}
+			\[
+				\norm{f}_p =
+				\biggl( \int \abs{f}^p \cdot 1 \dd{\mu} \biggr)^{\tfrac{1}{p}} =
+				\norm\big{\abs{f}^p \cdot 1 }_1
+				\leq
+				\norm\big{ \abs{f}^p }_{\frac{q}{p}} \cdot \norm{ 1 }_{1 - \frac{q}{p}}.
+			\]
+		\end{enumerate}
+	\end{proof}
+	
+\end{document} 

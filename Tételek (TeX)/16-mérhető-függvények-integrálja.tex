@@ -1,0 +1,125 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{16. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Emlékeztető}
+	
+	\section{Integrálható függvények}
+	
+	\begin{definition}{Pozitív rész, negatív rész}
+		Legyen \( (X, \Omega, \mu) \) mértéktér,
+		valamint  \( \func{f}{X}{\overline{ \R }} \) egy függvény.
+		Ekkor
+		\marginnote{
+			Tehát a pozitív rész függvény röviden
+			\[
+				f^+ = f {\cdot} \chi_{\{ f > 0 \}}.
+			\]
+		}
+		\[
+			f^+ \coloneq f {\cdot} \chi_{\{ f > 0 \}}
+		\]
+%		\[
+%			f^+(x) \coloneq
+%			\left\{
+%			\begin{aligned}
+%				f(x), & \quad \text{ha } f(x) \geq 0, \\
+%				0,    & \quad \text{ha } f(x) < 0
+%			\end{aligned}
+%			\right.
+%		\]
+		az \( f \) függvény \emph{pozitív része}, valamint
+		\[
+			f^- \coloneq -f {\cdot} \chi_{\{ f < 0 \}}
+		\]
+%		\[
+%			f^-(x) \coloneq
+%			\left\{
+%			\begin{aligned}
+%				-f(x), & \quad \text{ha } f(x) \leq 0, \\
+%				 0,    & \quad \text{ha } f(x) > 0
+%			\end{aligned}
+%			\right.
+%		\]
+		az \( f \) függvény \emph{negatív része}.
+	\end{definition}
+	
+	Világon, hogy a pozitív és negatív rész függvények nemnegatívok, valamint
+	\[
+		f = f^+ - f^-
+		\qquad \text{és} \qquad
+		\abs{f} = f^+ + f^-.
+	\]
+	Továbbá az is nyilvánvaló, hogyha az \( f \) mérhető függvény, 
+	akkor \( f^+, f^- \in \StepFuncPlus \).
+	Következésképpen léteznek a nemnegatív
+	\[
+		\int f^+ \dd{\mu}, \quad \int f^- \dd{\mu}
+	\]
+	integrálok, amelyek lehetnek akár \( +\infty \) is.
+	
+	\begin{definition}{Mérhető függvény integrálja}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		valamint \( \func{f}{X}{\overline{ \R }} \) egy mérhető függvény.\\[3pt]
+		Azt mondjuk, hogy létezik az \( f \) függvény \emph{integrálja}, amennyiben az
+		\[
+			\int f^+ \dd{\mu}, \ \int f^- \dd{\mu}
+		\]
+		integrálok közül legalább az egyik véges. Ekkor az
+		\[
+			\int f \dd{\mu} \coloneq
+			\int f^+ \dd{\mu} - \int f^- \dd{\mu}
+		\]
+		érték az \( f \) függvény \( \mu \) mérték szerinti \emph{integrálja}.
+	\end{definition}
+	
+	\noindent 
+	Amennyiben az \( f \in \StepFuncPlus \), 
+	akkor az \( \func{f}{X}{\overline{\R}} \) egy nemnegatív mérhető függvény.
+	Ennél fogva a negatív része azonosan nulla, ahonnan \( \int f^- \dd{\mu} = 0 \) adódik.
+	Tehát az \( f \) integrálja megegyezik az \( \StepFuncPlus \)-beli integráljával.
+	
+	A későbbiekben azok a függvények lesznek fontosak a számunkra, 
+	amelyeknek van integrálja, és az véges. 
+	Minden ilyen leképezést \emph{integrálható függvénynek} nevezünk. 
+	Vezessük be ezzel kapcsolatban a következő jelölést:
+	\[
+		\Lebesgue \coloneq \Lebesgue(\mu) \coloneq
+		\setc[\Bigg]{ \func{f}{X}{\overline{\R}} }{ f \text{ mérhető és } \int f \dd{\mu} \in \R}.
+	\]
+	\newpage
+	
+	\begin{theorem}{A Lebesgue-integrál alaptulajdonságai}{}
+		Legyen \( (X,\Omega,\mu) \) mértéktér, 
+		valamint \( f, g \in \Lebesgue \) és \( \alpha \in \R \).
+		\begin{enumerate}
+			\item 
+			\( (\alpha \cdot f) \in \Lebesgue \) 
+			\quad és \quad 
+			\( \displaystyle \int (\alpha \cdot f) \dd{\mu} = \alpha \cdot \int f \dd{\mu} \).
+		\end{enumerate}
+	\end{theorem}
+		
+\end{document} 

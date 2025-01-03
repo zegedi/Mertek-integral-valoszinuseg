@@ -1,0 +1,93 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{11. Vizsgatétel}
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Invariancia}
+	
+	Legyen \( 1 \leq p \in \N \) egy tetszőleges kitevő.
+	
+	\begin{statement}{Eltolás és tükrözés invariancia}{}
+		Legyen \( A \in \Omega_p \) tetszőleges Borel-halmaz, 
+		valamint \( \vb{a} \in \R^p \) egy vektor. Ekkor
+		\begin{enumerate}
+			\item
+			\emph{Eltolás invariancia:}
+			\( \vb{a} + A \in \Omega_p \) 
+			\quad és \quad 
+			\( \mu_p( \vb{a} + A ) = \mu_p(A) \).
+		\end{enumerate}
+	\end{statement}
+	
+	\newpage
+	\section{Példa nem Borel-mérhető halmazra}
+	
+	\begin{statement}{}{}
+		Létezik olyan \( A \subseteq \R \) halmaz, ami nem Borel-mérhető, 
+		azaz \( A \notin \Omega_1. \)
+	\end{statement}
+	\begin{proof}
+		Vezessük be az alábbi relációt
+		\[
+			x \sim y
+			\quad \ratio\Longleftrightarrow \quad
+			x - y \in \Q.
+		\]
+		Ekkor fennállnak az alábbi állítások.
+		\begin{enumerate}
+			\item A \( \sim \) ekvivalenciareláció.
+			\item Bármely \( A \) ekvivalenciaosztály esetén \( A \cap [0, 1) \neq \emptyset \).
+		\end{enumerate}
+		Ezt felhasználva legyen \( K \) az a halmaz, 
+		ami minden ekvivalenciaosztályból pontosan egy elemet tartalmaz és más eleme nincsen.
+		Ekkor
+		\[
+			\R = \bigcup_{r \in \Q} (r + K)
+		\]
+		és ez páronként diszjunkt felbontás.
+		
+		Végül indirekt tegyük fel, hogy \( K \in \Omega_1 \). Ekkor
+		\[
+			\mu_1( \R ) = 
+			+\infty =
+			\sum_{r \in \Q} \mu_1(r + K) = 
+			\sum_{r \in \Q} \mu_1(K).
+		\]
+		Innen egyszerűen adódik, hogy \( \mu_1(K) > 0 \). Ugyanakkor
+		\[
+			B \coloneq \Q \cap [0, 1)
+			\quad \Longrightarrow \quad
+			\bigcup_{r \in B} (r + K) \subseteq [0, 2)
+			\quad \Longrightarrow \quad
+			\mu_1(B) \leq 2.
+		\]
+		Viszont
+		\[
+			\mu_1(B) =
+			\sum_{r \in B} \mu_1(r + K) =
+			\sum_{r \in B} \mu_1(K) =
+			+\infty.
+		\]
+	\end{proof}
+	
+\end{document}

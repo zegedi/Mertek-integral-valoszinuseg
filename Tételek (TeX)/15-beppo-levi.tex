@@ -1,0 +1,368 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{\circled{15} Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Beppo Levi tétele}
+	
+	\begin{theorem}{Beppo Levi}{beppo-levi}
+		Legyen \( \func{(f_n)}{\N}{\StepFuncPlus} \) egy monoton növekedő függvénysorozat. 
+		\marginnote{
+			Tehát az \( (f_n) \) sorozatra
+			\[
+				\int \lim_{n \to \infty} f_n \dd{\mu} =
+				\lim_{n \to \infty} \int f_n \dd{\mu}.
+			\]
+		}
+		Ekkor
+		\[
+			f \coloneq \lim(f_n) \in \StepFuncPlus
+			\qquad \text{és} \qquad
+			\int f \dd{\mu} = \lim_{n \to \infty} \int f_n \dd{\mu}.
+		\]
+	\end{theorem}
+	\begin{proof}
+		Mivel az \( (f_n) \) sorozat tagjai valamennyien \( \StepFuncPlus \)-ban vannak,
+		\marginnote{
+			Tehát minden \( n \in \N \) indexhez van olyan
+			\[
+				\func{(f_{kn})}{\N}{\StepFuncPos}
+			\]
+			sorozat, ami monoton növekedve tart a
+			\[
+				\lim_{k \to \infty} f_{kn} = f_n
+			\]
+			határfüggvényhez.
+		}
+		így
+		\[
+			\begin{NiceArray}{cccccc}
+				f_{00} & f_{01} & \Cdots & f_{0n} & \Cdots & \nearrow \ f_0 \\
+				f_{10} & f_{11} & \Cdots & f_{1n} & \Cdots & \nearrow \ f_1 \\
+				\Vdots & \Vdots &        & \Vdots &        & \Vdots         \\
+				f_{n0} & f_{n1} & \Cdots & f_{nn} & \Cdots & \nearrow \ f_n \\
+			\end{NiceArray}
+			\qquad (n \in \N).
+		\]
+		Tekintsük az alábbi függvénysorozatot:
+		\[
+			g_n \coloneq \max \setc[\big]{ f_{ij} }{ i,j = 0,\dots,n } \qquad (n \in \N).
+		\]
+		Ekkor nyilvánvaló, hogy fennállnak a soron következő állítások:
+		\[
+			g_n \in \StepFuncPos, \quad
+			g_n \leq g_{n + 1}, \quad
+			g_n \leq f_n \leq f \qquad (n \in \N).
+		\]
+		Az utóbbi egyenlőtlenség következménye, hogy
+		\[
+			\lim(g_n) \leq \lim(f_n) = f.
+		\]
+		Ugyanakkor \( (g_n) \) monoton nő, így tetszőleges \( i, j = 0, \dots, n \) index esetén
+		\[
+			f_{ij} \leq g_n \leq \lim(g_n).
+		\]
+		Amennyiben vesszük az \( i, j \to \infty \) határátmenetet, akkor
+		\[
+			f = \lim(f_n) \leq \lim(g_n).
+		\]
+		Tehát \( f = \lim(g_n) \),
+		ami definíció szerint egy \( \StepFuncPlus \)-beli függvény, továbbá
+		\marginnote{
+			Kihasználva az
+			\[
+				g_n \leq f_n \leq f \qquad (n \in \N)
+			\]
+			egyenlőtlenséget és a monotonitást.
+		}
+		\[
+			\int f \dd{\mu} = 
+			\lim_{n \to \infty} \int g_n \dd{\mu} \leq
+			\lim_{n \to \infty} \int f_n \dd{\mu} \leq
+			\int f \dd{\mu}.
+		\]
+	\end{proof}
+	
+	\noindent 
+	
+	\newpage
+	\section{Következmények}
+	
+	Fogalmazzuk meg a Beppo Levi--tételt tetszőleges \( \StepFuncPlus \)-beli függvénysor esetén!
+	
+	\begin{theorem}{Beppo Levi--tétel függvénysorokra}{}
+		Legyen \( \func{(h_n)}{\N}{\StepFuncPlus} \) egy tetszőleges függvénysorozat. Ekkor
+		\[
+			\sum_{n=0}^{\infty} h_n \in \StepFuncPlus
+			\qquad \text{és} \qquad
+			\int \sum_{n=0}^{\infty} h_n \dd{\mu} =
+			\sum_{n=0}^{\infty} \int h_n \dd{\mu}.
+		\]
+	\end{theorem}
+	\begin{proof}
+		Tekintsük az alábbi részletösszeg-sorozatot:
+		\[
+			f_n \coloneq \sum_{k=0}^{n} h_k \qquad (n \in \N).
+		\]
+		Ekkor \( (f_n) \) egy \( \StepFuncPlus \)-beli, 
+		monoton növekedő függvényekből álló sorozat, 
+		így a \hyperref[th:beppo-levi]{Beppo Levi--tétel} alkalmazásával adódik, 
+		hogy az \( (f_n) \) konvergens és
+		\[
+			\int \sum_{n=0}^{\infty} h_n \dd{\mu} =
+			\int \lim_{n \to \infty} f_n \dd{\mu} =
+			\lim_{n \to \infty} \int f_n \dd{\mu} =
+			\sum_{n=0}^{\infty} \int h_n \dd{\mu}.
+		\]
+	\end{proof}
+	
+	
+	
+	\begin{definition}{Majdnem mindenhol terminológia}{}
+		Legyen \( (X, \Omega, \mu) \) egy mértéktér, 
+		valamint \( T \) egy tulajdonság az \( X \) elemein.\\[3pt]
+		Ekkor \( T \) \emph{majdnem mindenhol} igaz, 
+		ha megadható olyan \( A \in \Omega \), hogy
+		\begin{enumerate}
+			\item \( \mu(A) = 0 \),
+			\item minden \( x \in X \setminus A \) esetén a \( T \) igaz \( x \)-ben.
+		\end{enumerate}
+	\end{definition}
+	
+	\begin{notes}
+		\item
+		Használatos még a \( T \) \emph{majdnem mindenütt} igaz megnevezés is,
+		illetve ezek rövidítésére a \( T \) \emph{\( \boldsymbol{\mu} \)-m.m.} 
+		és (egyetlen mérték esetén) a \( T \) \emph{m.m.} szimbólum.
+		
+		\item 
+		\textbf{\textcolor{red}{Figyelem!}}
+		A most bevezetett majdnem mindenhol terminológia azt jelenti, hogy 
+		\textit{egy alkalmas nullamértékű halmaz pontjait leszámítva a \( T \) tulajdonság mindenhol teljesül}.
+		
+		Azt nem állíthatjuk, hogy egy nullamértékű \( A \) halmaz pontjaiban a \( T \) hamis
+		és egyébként meg mindenhol igaz.
+		Csupán azt követeljük meg, hogy az
+		\[
+			N \coloneq \setc[\big]{ x \in X }{ T \text{ nem igaz } x \text{-ben} }
+		\]
+		halmaz lefedhető legyen egy nullamértékű \( A \) halmazzal.
+		\marginnote{Vagyis legyen \( N \subseteq A \) és \( \mu(A) = 0 \).}
+		
+		\item 
+		Előfordulhat, hogy \( N \notin \Omega \).
+		Viszont, ha a \( \mu \) mérték teljes és \( T \) \( \mu \)-m.m., akkor
+		\[
+			N \in \Omega
+			\qquad \text{és} \qquad
+			\mu(N) = 0.
+		\]
+		
+	\end{notes}
+
+	
+	\newpage
+	\begin{theorem}{}{}
+		 Legyen \( (X, \Omega, \mu) \) egy mértéktér, 
+		 valamint \( f, g \in \StepFuncPlus \) adott függvények.
+		 \begin{enumerate}
+		 	\item\label{eq:majdnem-mindenhol-01}
+		 	\( \displaystyle \int f \dd{\mu} = 0 \iff f = 0 \) majdnem mindenhol.
+		 	
+		 	\item\label{eq:majdnem-mindenhol-02}
+		 	Ha \( \displaystyle \int f \dd{\mu}  \) véges, 
+		 	akkor \( \abs{f} < +\infty \) majdnem mindenhol.
+		 	
+		 	\item\label{eq:majdnem-mindenhol-03}
+		 	Ha \( f = g \) majdnem mindenhol, 
+		 	akkor \( \displaystyle \int f \dd{\mu} = \int g \dd{\mu} \).
+		 \end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		\Aref{eq:majdnem-mindenhol-01} állítás bizonyítása.
+		
+		\Ifstep Tekintsük a \( \{ f > q \} \) nívóhalmazt, ahol \( q > 0 \) rögzített. Ekkor
+		\[
+			f \geq q \cdot \chi_{\{ f > q \}}
+			\qquad \Longrightarrow \qquad
+			0 = 
+			\int f \dd{\mu} \geq 
+			q \cdot \mu \bigl( \{ f > q \} \bigr) \geq 0.
+		\]
+		Ugyanakkor
+		\[
+			\{ f > 0 \} = 
+			\bigcup_{n = 1}^{\infty} \biggl\{ f > \frac{1}{n} \biggr\}
+			\qquad \Longrightarrow \qquad
+			\mu \bigl( \{ f > 0 \} \bigr) = 0.
+		\]
+		
+		\Backifstep Tekintsük az \( f_n \coloneq n {\cdot} \chi_{\{ f > 0 \}}  \ (n \in \N) \) függvénysorozatot. Ekkor
+		\[
+			f_n \in \StepFuncPlus, \quad
+			f_n \leq f_{n + 1}, \quad
+			f \leq \sup_{n} f_n = \lim( f_n )
+			\qquad (n \in \N).
+		\]
+		Alkalmazva a \hyperref[th:beppo-levi]{Beppo Levi--tételt} azt kapjuk, hogy
+		\[
+			0 \leq
+			\int f \dd{\mu} =
+			\lim_{n \to \infty} \int f_n \dd{\mu} = 
+			\lim_{n \to \infty} \Bigl( n \cdot \mu \bigl( \{ f > 0 \} \bigr) \Bigr) = 0.
+		\]
+		
+		\noindent\rule{\linewidth}{0.4pt}\\
+		
+		\Aref{eq:majdnem-mindenhol-02} állítás bizonyítása.
+		Tetszőleges \( q > 0 \) számmal, hogy \( f \geq q {\cdot} \chi_{\{ f = +\infty \}} \).
+		\[
+			0 \leq
+			q \cdot \mu\bigl( \{ f = +\infty \} \bigr) \leq 
+			\int f \dd{\mu}
+		\]
+		ahonnan \( \mu \bigl( \{ f = +\infty \} \bigr) = 0 \).
+		
+		\noindent\rule{\linewidth}{0.4pt}\\
+		
+		\Aref{eq:majdnem-mindenhol-03} állítás bizonyítása.
+		Tekintsük az \( f \) függvény alábbi felbontását:
+		\marginnote{
+			Ugyanezen oknál fogva
+			\[
+				g = g \cdot \chi_{\{ f = g \}} + g \cdot \chi_{\{ f \neq g \}}.
+			\]
+			Ekkor az integrál additivitása miatt
+			\[
+				\int g \dd{\mu} =
+				\int g {\cdot} \chi_{\{ f = g \}} \dd{\mu},
+			\]
+			hiszen az \( f = g \) m.m. feltétel alapján
+			\[
+				\int g {\cdot} \chi_{\{ f \neq g \}} \dd{\mu} = 0.
+			\]
+		}
+		\[
+			f = f \cdot \chi_{\{ f = g \}} + f \cdot \chi_{\{ f \neq g \}}
+		\]
+		Mivel az integrál additív, ennél fogva
+		\[
+			\int f \dd{\mu} =
+			\int f {\cdot} \chi_{\{ f = g \}} \dd{\mu} +
+			\int f {\cdot} \chi_{\{ f \neq g \}} \dd{\mu}.
+		\]
+		Mivel az \( f {\cdot} \chi_{\{ f \neq g \}} = 0 \) majdnem mindenhol igaz, 
+		ezért \aref{eq:majdnem-mindenhol-01} állítás miatt
+		\[
+			\int f \dd{\mu} =
+			\int f {\cdot} \chi_{\{ f = g \}} \dd{\mu} =
+			\int g {\cdot} \chi_{\{ f = g \}} \dd{\mu} =
+			\int g \dd{\mu}.
+		\]
+	\end{proof}
+	
+	
+	\begin{lemma}{Fatou--lemma}{}
+		Legyen \( (X, \Omega, \mu) \) egy mértéktér, 
+		\( \func{(h_n)}{\N}{\StepFuncPlus}\) függvénysorozat. 
+		Ekkor
+		\[
+			\liminf(h_n) \in \StepFuncPlus
+			\qquad \text{és} \qquad
+			\int \liminf_{n \to \infty} h_n \dd{\mu} \leq \liminf_{n \to \infty} \int h_n \dd{\mu}.
+		\]
+	\end{lemma}
+	\begin{lemma}{Fatou--lemma}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		valamint \( \func{(h_n)}{\N}{\StepFuncPlus} \) egy függvénysorozat.
+		\begin{enumerate}
+			\item\label{eq:fatou-01}
+			Ekkor \( \liminf(h_n) \in \StepFuncPlus \) és
+			\[
+				\int \liminf_{n \to \infty} h_n \dd{\mu} \leq 
+				\liminf_{n \to \infty} \int h_n \dd{\mu}.
+			\]
+			
+			\item\label{eq:fatou-02}
+			Ha létezik olyan \( F \in \StepFuncPlus \) függvény, hogy
+			\[
+				\int F \dd{\mu} < +\infty
+				\qquad \text{és} \qquad
+				h_n \leq F \ \mu \text{-m.m.} \qquad (n \in \N)
+			\]
+			akkor
+			\[
+				\limsup_{n \to \infty} \int h_n \dd{\mu} \leq 
+				\int \limsup_{n \to \infty} h_n \dd{\mu}.
+			\]
+		\end{enumerate}
+	\end{lemma}
+	
+	\begin{proof}
+		asdf
+		\[
+			\liminf(h_n) = 
+			\lim \bigl( \inf_{k \geq n} h_k \bigr) \eqcolon
+			\lim( f_n ).
+		\]
+		Itt \( (f_n) \) egy \( \StepFuncPlus \)-beli monoton növő sorozat, 
+		ezért a \hyperref[th:beppo-levi]{Beppo Levi--tétel} alapján
+		\[
+			\int \liminf_{n \to \infty} h_n \dd{\mu} =
+			\int \lim_{n \to \infty} f_n \dd{\mu} =
+			\lim_{n \to \infty} \int f_n \dd{\mu}.
+		\]
+		Mivel \( f_n \leq h_k \ (k \geq n) \),
+		\marginnote{
+			Ugyanis minden \( k \geq n \) indexre
+			\[
+				\int f_n \dd{\mu} \leq \int h_k \dd{\mu}.
+			\]
+		}
+		ezért az integrál monotonitása miatt
+		\[
+			\lim_{n \to \infty} \int f_n \dd{\mu}. \leq
+			\lim_{n \to \infty} \biggl( \inf_{k \geq n} \int h_k \dd{\mu} \biggr) =
+			\liminf_{n \to \infty} \int h_n \dd{\mu}.
+		\]
+		
+		\noindent\rule{\linewidth}{0.4pt}\\
+		
+		\Aref{eq:fatou-02} állítás bizonyítását nem részletezzük.
+		
+		Csupán megjegyezzük, hogy az \( F \) függvény \( \mu \)-m.m. majorálja a \( (h_n) \) sorozat tagjait, vagyis egy alkalmas \( A \in \Omega \) mérhető halmazzal
+		\[
+			\mu(A) = 0, \quad 
+			h_n(x) \leq F(x) < +\infty \qquad (n \in \N, \ x \in X \setminus A).
+		\]
+		Ezek után alkalmazva \aref{eq:fatou-01} állítást az
+		\[
+			F - h_n {\cdot} \chi_C \in \StepFuncPlus \qquad (n \in \N)
+		\]
+		sorozaton, ahol \( C \coloneq X \setminus A \).
+	\end{proof}
+	
+	
+	
+\end{document} 

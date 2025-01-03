@@ -1,0 +1,171 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{23. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Szorzatmérték}
+	
+	Legyen adott az \( (X_i, \Omega_i, \mu_i) \ (i=1,2) \) mértéktér, majd tekintsük az
+	\[
+		X \coloneq X_1 \times X_2
+	\]
+	kétdimenziós teret.
+%	a két alaphalmaz Descartes-szorzata.
+	A cél egy olyan \( \Omega \subseteq \powerset{X} \) szigma-algebra és 
+	\( \func{\mu}{\Omega}{[0, +\infty]} \) mérték megkonstruálása,
+	amely rendelkezik a
+	\[
+		\mu(U \times V) = \mu_1(U) \cdot \mu_2(V) 
+		\qquad (U \in \Omega_1, \ V \in \Omega_2)
+	\]
+	alábbi művelettartási tulajdonsággal.
+	Kézenfekvőnek tűnik, hogy legyen
+	\[
+		\Omega \coloneq
+		\Omega_1 \otimes \Omega_2 \coloneq
+		\Omega \bigl( \setc{ U \times V }{ U \in \Omega_1, \ V \in \Omega_2 } \bigr).
+	\]
+%	valamint
+%	\[
+%		\Omega \coloneq
+%		\Omega_1 \otimes \Omega_2 \coloneq
+%		\Omega \bigl( \setc{ U \times V }{ U \in \Omega_1, \ V \in \Omega_2 } \bigr).
+%	\]
+%	az \( \Omega_1, \Omega_2 \) halmazok Descartes-szorzatai által meghatározott 
+%	legszűkebb szigma-algebra.
+%	\[
+%		\func{f}{X}{[0, +\infty]}
+%	\]
+%	kétváltozós függvényeket vizsgáljuk az integrálhatóság és az integrál 
+%	kiszámítása szempontjából. 
+%	Az itt említett ``integrál'' (szigma-véges mértékek	esetén) majd a \( \mu_1, \mu_2 \) mértékekből származó \( \mu_1 \otimes \mu_2 \) szorzatmérték szerint lesz értendő.
+	
+	\begin{statement}{}{}
+		Tetszőleges \( A \in \Omega \) halmaz 
+		és \( x \in \Omega_1, y \in \Omega_2 \) elemek esetén
+		\begin{enumerate}[label=\alph*)]
+			\item \( A_x \coloneq \setc[\big]{ z \in X_2 }{ (x, z) \in A } \in \Omega_2. \)
+			\item \( A^y \coloneq \setc[\big]{ v \in X_1 }{ (v, y) \in A } \in \Omega_1. \)
+		\end{enumerate}
+	\end{statement}
+	
+	\noindent
+	Értelmezzünk most minden \( A \in \Omega \) halmaz mellett két újabb leképezést az
+	\begin{alignat*}{3}
+		\func{f_A}{X_1}{[0, +\infty]},& \quad 
+		&{} f_A(x) &\coloneq \mu_2(A_x) \qquad &&(x \in X_1) \\[3pt]
+		\func{f^A}{X_2}{[0, +\infty]},& \quad 
+		&{} f^A(y) &\coloneq \mu_1(A^y) \qquad &&(y \in X_2)
+	\end{alignat*}
+	módon.
+	
+	\begin{statement}{}{}
+		Legyenek \( (X_i, \Omega_i, \mu_i) \ (i=1,2) \) szigma-véges mértékterek.\\[6pt]
+		Ekkor tetszőleges \( A \in \Omega \) halmaz esetén 
+		\( f_A \in \StepFuncPlus(\mu_1) \) és \( f^A \in \StepFuncPlus(\mu_2) \),
+		\[
+			\int f_A \dd{\mu_1} = 
+			\int f^A \dd{\mu_2}.
+		\]
+	\end{statement}
+	
+	\begin{definition}{Szorzatmérték}{}
+		Legyenek \( (X_i, \Omega_i, \mu_i) \ (i=1,2) \) szigma-véges mértékterek.\\[6pt]
+		Ekkor a \( \mu_1, \mu_2 \) által meghatározott \emph{szorzatmérték}
+		\[
+			(\mu_1 \otimes \mu_2) (A) \coloneq
+			\int f_A \dd{\mu_1} = 
+			\int f^A \dd{\mu_2}
+			\qquad (A \in \Omega).
+		\]
+	\end{definition}
+	
+	\begin{notes}
+		\item A \( \mu \coloneq (\mu_1 \otimes \mu_2) \) szorzatmérték szintén szigma-véges mérték.
+		\item Az előbbi szorzatmértékre teljesül az alábbi ``művelettartási'' tulajdonság
+		\[
+			\mu(U \times V) = \mu_1(U) \cdot \mu_2(V)
+			\qquad (U \in \Omega_1, \ V \in \Omega_2).
+		\]
+	\end{notes}
+	
+	\newpage
+	\section{Fubini-tétel}
+	
+	\noindent
+	Amennyiben adott az \( \func{f}{X}{\overline{\R}} \) kétváltozós függvény 
+	és \( x \in X_1, y \in X_2 \) esetén
+	%
+	\begin{alignat*}{3}
+		\func{f_x}{X_2}{\overline{\R}},& \quad 
+		&{} f_x(z) &\coloneq f(x, z) \qquad &&(z \in X_2) \\[3pt]
+		\func{f^y}{X_1}{\overline{\R}},& \quad 
+		&{} f^y(v) &\coloneq f(v, y) \qquad &&(v \in X_1).
+	\end{alignat*}
+	%
+	parciális függvényeket.
+	
+	\begin{statement}{}{}
+		Ha az \( f \) mérhető, akkor az \( f_x, f^y \) parciális függvények is mérhetőek.
+	\end{statement}
+	
+	Az előző állítás következménye, hogy amennyiben az \( f \) mérhető és nemnegatív,
+	azaz \( f \in \StepFuncPlus \)
+	
+	\begin{theorem}{Tonelli-tétel}{tonelli}
+		Legyen \( (X, \Omega, \mu) \)
+		az \( (X_i, \Omega_i, \mu_i) \ (i=1,2) \) szigma-véges mértékterek szorzattere.
+		\begin{enumerate}[label=\alph*)]
+			\item \( \varphi_f \in \StepFuncPlus(\mu_1), \ \varphi^f \in \StepFuncPlus(\mu_2) \).
+			\item
+		\end{enumerate}
+		\[
+			\int f \dd{\mu} = 
+			\int \phi_f \dd{\mu_1} =
+			\int \phi^f \dd{\mu_2}.
+		\]
+	\end{theorem}
+	
+	Amennyiben az 
+	\[
+		\int f \dd{\mu} = 
+		\int f(x, y) \dd{x} \dd{y}
+	\]
+	jelölést alkalmazzuk, akkor a Tonelli-tétel értelmében
+	\[
+		\int \biggl( \int f(x, y) \dd{x} \biggr) \dd{y} =
+		\int \biggl( \int f(x, y) \dd{y} \biggr) \dd{x}.
+	\]
+	
+	\begin{theorem}{Fubini-tétel}{}
+		Legyen \( \func{f}{X}{\overline{\R}} \) egy Lebesgue-integrálható függvény, 
+		azaz \( f \in \Lebesgue(\mu) \). Ekkor
+		\begin{enumerate}[label*=\alph*)]
+			\item \( \mu_1 \)-m.m. \( x \in X_1 \) elemre \( f_x \in \Lebesgue(\mu_2) \).
+			\item \( \mu_2 \)-m.m. \( y \in X_2 \) elemre \( f^y \in \Lebesgue(\mu_1) \).
+			\item Fennállnak a \hyperref[th:tonelli]{Tonelli-tételben} mondott állítások.
+		\end{enumerate}
+	\end{theorem}
+	
+\end{document} 

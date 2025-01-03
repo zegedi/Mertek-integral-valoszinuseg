@@ -44,6 +44,7 @@
 
 % Tikz tools
 \RequirePackage{tikz}
+\usetikzlibrary{matrix}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{%
 		\node[shape=circle,draw,inner sep=1.5pt] (char) {#1};}}
 
@@ -391,7 +392,7 @@
 	\paragraph{\noteslabel:}
 	\begin{enumerate}[label=\roman*)]
 }{
-	\( \blacksquare \)
+	\qed
 	\end{enumerate}
 }
 
@@ -651,7 +652,10 @@
 \newcommand{\ring}[1]{\mathcal{#1}}					% Halmazgyűrű
 
 \NewDocumentCommand \StepFunc     { O{0} } { \Step_#1   }	% Lépcsősfüggvény
-\NewDocumentCommand \StepFuncPlus { O{0} } { \Step_#1^+ }	% Lépcsősfüggvény +.
+\NewDocumentCommand \StepFuncPos  { O{0} } { \Step_#1^+ }	% Negnegatív lépcsősfüggvény.
+\newcommand{\StepFuncPlus}{ \Step^+ }	    % Lépcsősfüggvény +.
+% \newcommand{\Lebesgue}{ \Step }	            % Lebesgue-integrálható függvény
+\NewDocumentCommand \Lebesgue     { o    } { \Step \IfValueT {#1} { ^#1 } }
 
 \newcommand{\LinearTransform}[1]{\mathcal{L}(#1)}					% Lineáris transzformáció.
 \newcommand{\Linear}[3][]{\mathcal{L}#1(#2, #3 #1)}					% Lineáris leképezés.

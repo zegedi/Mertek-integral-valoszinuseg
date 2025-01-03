@@ -1,0 +1,105 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{20. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Súlyfüggvények}
+	
+	\begin{definition}{Súlyfüggvény}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		\( f \in \StepFuncPlus \) egy adott függvény. Ekkor a
+		\[
+			\func{\mu_f}{\Omega}{[0, +\infty]}, \qquad 
+			\mu_f(A) \coloneq 
+			\int_A f \dd{\mu} \coloneq 
+			\int f {\cdot} \chi_A \dd{\mu}
+		\]
+		leképezést \emph{súlyfüggvénynek} nevezzük.
+	%	az \( f \) függvény \emph{integrálja} az \( A \) halmazon.
+	\end{definition}
+	
+	\begin{notes}
+		\item
+		Speciálisan az \( A = X \) esetben
+		\[
+			\mu_f(X) = 
+			\int_X f \dd{\mu} = 
+			\int f {\cdot} \chi_X \dd{\mu} = 
+			\int f \dd{\mu}.
+		\]
+		
+		\item Amennyiben az \( A \in \Omega \) halmaz nullamértékű, akkor
+		\[
+			f {\cdot} \chi_A = 0 \ \mu \text{-m.m.}
+			\quad \Longrightarrow \quad
+			\mu_f(A) = 
+		%	\int_A f \dd{\mu} =
+			\int f {\cdot} \chi_A \dd{\mu} =
+			0.
+		\]
+	\end{notes}
+	
+	\begin{statement}{}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, \( f \in \StepFuncPlus \).
+		Ekkor a \( \mu_f \) súlyfüggvény mérték.
+	\end{statement}
+	\begin{proof}
+		A \( \mu_f \) függvényről az alábbiak mondhatóak el.
+		\begin{enumerate}
+			\item
+			\emph{Nemnegatív}, ugyanis az integrál monoton 
+			és \( f {\cdot} \chi_A \in \StepFuncPos \ (A \in \Omega) \).
+			
+			\item
+			\emph{Eltűnik \( \emptyset \)-ban}, hiszen
+			\[
+				\mu_f( \emptyset ) = 
+				\int f {\cdot} \chi_\emptyset \dd{\mu} = 
+				\int \chi_\emptyset \dd{\mu} = 
+				\mu( \emptyset ) =
+				0.
+			\]
+			
+			\item
+			\emph{Szigma-additív}, mert bármely \( A_n \in \Omega \ (n \in \N) \)
+			páronként diszjunkt halmazsorozat esetén
+			\[
+				A \coloneq \bigcup_{n=0}^{\infty} A_n
+				\qquad \Longrightarrow \qquad
+				f {\cdot} \chi_A = \sum_{n=0}^{\infty} f {\cdot} \chi_{A_n}.
+			\]
+			Innen a Beppo Levi-tétel sorokra vonatkozó alakjából
+			\[
+				\mu_f(A) = 
+			%	\int f {\cdot} \chi_{A_n} \dd{\mu} =
+				\int \sum_{n=0}^{\infty} f {\cdot} \chi_{A_n} \dd{\mu} =
+				\sum_{n=0}^{\infty} \int f {\cdot} \chi_{A_n} \dd{\mu} =
+				\sum_{n=0}^{\infty} \mu_f(A_n).
+			\]
+		\end{enumerate}
+		Továbbá \( \mu_f \) az \( \Omega \) szigma-algebrán van értelmezve, 
+		tehát \( \mu_f \) valóban mérték.
+	\end{proof}
+	
+\end{document} 

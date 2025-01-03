@@ -1,0 +1,134 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{20. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Emlékeztető}
+	
+	\begin{definition}{Súlyfüggvény}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		\( f \in \StepFuncPlus \) egy adott függvény. Ekkor a
+		\[
+			\func{\mu_f}{\Omega}{[0, +\infty]}, \qquad 
+			\mu_f(A) \coloneq 
+			\int_A f \dd{\mu} \coloneq 
+			\int f {\cdot} \chi_A \dd{\mu}
+		\]
+		leképezést \emph{súlyfüggvénynek} nevezzük.
+	\end{definition}
+	
+	\begin{note}
+		Amennyiben az \( A \in \Omega \) halmaz nullamértékű, akkor
+		\[
+			f {\cdot} \chi_A = 0 \ \mu \text{-m.m.}
+			\quad \Longrightarrow \quad
+			\mu_f(A) = 
+			\int f {\cdot} \chi_A \dd{\mu} =
+			0.
+		\]
+	\end{note}
+	
+	\begin{statement}{}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, \( f \in \StepFuncPlus \).
+		Ekkor a \( \mu_f \) súlyfüggvény mérték.
+	\end{statement}
+	
+	\section{Abszolút folytonosság}
+	
+	\begin{definition}{}{}
+		Legyen \( (X, \Omega) \) mérhető tér, 
+		valamint \( \func{\mu, \nu}{\Omega}{[0, +\infty]} \) két mérték.\\[6pt]
+		Azt mondjuk, 
+		hogy \( \nu \) \emph{abszolút folytonos} \( \mu \)-re nézve (jelben \( \nu \ll \mu \)), ha
+		\[
+			\mu(A) = 0
+			\quad \Longrightarrow \quad
+			\nu(A) = 0
+			\qquad (A \in \Omega).
+		\]
+	\end{definition}
+	
+	\begin{lemma}{}{}
+		Legyen \( (X, \Omega) \) mérhető tér, 
+		\( \func{\mu, \nu}{\Omega}{[0, +\infty]} \) két mérték, ahol \( \nu \) véges.\\[6pt]
+		Ekkor \( \nu \ll \mu \) azzal ekvivalens, hogy
+		bármely \( \varepsilon > 0 \)-hoz van olyan \( \delta > 0 \):
+		\[
+%			\forall \varepsilon > 0 \text{-hoz},\
+%			\exists \delta > 0,
+%			\forall A \in \Omega \colon \
+%			\mu(A) < \delta \quad \longrightarrow \quad \nu(A) < \delta.
+			\mu(A) < \delta
+			\quad \Longrightarrow \quad
+			\nu(A) < \varepsilon
+			\qquad (A \in \Omega).
+		\]
+	\end{lemma}
+	\begin{proof}\,\\
+		\Ifstep
+		Indirekt tegyük fel, hogy megadható olyan \( \varepsilon > 0 \) szám, amellyel
+		\[
+			X_n \in \Omega, \quad 
+			\mu(X_n) < \frac{1}{2^n} 
+			\quad \text{de} \quad
+			\nu( X_n ) \geq \varepsilon \quad (n \in \N).
+		\]
+		Definiáljuk a soron következő halmazokat:
+		\[
+			A_n \coloneq \bigcup_{k=n}^{\infty} X_k 
+			\qquad \text{és} \qquad
+			A \coloneq \bigcap_{k=0}^{\infty} A_k
+			\qquad (n \in \N)
+		\]
+		Ekkor az \( (A_n) \) halmazsorozat monoton szűkülve tart az \( A \)-hoz, ezért
+		\[
+			\mu( A ) \leq 
+			\mu( A_n ) \leq 
+			\sum_{k=n}^{\infty} \mu( X_n ) \leq
+			\sum_{k=n}^{\infty} \frac{1}{2^k}
+		%	= \frac{2}{2^n}
+			\longrightarrow 0
+			\qquad (n \to \infty).
+		\]
+		Tehát \( \mu(A) = 0 \), vagyis az abszolút folytonosság miatt \( \nu(A) = 0 \).
+		Viszont a \( \nu \) véges mérték és az \( (A_n) \) sorozat monoton szűkülve tart az \( A \)-hoz. Ezért
+		\[
+			\nu(A) = 
+			\lim_{n \to \infty} \nu(A_n) \geq 
+			\lim_{n \to \infty} \nu(X_n) \geq 
+			\varepsilon > 0.
+		\]
+		Ez viszont ellentmondás.
+		
+		\Backifstep Triviális, ha ugyanis egy \( A \in \Omega \) halmazra \( \mu(A) = 0 \), 
+		akkor a feltevés szerint tetszőleges \( \varepsilon > 0 \)-hoz megadható olyan \( \delta > 0 \), amivel
+		\[
+			\mu(A) < \delta
+			\quad \Longrightarrow \quad
+			0 \leq \nu(A) < \varepsilon.
+		\]
+		Mivel itt az \( \varepsilon \) tetszőleges lehet, ezért \( \nu(A) = 0 \).
+	\end{proof}
+	
+\end{document} 

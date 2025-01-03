@@ -15,7 +15,7 @@
 
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
-\subtitle{12. Vizsgatétel}
+\subtitle{14. Vizsgatétel}
 
 
 % The document
@@ -62,11 +62,11 @@
 	úgynevezett \emph{kanonikus alakban}. Továbbá bevezettük az alábbi osztályokat
 	\[
 		\StepFunc \coloneq \setc[\big]{ \func{f}{X}{\R} }{ f \text{ lépcsős}}, \qquad
-		\StepFuncPlus \coloneq \setc[\big]{ f \in \StepFunc }{ f \geq 0 }. 
+		\StepFuncPos \coloneq \setc[\big]{ f \in \StepFunc }{ f \geq 0 }. 
 	\]
 	
 	\begin{definition}{Nemnegatív lépcsősfüggvény integrálja}{}
-		Egy \( f \in \StepFuncPlus \) függvény (\( \mu \) mérték szerinti) \emph{integrálja} alatt az
+		Egy \( f \in \StepFuncPos \) függvény (\( \mu \) mérték szerinti) \emph{integrálja} alatt az
 		\[
 		\int f \dd{\mu} \coloneq
 		\sum_{y \in \rng{f}} y {\cdot} \mu \bigl( \{ f = y \} \bigr)
@@ -75,14 +75,14 @@
 	\end{definition}
 	
 	\begin{theorem}{Az integrál alaptulajdonságai}{}
-		Tekintsük az \( f, g \in \StepFuncPlus \) függvényeket és az \( \alpha \geq 0 \) számot. 
+		Tekintsük az \( f, g \in \StepFuncPos \) függvényeket és az \( \alpha \geq 0 \) számot. 
 		\marginnote{
 			\begin{stat*}
 				Az tételben foglalt jelölésekkel
 				\[
 					f + g \quad \text{és} \quad \alpha \cdot f
 				\]
-				szintén \( \StepFuncPlus \)-beli függvény.
+				szintén \( \StepFuncPos \)-beli függvény.
 			\end{stat*}
 		}
 		Ekkor
@@ -96,12 +96,12 @@
 	\newpage
 	\section{Az integrál kiterjesztése}
 	
-	\begin{theorem}{}{}
-		Legyen adott egy \( \StepFuncPlus \)-beli, monoton növekedő függvénysorozat:
+	\begin{theorem}{}{kiterjesztés-függvénysorozattal}
+		Legyen adott egy \( \StepFuncPos \)-beli, monoton növekedő függvénysorozat:
 		\[
-			f_n \in \StepFuncPlus, \quad f_n \leq f_{n + 1} \qquad (n \in \N).
+			f_n \in \StepFuncPos, \quad f_n \leq f_{n + 1} \qquad (n \in \N).
 		\]
-		Ha valamilyen \( g \in \StepFuncPlus \) függvény
+		Ha valamilyen \( g \in \StepFuncPos \) függvény
 		esetén \( g \leq \sup\limits_{n \in \N} f_n \). Ekkor
 		\[
 			\int g \dd{\mu} \leq \sup_{n} \int f_n \dd{\mu}.
@@ -114,6 +114,10 @@
 			\[
 				A_n \in \Omega, \quad (A_n) \nearrow X.
 			\]
+			Az utóbbi jelölés a következőt jelenti:
+			\[
+				A_n \subseteq A_{n + 1}, \quad X = \bigcup_{n = 0}^{\infty} A_n.
+			\]
 		}
 		\[
 			A_n \coloneq \bigl\{ f_n \geq c \cdot g \bigr\} \quad (n \in \N)
@@ -121,11 +125,16 @@
 		nívóhalmazok \( \Omega \)-ban vannak, és monoton növekvő módon tartanak \( X \)-hez.
 		
 		\begin{enumerate}
-			\item Mivel az \( (f_n) \) sorozat monoton nő, ezért az \( (A_n) \) monoton bővül. \checkmark
+			\item
+			Mivel az \( f_n, g \ (n \in \N) \) függvények mind mérhetőek, ezért \( A_n \in \Omega \). \checkmark
+			
+			\item 
+			Mivel az \( (f_n) \) sorozat monoton nő, ezért az \( (A_n) \) monoton bővül. \checkmark
+			
 			\item Ha \( x \in X \) tetszőleges, akkor
-			\marginnote{
-				Itt lehet, hogy \( g(x) = 0 \) vagy \( g(x) > 0 \).
-			}
+%			\marginnote{
+%				Itt lehet, hogy \( g(x) = 0 \) vagy \( g(x) > 0 \).
+%			}
 			\[
 				c \cdot g(x) \leq g(x) \leq \sup_{n \in \N} f_n(x).
 			\]
@@ -165,42 +174,206 @@
 		
 		Mivel \( \mu \) mérték, valamint bármely \( Z \in \Omega \) esetén 
 		az \( (A_n \cap Z) \nearrow Z \), ezért
-		\[
-			\mu(A_n \cap Z) \longrightarrow \mu(Z) \quad (n \to \infty).
-		\]
+		\begin{equation}\label{eq:majoráló-lépcsősfüggvény-sorozat}
+			\mu(A_n \cap Z) \longrightarrow \mu(Z) \quad (n \to \infty). \tag{\( * \)}
+		\end{equation}
 		
 		\noindent\rule{\linewidth}{0.4pt}\\
 		
-		Tekintsük az soron következő \( \StepFuncPlus \)-beli függvényeket
+		Vegyük észre, hogy a korábbiak értelmében fennáll az alábbi becslés:
+		\marginnote{
+			Véve \( g \) karakterisztikus alapját
+			\begin{align*}
+				g \cdot \chi_{A_n}
+				&= \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \}} {\cdot} \chi_{A_n} \\
+				&= \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \} \cap A_n}
+			\end{align*}
+			adódik. Továbbá elmondható, hogy
+			\[
+				\int \chi_B \dd{\mu} = \mu( B ) \quad (B \in \Omega).
+			\]
+		}
 		\[
 			f_n \geq c \cdot g \cdot \chi_{A_n} \qquad (n \in \N).
 		\]
-		Ekkor
-		\marginnote{
-			Ugyanis
-			\begin{align*}
-				\int g {\cdot} \chi_{A_n} \dd{\mu}
-				&= \int \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \}} {\cdot} \chi_{A_n} \dd{\mu} \\
-			%	&= \int \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \} \cap A_n} \dd{\mu} \\
-				&= \sum_{y \in \rng{g}} \int y {\cdot} \chi_{\{ g = y \} \cap A_n} \dd{\mu} \\
-				&= \sum_{y \in \rng{g}} y {\cdot} \mu \bigl( \{ g = y \} \cap A_n \bigr) \\
-			\end{align*}
-		}
+%		Ha pedig figyelembe vesszük a \( g \) függvény karakterisztikus alapját, akkor
+%		\[
+%			f_n \geq 
+%		%	c \cdot \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \}} {\cdot} \chi_{A_n} =
+%			c \cdot \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \} \cap A_n}
+%			\qquad (n \in \N).
+%		\]
+		Felhasználva a \( g \) karakterisztikus alapját, 
+		valamint az integrál additivitását
+%		\marginnote{
+%			Ugyanis
+%			\begin{align*}
+%				\int g {\cdot} \chi_{A_n} \dd{\mu}
+%				&= \int \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \}} {\cdot} \chi_{A_n} \dd{\mu} \\
+%			%	&= \int \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \} \cap A_n} \dd{\mu} \\
+%				&= \sum_{y \in \rng{g}} \int y {\cdot} \chi_{\{ g = y \} \cap A_n} \dd{\mu} \\
+%				&= \sum_{y \in \rng{g}} y {\cdot} \mu \bigl( \{ g = y \} \cap A_n \bigr) \\
+%			\end{align*}
+%		}
 		\[
-			\alpha \coloneq 
+		%	\alpha \coloneq 
 			\sup_{n} \int f_n \dd{\mu} \geq
 			\int f_n \dd{\mu} \geq 
 			c \cdot \int g {\cdot} \chi_{A_n} \dd{\mu} = 
 			c \cdot \sum_{y \in \rng{g}} y {\cdot} \mu\bigl( \{ y = g \} \cap A_n \bigr).
 		\]
-		Ekkor az \( n \to \infty \) határátmenet után
+		Végül \eqref{eq:majoráló-lépcsősfüggvény-sorozat} alapján elmondható, 
+		hogy az \( n \to \infty \) határátmenet után
 		\[
-			\alpha \geq 
+			\sup_{n} \int f_n \dd{\mu} \geq 
 			c \cdot \sum_{y \in \rng{g}} y {\cdot} \mu\bigl( \{ y = g \} \bigr) =
 			c \cdot \int g \dd{\mu}.
-			\qquad \Longrightarrow \qquad
-			\alpha \geq \int g \dd{\mu}.
+%			\qquad \Longrightarrow \qquad
+%			\alpha \geq \int g \dd{\mu}.
 		\]
 	\end{proof}
+	\newpage
+	\begin{note}
+		Mivel a fenti tételben szereplő \( (f_n) \) függvénysorozat monoton nő, így
+		\[
+			\sup_{n \in \N} f_n = \lim_{n \to \infty} f_n.
+		\]
+		Továbbá az integrál monotonitás miatt elmondható, 
+		hogy az \( \bigl( \int f_n \dd{\mu} \bigr) \) sorozat is monoton nő,
+		ezért létezik a soron következő határérték
+		\[
+			\sup_{n} \int f_n \dd{\mu} = 
+			\lim_{n \to \infty} \int f_n \dd{\mu}.
+		\]
+		Összefoglalva az alábbi következményhez jutunk.
+		
+		\begin{theo*}
+			\[
+				g \leq \lim_{n \to \infty} f_n
+				\qquad \Longrightarrow \qquad
+				\int g \dd{\mu} \leq \lim_{n \to \infty} \int f_n \dd{\mu}.
+			\]
+		\end{theo*}
+	\end{note}
+	
+	Az előző tétel alapján elmondható, hogy tetszőleges
+	\[
+		f_n, g_n \in \StepFuncPos, \quad f_n \leq f_{n + 1}, \quad g_n \leq g_{n + 1} \qquad (n \in \N)
+	\]
+	függvénysorozatot, amelyek a határértéke azonos, azaz
+	\[
+		\sup_{n \in \N} f_n = 
+		\lim_{n \to \infty} f_n = 
+		\lim_{n \to \infty} g_n = 
+		\sup_{n \in \N} g_n.
+	\]
+	Ekkor a hozzájuk tartozó integrálsorozatok határértékei is megegyeznek, vagyis
+	\[
+	%	\sup_{n} \int f_n \dd{\mu} = 
+		\lim_{n \to \infty} \int f_n \dd{\mu} = 
+		\lim_{n \to \infty} \int g_n \dd{\mu}.
+	%	\sup_{n} \int g_n \dd{\mu}.
+	\]
+	\begin{prf*}
+		Ugyanis egy rögzített \( m \in \N \) index esetén
+		\[
+			g_m \leq \sup_{n \in \N} g_n = \sup_{n \in \N} f_n.
+		\]
+		Ezért \aref{th:kiterjesztés-függvénysorozattal} tétel felhasználásával
+		\[
+			\int g_m \dd{\mu} \leq \sup_{n} \int f_n \dd{\mu}
+			\qquad \Longrightarrow \qquad
+			\sup_{m} \int g_m \dd{\mu} \leq \sup_{n} \int f_n \dd{\mu}.
+		\]
+		Ugyanezen oknál fogva (lásd \( g_m \longleftrightarrow f_n \) szerepcsere) adódik, hogy
+		\[
+			\sup_{m} \int g_m \dd{\mu} \geq \sup_{n} \int f_n \dd{\mu}
+			\qquad \Longrightarrow \qquad
+			\boxed{\sup_{m} \int g_m \dd{\mu} = \sup_{n} \int f_n \dd{\mu}}.
+		\]
+	\end{prf*}
+	
+	\noindent
+	Mindez azt jelenti, hogy egy monoton növekedő \( \StepFuncPos \)-beli függvényekhez tartozó 
+	integrálsorozat határértéke független magától a függvénysorozat megválasztásától. 
+	Egyedül az számít, hogy milyen határfüggvényhez konvergál a sorozat.
+	Ezért érdemes kitüntetett szereppel felruházni az előbb határfüggvényeket.
+	
+	\begin{definition}{\( \StepFuncPlus \)-függvények integrálja}{}
+		Legyen
+		\[
+			\StepFuncPlus \coloneq
+			\setc[\big]{ \func{f}{X}{\overline{\R}} }
+			     { f = \lim(f_n), \text{ ahol } (f_n) \nearrow, \ \StepFuncPos \text{-beli}}.
+		\]
+		Ha \( f \in \StepFuncPlus \), valamint egy \( \func{(f_n)}{\N}{\StepFuncPos} \) sorozattal,
+		\( f = \lim(f_n) \), akkor legyen
+		\[
+			\int f \dd{\mu} \coloneq 
+			\lim_{n \to \infty} \int f_n \dd{\mu}
+		\]
+		az \( f \) függvény \( \mu \) mérték szerinti \emph{integrálja}.
+	\end{definition}
+	
+	\begin{notes}
+		\item 
+		Nyilvánvaló, hogy \( \StepFuncPos \subset \StepFuncPlus \),
+		valamint az \( \StepFuncPos \)-beli függvények integrálja megegyezik az 
+		\( \StepFuncPlus \)-beli függvények integráljával.
+		
+		Ugyanis, ha \( f \in \StepFuncPos \), akkor az \( f_n \coloneq f \ (n \in \N) \)
+		függvénysorozat monoton nő, valamint a határfüggvénye
+		\[
+			\lim(f_n) = f \in \StepFuncPos
+			\qquad \Longrightarrow \qquad
+			\StepFuncPos \subset \StepFuncPlus.
+		\]
+		\[
+		%	\StepFuncPos \text{-beli} \longrightarrow
+			\underset{
+				\substack{
+					\mathclap{\big\uparrow} \\
+					\mathclap{\StepFuncPlus \text{-beli}}
+				}
+			}{\int f \dd{\mu}} = 
+			\lim_{n \to \infty} \int f_n \dd{\mu} =
+			\lim_{n \to \infty} \int f \dd{\mu} =
+			\underset{
+				\substack{
+					\mathclap{\big\uparrow} \\
+					\mathclap{\StepFuncPos \text{-beli}}
+				}
+			}{\int f \dd{\mu}}.
+		%	\longleftarrow \StepFuncPlus \text{-beli}.
+		\]
+	\end{notes}
+	
+	\begin{theorem}{Az \( \StepFuncPlus \) szerkezete}{}
+		Az \( \func{f}{X}{[0, +\infty]} \) függvény pontosan akkor eleme \( \StepFuncPlus \)-nak, 
+		ha mérhető, így
+		\[
+			\StepFuncPlus =
+			\setc[\big]{ \func{f}{X}{\overline{ \R }} }{ \text{az } f \geq 0 \text{ mérhető}}
+		\]
+	\end{theorem}
+	
+	\begin{theorem}{Az \( \StepFuncPlus \)-beli integrál alaptulajdonságai}{}
+		Tekintsük az \( f, g \in \StepFuncPlus \) függvényeket és az \( \alpha \geq 0 \) számot. 
+		\marginnote{
+			\begin{stat*}
+				Az tételben foglalt jelölésekkel
+				\[
+					f + g \quad \text{és} \quad \alpha \cdot f
+				\]
+				szintén \( \StepFuncPlus \)-beli függvény.
+			\end{stat*}
+		}[-\baselineskip]
+		Ekkor
+		\begin{enumerate}
+			\item \( \displaystyle \int (\alpha \cdot f) \dd{\mu} = \alpha \cdot \int f \dd{\mu} \);
+			\item \( \displaystyle \int (f + g) \dd{\mu} = \int f \dd{\mu} + \int g \dd{\mu} \);
+			\item \( \displaystyle f \leq g \quad \Longrightarrow \quad \int f \dd{\mu} \leq \int g \dd{\mu} \);
+		\end{enumerate}
+	\end{theorem}
 	
 \end{document} 

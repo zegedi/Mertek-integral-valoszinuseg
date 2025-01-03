@@ -1,0 +1,347 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{20. Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Emlékeztető}
+	
+	\begin{definition}{Súlyfüggvény}{}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, 
+		\( f \in \StepFuncPlus \) egy adott függvény. Ekkor a
+		\[
+		\func{\mu_f}{\Omega}{[0, +\infty]}, \qquad 
+		\mu_f(A) \coloneq 
+		\int_A f \dd{\mu} \coloneq 
+		\int f {\cdot} \chi_A \dd{\mu}
+		\]
+		leképezést \emph{súlyfüggvénynek} nevezzük.
+		%	az \( f \) függvény \emph{integrálja} az \( A \) halmazon.
+	\end{definition}
+	
+	\begin{notes}
+		\item Könnyen igazolható, hogy \( \mu_f \) mérték.
+		
+		\item Amennyiben az \( A \in \Omega \) halmaz nullamértékű, akkor
+		\[
+			f {\cdot} \chi_A = 0 \ \mu \text{-m.m.}
+			\quad \Longrightarrow \quad
+			\mu_f(A) = 
+			%	\int_A f \dd{\mu} =
+			\int f {\cdot} \chi_A \dd{\mu} =
+			0.
+		\]
+	\end{notes}
+	
+	\begin{definition}{Abszolút folytonosság}{}
+		Legyen \( (X, \Omega) \) mérhető tér, 
+		valamint \( \func{\mu, \nu}{\Omega}{[0, +\infty]} \) két mérték.\\[6pt]
+		Azt mondjuk, 
+		hogy \( \nu \) \emph{abszolút folytonos} \( \mu \)-re nézve (jelben \( \nu \ll \mu \)), ha
+		\[
+			\mu(A) = 0
+			\quad \Longrightarrow \quad
+			\nu(A) = 0
+			\qquad (A \in \Omega).
+		\]
+	\end{definition}
+	
+	\begin{lemma}{}{}
+		Legyen \( (X, \Omega) \) mérhető tér, 
+		\( \func{\mu, \nu}{\Omega}{[0, +\infty]} \) két mérték, ahol \( \nu \) véges.\\[6pt]
+		Ekkor \( \nu \ll \mu \) azzal ekvivalens, hogy
+		bármely \( \varepsilon > 0 \)-hoz van olyan \( \delta > 0 \):
+		\[
+		%			\forall \varepsilon > 0 \text{-hoz},\
+		%			\exists \delta > 0,
+		%			\forall A \in \Omega \colon \
+		%			\mu(A) < \delta \quad \longrightarrow \quad \nu(A) < \delta.
+		\mu(A) < \delta
+		\quad \Longrightarrow \quad
+		\nu(A) < \varepsilon
+		\qquad (A \in \Omega).
+		\]
+	\end{lemma}
+	
+	\section{Radon--Nikodym-tétel}
+	
+	Korábban megjegyeztük, hogy amennyiben \( (X, \Omega, \mu) \) mértéktér és
+	\( f \in \StepFuncPlus \), akkor igaz a
+	\[
+		\mu(A) = 0
+		\quad \Longrightarrow \quad
+		\mu_f(A) = 0
+		\qquad (A \in \Omega)
+	\]
+	implikáció, vagyis a \( \mu_f \) mérték abszolút folytonos a \( \mu \) mértékre.
+	A most tárgyalásra kerülő Radon--Nikodym-tétel azt állítja, hogy amennyiben a \( \mu \) szigma-véges mérték, akkor \( \mu_f \) az egyetlen olyan mérték, ami eleget tesz ennek.
+	
+	\newpage
+	\begin{theorem}{Radon--Nikodym-tétel}{radon-nikodym}
+		Legyen \( (X, \Omega) \) mérhető tér, 
+		valamint \( \func{\mu, \nu}{\Omega}{[0, +\infty)} \) mérték. Ekkor
+		\[
+			\nu \ll \mu
+			\quad \iff \quad
+			\exists f \in \StepFuncPlus, \text{ hogy } \nu = \mu_f.
+		\]
+	\end{theorem}
+	\begin{proof}
+		Tehát feltesszük, hogy a \( \mu, \nu \) mértékek végesek.
+		Legyen
+		\marginnote{
+			Az \( \mathcal{L} \) halmaz valóban nem üres, mert
+			\[
+				g \equiv 0
+				\quad \Longrightarrow \quad
+				g \in \mathcal{L}.
+			\]
+		}
+		\[
+			\mathcal{L} \coloneq 
+			\setc[\big]{ g \in \StepFuncPlus }{ \mu_g \leq \nu } \neq \emptyset.
+		\]
+		Könnyen belátható módon fennállnak az alábbi állítások.
+	%	Ekkor az \( \mathcal{L} \) halmaz nem üres, 
+	%	ugyanis a \( g \equiv 0 \) függvény eleme ennek.
+		\begin{enumerate}
+			\item\label{eq:radon-nikodym-01}
+			Tetszőleges \( g, h \in \mathcal{L} \) függvény esetén
+			\marginnote{
+				Lásd: \( 
+					\max \{ g, h \} =
+					g {\cdot} \chi_{\{ g \geq h \}} + h {\cdot} \chi_{\{ g < h \}}
+				\).
+			}
+			\( \max \{ g, h \} \in \mathcal{L} \).
+			
+			\item\label{eq:radon-nikodym-02}
+			Létezik az alábbi véges ``integrál-szuprémum''
+			\marginnote{
+				Ugyanis tetszőleges \( g \in \mathcal{L} \) függvényre
+				\[
+					\int g \dd{\mu} =
+				%	\int g \cdot \chi_X \dd{\mu} =
+					\mu_g(X) \leq
+					\nu(X) <
+					+\infty.
+				\]
+			}
+			\[
+				\gamma \coloneq 
+				\sup \setc[\bigg]{ \int g \dd{\mu} }{ g \in \mathcal{L} } < +\infty.
+			\]
+		\end{enumerate}
+		
+		\vspace{-6pt}
+		\hrule
+		\vspace{9pt}
+		
+		\Aref{eq:radon-nikodym-01} és \ref{eq:radon-nikodym-02} állítások alapján 
+		megadható olyan	\( (f_n) \) függvénysorozat, hogy
+		\[
+			f_n \in \mathcal{L}, \quad 
+			f_n \leq f_{n + 1}, \quad
+			\lim_{n \to \infty} \int f_n \dd{\mu} = \gamma 
+			\qquad (n \in \N).
+		\]
+		Ekkor a \hyperref[th:beppo-levi]{Beppo Levi-tétel} miatt elmondható,
+		\marginnote{
+			\begin{theo*}[Beppo Levi-tétel]\phantomsection\label{th:beppo-levi}
+				Amennyiben
+				\[
+					g_n \in \StepFuncPlus, \quad 
+					g_n \leq g_{n + 1} \quad (n \in \N),
+				\]
+				akkor \( g \coloneq \lim(g_n) \) szintén \( \StepFuncPlus \)-beli és
+				\[
+					\int g \dd{\mu} =
+					\lim_{n \to \infty} \int g_n \dd{\mu}.
+				\]
+			\end{theo*}
+		}[-1.4\baselineskip]
+		hogy az \( (f_n) \) konvergens, azaz
+		\[
+			f \coloneq \lim(f_n) \in \StepFuncPlus.
+		\]
+		Továbbá bármilyen \( A \in \Omega \) halmaz esetén az \( (f_n {\cdot} \chi_A) \) sorozat monoton növő és \( \StepFuncPlus \)-beli, ezért szintén a 
+		\hyperref[th:beppo-levi]{Beppo Levi-tétel} felhasználásával kapjuk, hogy
+		\[
+			\lim_{n \to \infty} (f_n {\cdot} \chi_A ) = 
+			f { \cdot } \chi_A \in \StepFuncPlus.
+		\]
+		Továbbá a határátmenet és az integrálás felcseresével
+		\[
+			\mu_f(A) = 
+			\int f {\cdot} \chi_A \dd{\mu} =
+		%	\int \lim_{n \to \infty} f_n {\cdot} \chi_A \dd{\mu} =
+			\lim_{n \to \infty} \int f_n {\cdot} \chi_A \dd{\mu} =
+			\lim_{n \to \infty} \mu_{f_n}(A) \leq
+			\nu(A).
+		\]
+		Speciálisan megmutattuk, hogy \( \mu_f \leq \nu \).
+		
+		\vspace{6pt}
+		\hrule
+		\vspace{6pt}
+		
+		Belátjuk, hogy \( \nu = \mu_f \). Ez azzal ekvivalens, hogy
+		\marginnote{
+			Hiszen \( A \in \Omega \) esetén \( A \subseteq X \), ezért
+			\[
+				0 \leq \sigma(A) \leq \sigma(X) = 0.
+			\]
+		}
+		\[
+			\sigma \coloneq \nu - \mu_f = 0 
+			\quad \iff \quad
+			\sigma(X) = 0.
+		\]
+		Ekkor nyilvánvaló, hogy \( \sigma \) egy véges mérték.
+		Továbbá \( \sigma \leq \nu \), ezért \( \nu \ll \mu \) következtében \( \sigma \ll \mu \).
+		\marginnote{
+			Ha ugyanis \( A \in \Omega, \ \mu(A) = 0 \), akkor
+			\[
+				0 \leq \sigma(A) \leq \nu(A) = 0.
+			\]
+		}
+%		\[
+%			\mu(A) = 0
+%			\quad \Longrightarrow \quad
+%			\nu(A) = 0
+%			\quad \Longrightarrow \quad
+%			\sigma(A) = 0
+%			\qquad (A \in \Omega).
+%		\]
+%		Tehát \( \sigma \) abszolút folytonos a \( \mu \)-re nézve.
+		Továbbá indirekt módon tegyük fel, hogy
+		\[
+			\sigma(X) > 0
+			\quad \Longrightarrow \quad
+			\mu(X) > 0.
+		\]
+		Ezt követően bizonyítás nélkül elfogadjuk az alábbi lemmát.
+		\begin{lemma}{B-lemma}{radon-nikodym-b}
+			Megadható olyan \( Y \in \Omega \) halmaz és \( \beta > 0 \) szám, 
+			amellyel %\( A \in \Omega \) esetén
+			\[
+				\sigma(Y) > \beta \cdot \mu(Y), \qquad
+			%	\qquad \text{és} \qquad
+				\sigma(A \cap Y) \geq \beta \cdot \mu(A \cap Y)
+				\qquad (A \in \Omega).
+			\]
+		\end{lemma}
+		
+		\newpage
+		Ekkor a \hyperref[lem:radon-nikodym-b]{B-lemma} alapján \( \mu(Y) >  0 \).
+		Ellenkező esetben a \( \sigma \ll \mu \) abszolút folytonosság miatt ellentmondanánk az előbb említett lemma első pontjának.
+		Továbbá tekintsük az \( \StepFuncPlus \)-beli
+		\[
+			F \coloneq f + \beta \cdot \chi_Y 
+		\]
+		függvényt. Ekkor tetszőleges \( A \in \Omega \) mellett
+		\begin{align*}
+			\mu_F(A)
+			&= \int F {\cdot} \chi_A \dd{\mu} 
+			 = \int f {\cdot} \chi_A \dd{\mu} + \int \beta {\cdot} \chi_{A \cap Y} \dd{\mu} \\[3pt]
+			&= \mu_f(A) + \beta {\cdot} \mu(A \cap Y)
+			\leq \mu_f(A) + \sigma(A) = \nu(A).
+		\end{align*}
+		Ezek szerint \( F \in \mathcal{L} \), ahonnan az alábbi ellentmondás adódik:
+		\[
+			\gamma \geq 
+			\int F \dd{\mu} = 
+		%	\int f \dd{\mu} + \beta \int \chi_Y \dd{\mu} =
+			\int f \dd{\mu} + \beta \cdot \mu(Y) > \gamma.
+		\]
+		
+		
+	%	Mindez azt jelenti, hogy \( f \in \mathcal{L} \).
+	\end{proof}
+	
+	\begin{notes}
+		\item
+		A \hyperref[th:radon-nikodym]{Radon--Nikodym-tétel} abban az esetben is igaz marad,
+		amikor a
+		\[
+			\func{\mu, \nu}{\Omega}{[0, +\infty]}
+		\]
+		mértékek végessége helyett azt követeljük meg, hogy \( \mu \) szigma-véges legyen.
+		
+		Ez utóbbi azt jelenti, hogy létezik olyan \( A_n \in \Omega \ (n \in \N) \)
+		páronként diszjunkt mérhető halmazokból álló sorozat, amellyel
+		\[
+			X = \bigcup_{n = 0}^{\infty} A_n
+			\quad \text{és} \quad
+			\mu(A_n) < +\infty \qquad (n \in \N).
+		\]
+		
+		\item
+		A \hyperref[th:radon-nikodym]{Radon--Nikodym-tételben} bevezetett jelölésekkel az alábbi teljesül.
+		
+		\begin{theo*}
+			Legyen \( (X, \Omega) \) mérhető tér, 
+			\( \func{\mu}{\Omega}{[0, +\infty]} \) szigma-véges mérték. 
+			Ekkor tetszőleges \( f,g \in \StepFuncPlus(\mu) \) esetén
+			\[
+				\mu_f = \mu_g
+				\qquad \Longrightarrow \qquad
+				f = g \quad \mu \text{-m.m.}
+			\]
+		\end{theo*}
+		
+	\end{notes}
+	
+	
+%	\newpage
+%	
+%	\begin{theorem}{Radon--Nikodym-tétel}{}
+%		Legyen \( (X, \Omega) \) mérhető tér, 
+%		valamint \( \func{\mu, \nu}{\Omega}{[0, +\infty)} \) mérték. Ekkor
+%		\[
+%		\nu \ll \mu
+%		\quad \iff \quad
+%		\exists f \in \StepFuncPlus, \text{ hogy } \nu = \mu_f.
+%		\]
+%	\end{theorem}
+%	\begin{proof}
+%		Ha \( \mu, \nu \) véges mértékek, akkor \( (\mu + \nu) \) is véges mérték. Legyen
+%		\[
+%			\mathcal{H} \coloneq \Lebesgue[2](\mu + \nu)
+%		\]
+%		Következésképpen értelmezhető az alábbi funkcionál
+%		\[
+%			\func{\varphi}{\mathcal{H}}{\R}, \qquad 
+%			\varphi(h) \coloneq \int h \dd{\mu}.
+%		\]
+%		Ezen \( \varphi \) funkcionál korlátos, ugyanis a Hölder-egyenlőtlenséget felhasználva
+%		\[
+%			\abs\big{ \varphi(h) } =
+%			\abs{ \int h \cdot 1 \dd{\mu} } \leq
+%			\int \abs{h} \cdot \abs{1} \dd{\mu} \leq
+%			\int \abs{h} \cdot \abs{1} \dd{(\mu + \nu)}
+%		\]
+%	\end{proof}
+	
+	
+\end{document} 

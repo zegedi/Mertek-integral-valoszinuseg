@@ -1,0 +1,294 @@
+\documentclass[
+%parspace, % Add vertical space between paragraphs
+%noindent, % No indentation of first lines in each paragraph
+%nohyp,	   % No hyphenation of words
+%twoside,  % Double sided format
+%draft,    % Quicker draft compilation without rendering images
+%final,    % Set final to hide todos
+]{elteikthesis}[2024/04/26]
+
+
+% The minted package is also supported for source highlighting
+% See elteikthesis_minted.tex for example
+%\usepackage[newfloat]{minted}
+\usepackage{enumitem}
+
+% Document's metadata
+\title{Mérték, integrál, valószínűség} % title
+\subtitle{\circled{19} Vizsgatétel}
+
+
+% The document
+\begin{document}
+	
+	% Set document language
+	\documentlang{hungarian}
+	
+	\section{Emlékeztető}
+	
+	as
+	
+	\begin{theorem}{Kis Lebesgue-tétel}{kis-lebesgue}
+		Legyen \( (X, \Omega, \mu) \) mértéktér, \( \mu \) véges, 
+		valamint az \( f_n \in \Lebesgue \ (n \in \N) \) olyan függvénysorozat, 
+		amelyre a következők igazak:
+		\begin{enumerate}[label=\roman*)]
+			\item
+			majdnem mindenhol létezik a \( \lim(f_n) \) pontonkénti limesz;
+			
+			\item
+			megadható olyan \( C \) konstans, hogy minden \( n \in \N \) indexre
+			\[
+			%	\abs{f_n} \leq F \qquad \mu \text{-m.m.}
+			\abs\big{f_n(x)} \leq C \qquad (\mu \text{-m.m. } x \in X).
+			\]
+		\end{enumerate}
+		Ekkor van olyan \( f \in \Lebesgue \) függvény, 
+		hogy majdnem mindenhol \( f = \lim(f_n) \) és
+		\[
+		%	f = \lim_{n \to \infty} f_n \quad \mu \text{-m.m.}
+		%	\qquad \text{és} \qquad
+		\int f \dd{\mu} = \lim_{n \to \infty} \int f_n \dd{\mu}.
+		\]
+	\end{theorem}
+	
+	\section{Riemann--Lebesgue-tétel}
+	
+	A továbbiakban feltesszük, hogy adottak az \( a, b \in \R, \ a < b \) számok.
+	Ekkor
+	\[
+		\Omega \coloneq 
+		\bigl\{ A \subseteq [a, b] \ \colon \, A \in \widehat{\Omega}_1 \bigr\}
+	\]
+	a \textit{Lebesgue-mérhető halmazok} szigma-algebrája, valamint legyen 
+	\[
+		\func{\mu}{\Omega}{[0, +\infty)}, \quad
+		\mu(A) \coloneq \widehat{\mu}_1(A) \quad (A \in \Omega)
+	\]
+	a \textit{Lebesgue-mérték}.
+	Mivel \( \mu \) véges, ezért bármely \( 1 \leq p \leq q \leq +\infty \) mellett
+	\[
+		\Lebesgue[\infty][a, b] \subset
+		\Lebesgue[q][a, b] \subset
+		\Lebesgue[p][a, b] \subset
+		\Lebesgue[1][a, b].
+	\]
+	a szigorú értelemben vett tartalmazások
+	
+	\begin{theorem}{Riemann--Lebesgue-tétel}{}
+		Bármely \( \func{f}{[a, b]}{\R} \) Riemann-integrálható függvényre
+		\( f \in \Lebesgue[\infty][a, b] \), és
+		\[
+			\text{Riemann-integrál} \ \longrightarrow \
+			\int_a^b f(x) \dd{x} = \int f \dd{\mu}
+			\ \longleftarrow \ \text{Lebesgue-integrál}.
+		\]
+	\end{theorem}
+	\begin{proof}
+		Vegyünk egy \( \tau \coloneq \{ x_0, \dots, x_s \} \subseteq [a, b] \) felosztást és legyen
+		\[
+			\delta_\tau \coloneq \max \setc[\big]{ x_{i + 1} - x_i }{ i = 0,\dots, s-1 }
+		\]
+		az felosztás úgynevezett \emph{finomsága}. Továbbá legyen
+		\[
+			\begin{alignedat}{2}
+				m_i &\coloneq \inf && \setc[\big]{ f(x) }{ x_i \leq x \leq x_{i + 1} } \\
+				M_i &\coloneq \sup && \setc[\big]{ f(x) }{ x_i \leq x \leq x_{i + 1} }
+			\end{alignedat}
+			\qquad (i = 0,\dots,s-1).
+		\]
+		Vezessük be az alábbi függvényeket
+		\begin{align*}
+			\varphi &\coloneq
+			\sum_{i=0}^{s-2} m_i     {\cdot} \chi_{[x_i, x_{i+1})}
+			+                m_{s-1} {\cdot} \chi_{[x_{s-1}, x_s]} \\[6pt]
+			\Phi &\coloneq
+			\sum_{i=0}^{s-2} M_i     {\cdot} \chi_{[x_i, x_{i+1})}
+			+                M_{s-1} {\cdot} \chi_{[x_{s-1}, x_s]}.
+		\end{align*}
+		Nyilvánvaló, hogy fennállnak az alábbi állítások
+		\[
+			\varphi, \Phi \in \StepFunc, \quad
+			\varphi \leq f \leq \Phi, \quad
+			\int \varphi \dd{\mu} = s(f, \tau), \quad
+			\int \Phi \dd{\mu} = S(f, \tau).
+		\]
+		Továbbá az \( \StepFunc \)-beli integrál definíció miatt világos, hogy
+		\[
+			\int \varphi \dd{\mu} = 
+			s(f, \tau) = 
+			\sum_{i=0}^{s-1} m_i {\cdot} \bigl( x_{i+1} - x_i \bigr)
+			\int \Phi \dd{\mu} = S(f, \tau).
+		\]
+		
+		Vegyünk egy minden határon túl finomodó felosztássorozat, azaz legyen
+		\[
+			\tau_n \subset [a, b] \text{ felosztás}, \quad
+			\tau_n \subset \tau_{n + 1} \quad (n \in \N), \qquad
+			\lim_{n \to \infty} \delta_{\tau_n} = 0.
+		\]
+		A Riemann-integrálról tanultak alapján elmondható, hogy
+		\[
+%			s(f, \tau_n) \nearrow \int\limits_a^b f(x) \dd{x}
+%			\qquad \text{és} \qquad
+%			S(f, \tau_n) \searrow \int\limits_a^b f(x) \dd{x}
+			s(f, \tau_n), \ S(f, \tau_n) \longrightarrow  \int_a^b f(x) \dd{x}
+			\qquad (n \to \infty).
+		\]
+		Következésképpen a megfelelő Lebesgue-integrálsorozatok is
+		\[
+			\int \varphi_n \dd{\mu}, \
+			\int \Phi_n    \dd{\mu} \longrightarrow  \int_a^b f(x) \dd{x}
+			\qquad (n \to \infty).
+		\]
+		Az itt szereplő \( (\varphi_n) \) függvénysorozat monoton növekedő,
+		míg a \( (\Phi_n) \) sorozat monoton csökken, továbbá
+		\begin{equation}\label{eq:riemann-lebesgue-01}
+			\varphi_n \leq f \leq \Phi_n
+			\qquad (n \in \N).
+			\tag{\( * \)}
+		\end{equation}
+		\newpage
+		Mivel két lépcsősfüggvény különbsége továbbra is lépcsősfüggvény, 
+		ezért a \( (\Phi_n - \varphi_n) \) sorozat \( \StepFuncPos \)-beli függvényekből álló monoton csökkenő sorozat.
+		\[
+			\Psi \coloneq 
+			\lim_{n \to \infty} (\Phi_n - \varphi_n) =
+			\lim_{n \to \infty} \Phi_n - \lim_{n \to \infty} \varphi_n
+		\]
+		függvény nemnegatív és mérhető, tehát \( \Psi \in \StepFuncPlus \). 
+		\marginnote{
+			Mivel \( \Phi_0 \in \StepFunc \), ezért korlátos is.
+		}
+		Illetve adott \( C \in \R \) esetén
+		\[
+			\Phi_n - \varphi_n \leq \Phi_0 \leq C \qquad (n \in \N)
+		\]
+		is fennáll, 
+		ezért az \( n \to \infty \) határátmenetet véve \( \Psi \leq C \).
+		
+		Ekkor a kis Lebesgue-tétel alkalmazásával kapjuk, hogy
+		\[
+			\int \Psi \dd{\mu} =
+			\lim_{n \to \infty} \int (\Phi_n - \varphi_n) \dd{\mu} =
+			\int_a^b f(x) \dd{x} - \int_a^b f(x) \dd{x} =
+			0.
+		\]
+		Innen kapjuk, hogy \( \Psi = 0 \) m.m.
+		Ugyanakkor a \eqref{eq:riemann-lebesgue-01} becslés alapján
+		\begin{equation*}\label{eq:riemann-lebesgue-02}
+			f = g \coloneq \lim(\varphi_n) \quad \mu \text{-m.m.}
+			\tag{\( ** \)}
+		\end{equation*}
+		Igazoljuk, hogy \( f \in \Lebesgue[\infty][a, b] \).
+		Ehhez azt kell megmutatni, hogy az \( f \) korlátos és mérhető.
+		Nyilván az előbbi fennáll, hiszen csakis a korlátos függvények Riemann-integrálhatóak.
+		Utóbbihoz megmutatjuk, hogy minden \( A \subseteq \R \) Borel-halmazra
+		\[
+			f^{-1}[A] \in \Omega.
+		\]
+		Ugyanis
+		\[
+			f^{-1}[A] =
+			\bigl( f^{-1}[A] \cap \{ f = g \} \bigr) \cup 
+			\bigl( f^{-1}[A] \cap \{ f \neq g \} \bigr).
+		\]
+		Ekkor \eqref{eq:riemann-lebesgue-02} szerint van olyan 
+		\( B \in \Omega \) nullamértékű halmaz, 
+		hogy \( \{ f \neq g \} \subseteq B \).
+		Felhasználva a \( \mu \) mérték teljességét
+		\[
+			\underbrace{f^{-1}[A] \cap \{ f = g \}}_{\in \Omega} =
+			\underbrace{g^{-1}[A]}_{\in \Omega} \cap \underbrace{\{ f = g \}}_{\in \Omega}
+			\quad \text{és} \quad
+			\underbrace{f^{-1}[A] \cap \{ f \neq g \}}_{\in \Omega} \subseteq B.
+		\]
+		Tehát \( f^{-1}[A] \in \Omega \) valóban fennáll, vagyis az \( f \) mérhető.
+%		\begin{equation*}
+%			\begin{tikzpicture}
+%				\matrix (m) [
+%					matrix of math nodes,
+%					row sep=1em,
+%					column sep=-0.5em,
+%					text height=1.5ex, text depth=0.25ex
+%					] {
+%					\underbrace{f^{-1}[A] \cap \{ f = g \}} & = & g^{-1}[A] & \cap & \{ f = g \} \\
+%					\in	\Omega &  & \in \Omega & & \in \Omega \\
+%				};
+%				\path[->]
+%				%	(m-1-1) edge node[above] {$L$} (m-1-2)
+%					(m-2-1) edge node[left]  {} (m-1-1)
+%					(m-2-3) edge node[right] {} (m-1-3)
+%					(m-2-5) edge node[right] {} (m-1-5);
+%			\end{tikzpicture}
+%		\end{equation*}
+
+		Már csak az integrálok egyenlőségét kell megmutatni.
+		Ehhez ismételten a kis Lebesgue-tétel alkalmazzuk, 
+		most viszont az \( (\varphi_n) \) függvénysorozatra.
+		\[
+			\int f \dd{\mu} =
+			\lim_{n \to \infty} \int \varphi_n \dd{\mu} =
+			\int_a^b f(x) \dd{x}.
+		\]
+	\end{proof}
+	
+	\begin{notes}
+		\item
+		Mivel a Lebesgue-féle \( \mu \) mérték véges, ezért fennállnak az
+		\[
+			\Lebesgue[\infty][a, b] \subset
+			\Lebesgue[q][a, b] \subset
+			\Lebesgue[p][a, b] \subset
+			\Lebesgue[1][a, b]
+		\]
+		szigorú értelemben vett tartalmazások, ahol a kitevők sorrendje
+		\[
+			1 < p < q < +\infty.
+		\]
+		
+		\item
+		Megmutatjuk, hogy nem minden Lebesgue-integrálható függvény Riemann-integrálható, 
+		tehát a Lebesgue-integrál valóban kiterjesztése a Riemann-féle megközelítésnek.
+		
+		Ugyanis jól ismert, hogy a Dirichlet-féle
+		\[
+			\func{f}{[0, 1]}{\R}, \qquad
+			f(x) =
+			\left\{
+			\begin{aligned}
+				1, & \quad x \in \Q \\
+				0, & \quad x \notin \Q
+			\end{aligned}
+			\right.
+		\]
+		függvény nem Riemann-integrálható. 
+		Ugyanakkor ha vesszük a \( [0, 1] \)-beli racionális számoknak egy 
+		\( (r_n) \) sorozatát, akkor az
+		\[
+			\func{f_n}{[0, 1]}{\R}, \quad
+			f_n(x) =
+			\left\{
+			\begin{aligned}
+				1, & \quad x \in \{ r_0, \dots, r_n \} \\
+				0, & \quad x \notin \{ r_0, \dots, r_n \}
+			\end{aligned}
+			\right.
+			\quad (x \in [0, 1], \ n \in \N).
+		\]
+		függvénysorozatról nyilvánvaló, hogy
+		\[
+			f_n \in \StepFuncPlus, \quad
+			f_n \leq f_{n + 1} \quad (n \in \N), \quad
+			f = \lim(f_n).
+		\]
+		Ezért az \( f \) függvény Lebesgue-integrálja
+		\[
+			\int f \dd{\mu} =
+			\lim_{n \to \infty} \int f_n \dd{\mu} = 
+			\lim_{n \to \infty} 0 = 
+			0.
+		\]
+	\end{notes}
+	
+\end{document} 
