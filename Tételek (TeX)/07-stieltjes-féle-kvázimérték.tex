@@ -1,4 +1,4 @@
-{\tiny \documentclass[
+\documentclass[
 %parspace, % Add vertical space between paragraphs
 %noindent, % No indentation of first lines in each paragraph
 %nohyp,	   % No hyphenation of words
@@ -49,6 +49,27 @@
 		\setc[\Big]{ \emptyset, [a, b) \subseteq \R }{ a, b \in \R, \ a < b }, \qquad
 		\mathcal{I} \coloneq \mathcal{G}(\mathbf{I}).
 	\]
+	Mivel az \( m \) egy félgyűrűn értelmezett nemnegatív, 
+	additív és az üres halmazhoz nullát rendelő halmazfüggvény, 
+	ezért érvényes rá az alábbi kiterjesztési tétel.
+	
+	\begin{theorem}{}{}
+		Definiáljuk az alábbi (\emph{Stieltjes-féle kvázimérték}) halmazfüggvényt:
+		\[
+			\func{\widetilde{\mu}_\varphi}{\mathcal{I}}{[0, +\infty)}, \qquad
+			\mu(I) \coloneq \sum_{k=0}^{n} m( I_k ),
+		\]
+		ahol az \( I \in \mathcal{I} \) esetén vannak olyan
+		páronként diszjunkt \( I_0, \dots, I_n \in \mathbf{I} \), hogy
+		\[
+			I = \bigcup_{k=0}^{n} I_k.
+		\]
+		Ekkor \( \widetilde{\mu}_\varphi \) előmérték,
+		és ez az egyetlen olyan előmérték \( \mathcal{I} \)-n,
+		amire \( \restr{ \widetilde{\mu}_\varphi }{ \mathbf{I} } = m \).
+	\end{theorem}
+	
+	Bizonyos feltétel mellett \( \widetilde{\mu}_\varphi \) nemcsak előmérték, hanem valóban kvázimérték.
 	
 	\begin{theorem}{}{}
 		A most bevezetett \( \widetilde{\mu}_\varphi \) kvázimérték \( \iff \)
@@ -115,9 +136,9 @@
 		\]
 		Ez pedig pontosan azt jelenti, hogy a \( \varphi \) balról folytonos az \( x \)-ben.
 		
-		\vspace{6pt}
-		\hrule
-		\vspace{6pt}
+%		\vspace{6pt}
+%		\hrule
+%		\vspace{6pt}
 		
 		\newpage
 		\Backifstep
@@ -244,6 +265,17 @@
 			\sum_{n=0}^{\infty} \Bigl( \varphi(b_n) - \varphi(a_n) \Bigr).
 		\]
 	\end{proof}
+	
+	\begin{note}
+		Nyilván az identitásfüggvény eleget tesz a kívánalmaknak, és
+		\[
+			\varphi(x) \coloneq x \qquad (x \in \R)
+		\]
+		esetén visszakapjuk az úgynevezett \emph{Borel--Lebesgue-kvázimértéket}, azaz
+		\[
+			\widetilde{\mu}_\varphi = \widetilde{\mu}_1.
+		\]
+	\end{note}
 	
 	
 \end{document}}

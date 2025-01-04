@@ -80,88 +80,46 @@
 		\end{enumerate}
 	\end{definition}
 	
-	\newpage
-	
-	\begin{theorem}{Az előmérték tulajdonságai}{}
+	\begin{theorem}{Az előmérték tulajdonságai}{előmérték-tulajdonságok}
 		Legyen \( \mu \) előmérték a \( \ring{G} \subseteq \powerset{X} \) gyűrűn,
 		\marginnote{Tehát \( \func{\mu}{\ring{G}}{[0, +\infty]} \) egy előmérték.}
 		továbbá \( A, B, A_n \in \ring{G} \ (n \in \N) \).
 		
-		\begin{enumerate}
+		\begin{enumerate}[label=\arabic*.]
 			\item\label{th:előmérték-monoton}
-			\( \mu \) monoton, azaz \( B \subseteq A \) esetén \( \mu(B) \leq \mu(A) \).
+			Ha \( B \subseteq A \), akkor \( \mu(B) \leq \mu(A) \).
+			\marginnote{\ref{th:előmérték-monoton} tulajdonság: \emph{\( \boldsymbol{\mu} \) monoton növő}.}
+			
+			\item\label{th:előmérték-különbség-mértéke}
+			Ha \( B \subseteq A \) és  \( \mu(B) \) véges,
+			akkor \( \mu(A \setminus B) = \mu(A) - \mu(B) \).
+			\marginnote{\ref{th:előmérték-különbség-mértéke} tulajdonság: \emph{\( \boldsymbol{\mu} \) szubtraktív}.}
 			
 			\item\label{th:előmérték-szita-formula}
 			\( \mu(A \cup B) + \mu(A \cap B) = \mu(A) + \mu(B) \).
-			
-			\item\label{th:előmérték-különbség-mértéke}
-			Ha \( \mu(B) \) véges és \( B \subseteq A \),
-			akkor \( \mu(A \setminus B) = \mu(A) - \mu(B) \).
+			\marginnote{\ref{th:előmérték-szita-formula} tulajdonság: \emph{szita-formula}.}
 			
 			\item\label{th:előmérték-véges-szubadditív}
 			Minden \( n \in \N \) indexre 
 			\( \mu \biggl(\, \bigcup\limits_{k=0}^n \! A_k \biggr) \leq \sum\limits_{k=0}^n \mu( A_k ) \).
+			\marginnote{\ref{th:előmérték-véges-szubadditív} tulajdonság: \emph{\( \boldsymbol{\mu} \) szubadditív}.}
 			
 			\item\label{th:előmérték-szubadditívitás-kiterjesztése}
 			Ha az \( (A_n) \) tagjai páronként diszjunktak
 			és \( \bigcup\limits_{n=0}^{\infty} \! A_n \in \ring{G} \), akkor
 			\[
-			\mu \Biggl(\, \bigcup\limits_{n=0}^{\infty} \! A_n \Biggr) \leq 
-			\sum\limits_{n=0}^{\infty} \mu( A_n ).
+			\sum\limits_{n=0}^{\infty} \mu( A_n ) \leq
+			\mu \Biggl(\, \bigcup\limits_{n=0}^{\infty} \! A_n \Biggr).
 			\]
 		\end{enumerate}
 	\end{theorem}
-	\begin{proof}\,
-		\begin{enumerate}
-			\item Mivel \( A = B \cup (A \setminus B) \) diszjunkt felbontás és \( \mu \) nemnegatív, ezért
-			\[
-			\mu(A) = \mu(B) + \mu(A \setminus B) \geq \mu(B). 
-			\tag{\( * \)}\label{eq:előmérték-monoton}
-			\]
-			
-			\item Ha \( \mu(B) \) véges, akkor \eqref{eq:előmérték-monoton} átrendezésével adódik a belátandó állítás.
-			
-			\item Két esetet különböztetünk meg.
-			\begin{enumerate}
-				\item Amennyiben \( \mu(A \cap B) = +\infty \), 
-				akkor az \( A \cap B \subseteq A, B \subseteq A \cup B \) tartalmazások,
-				valamint a \hyperref[th:előmérték-monoton]{\( \mu \) monotonitása} alapján
-				\[
-				\mu(A \cap B) = \mu(A \cup B) = \mu(A) = \mu(B) = +\infty.\ \checkmark
-				\]
-				
-				\item Ha most \( \mu(A \cap B) \) véges, 
-				akkor az \( A \cup B = A \cup \bigl( B \setminus (A \cap B) \bigr) \) diszjunkt felbontás és \( \mu \) additivitása miatt
-				\[
-				\mu(A \cup B) = 
-				\mu(A) + \mu \bigl( B \setminus (A \cap B) \bigr) \overset{\ref{th:előmérték-különbség-mértéke}}{=} 
-				\mu(A) + \mu(B) - \mu( A \cap B).\ \checkmark
-				\]
-			\end{enumerate}
-			
-			\item Az állítás teljes indukcióval igazolható, 
-			felhasználva \ref{th:előmérték-szita-formula}-t.
-			
-			\item Mivel \( A_0, \dots, A_n \ (n \in \N) \) páronként diszjunktak 
-			és \( \mu \) additív, ezért
-			\[
-			\sum_{n=0}^{\infty} \mu( A_n ) =
-			\lim_{n \to \infty} \sum_{k=0}^{n} \mu( A_k ) =
-			\lim_{n \to \infty} \mu \Biggl( \, \bigcup_{k=0}^n \! A_k \Biggr).
-			\]
-			Ugyanakkor az
-			\( \bigcup\limits_{k=0}^n \! A_k \subseteq \bigcup\limits_{k=0}^{\infty} \! A_k \)
-			tartalmazás és \hyperref[th:előmérték-monoton]{\( \mu \) monotonitása} miatt
-			\[
-			\sum_{n=0}^{\infty} \mu( A_n ) =
-			\lim_{n \to \infty} \mu \Biggl( \, \bigcup_{k=0}^n \! A_k \Biggr) \leq
-			\lim_{n \to \infty} \mu \Biggl( \, \bigcup_{k=0}^{\infty} \! A_k \Biggr) =
-			\mu \Biggl( \, \bigcup_{n=0}^{\infty} \! A_n \Biggr).
-			\]
-		\end{enumerate}
-	\end{proof}
 	
-	\begin{theorem}{Az előmérték és a kvázimérték kapcsolata}{előmérték-kvázimérték-kapcsolata}
+	\newpage
+	
+	\section{A kvázimérték jellemzése}
+	\,\vspace{-\baselineskip}
+	
+	\begin{theorem}{}{előmérték-kvázimérték-kapcsolata}
 		Legyen \( \mu \) egy előmérték a \( \ring{G} \subseteq \powerset{X} \) gyűrűn,
 		\marginnote{Vagyis \( \func{\mu}{\ring{G}}{[0, +\infty]} \) alakú függvény.}
 		és vegyük az alábbi állításokat.
@@ -203,34 +161,11 @@
 			Minden \( \ring{G} \)-beli \( C_{n + 1} \subseteq C_n \ (n \in \N) \)
 			halmazsorozatra, ha \( \mu(C_n) < +\infty \)
 			\[
-			\emptyset = \bigcap_{n=0}^{\infty} C_n \in \ring{G}
-			\qquad \Longrightarrow \qquad
-			\mu(\emptyset) = \lim_{n \to \infty} \mu(C_n) = 0.
+				\emptyset = \bigcap_{n=0}^{\infty} C_n \in \ring{G}
+				\qquad \Longrightarrow \qquad
+				\mu(\emptyset) = \lim_{n \to \infty} \mu(C_n) = 0.
 			\]
 		\end{enumerate}
-%		\begin{alignat*}{4}
-%				A &\coloneq \bigcup_{n=0}^{\infty} A_n \in \ring{G}
-%				\qquad &&\Longrightarrow \qquad
-%				& \mu(A) &= \lim_{n \to \infty} \mu(A_n).
-%			%
-%				\intertext{%
-%						\item\label{eq:kvázimérték-jellemzése-03} 
-%						Minden \( \ring{G} \)-beli \( B_{n + 1} \subseteq B_n \ (n \in \N) \)
-%						halmazsorozatra, ha \( \mu(B_n) < +\infty \)}
-%			%
-%				B &\coloneq \bigcap_{n=0}^{\infty} B_n \in \ring{G}
-%				\qquad &&\Longrightarrow \qquad
-%				& \mu(B) &= \lim_{n \to \infty} \mu(B_n).
-%			%
-%				\intertext{%
-%						\item\phantomsection\label{eq:kvázimérték-jellemzése-04} 
-%						Minden \( \ring{G} \)-beli \( C_{n + 1} \subseteq C_n \ (n \in \N) \)
-%						halmazsorozatra, ha \( \mu(C_n) < +\infty \)}
-%			%
-%				\emptyset &= \bigcap_{n=0}^{\infty} C_n \in \ring{G}
-%				\qquad &&\Longrightarrow \qquad
-%				& \mu(\emptyset) &= \lim_{n \to \infty} \mu(C_n) = 0.
-%			\end{alignat*}
 		Ekkor
 		\begin{enumerate}
 			\item 
@@ -253,7 +188,7 @@
 			}
 		\end{enumerate}
 	\end{theorem}
-	\begin{proof}\,\\[6pt]
+	\begin{proof}\,\\[1pt]
 		\fbox{\ref{eq:kvázimérték-jellemzése-01} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-02}}
 		%
@@ -269,14 +204,6 @@
 				\tag{\( * \)}\label{eq:A_n-előállítása}
 			\]
 			is igaz, hiszen az \( (A_n) \) monoton bővül.
-%			\begin{align*}
-%				\mu(A)
-%				&= \mu \Biggl( \, \bigcup_{n=0}^{\infty} D_n \Biggr)
-%				 = \sum_{n=0}^{\infty} \mu( D_n ) \\
-%				&= \lim_{n \to \infty} \sum_{k=0}^{n} \mu( D_k ) \\
-%				&= \lim_{n \to \infty} \mu \Biggl( \, \bigcup_{k=0}^n D_k \Biggr) \\
-%				&= \lim_{n \to \infty} \mu( A_n ) \\
-%			\end{align*}
 		}
 		\[
 			A = A_0 \cup (A_1 \setminus A_0) \cup (A_2 \setminus A_1) \cup \cdots
@@ -297,9 +224,9 @@
 		Kihasználtuk, hogy \( \mu \) szigma- és véges additív, 
 		valamint a \eqref{eq:A_n-előállítása} egyenlőséget.
 		
-		\vspace{9pt}
+		\vspace{3pt}
 		\hrule
-		\vspace{9pt}
+		\vspace{6pt}
 		
 		\fbox{\ref{eq:kvázimérték-jellemzése-02} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-01}}
@@ -308,7 +235,7 @@
 		\[
 			X_n \in \ring{G}, \quad
 			A \coloneq \bigcup_{k=0}^{\infty} X_k \in \ring{G} \qquad \text{és} \qquad
-			A_n \coloneq \bigcup_{k=0}^{n} X_n \qquad (n \in \N),
+			A_n \coloneq \bigcup_{k=0}^{n} X_k \qquad (n \in \N),
 		\]
 		ahol az \( (X_n) \) halmazsorozat tagjai páronként diszjunktak. 
 		Ekkor az \( (A_n) \) sorozat tagjai monoton bővülő módon tartanak az \( A \)-hoz,
@@ -383,14 +310,18 @@
 		\]
 		Innen \( \mu(B_0) \)-vel egyszerűsítve adódik a bizonyítandó állítás.
 		
-		\noindent\rule{\linewidth}{0.4pt}\\
+		\vspace{9pt}
+		\hrule
+		\vspace{9pt}
 		
 		\fbox{\ref{eq:kvázimérték-jellemzése-03} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-04}}
 		%
-		Az igazolandó \ref{eq:kvázimérték-jellemzése-04} állítás speciális esete \az{\ref{eq:kvázimérték-jellemzése-03}} kijelentésnek.
+		Az igazolandó \ref{eq:kvázimérték-jellemzése-04} állítás speciális esete \aref{eq:kvázimérték-jellemzése-03} kijelentésnek.
 		
-		\noindent\rule{\linewidth}{0.4pt}\\
+		\vspace{9pt}
+		\hrule
+		\vspace{9pt}
 		
 		\fbox{\ref{eq:kvázimérték-jellemzése-04} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-03}}
@@ -416,9 +347,13 @@
 		\]
 		Mivel itt \( \mu(B) \) véges, ezért átrendezés után kapjuk a bizonyítandó állítást.
 		
-		\noindent\rule{\linewidth}{0.4pt}\\
+		\vspace{9pt}
+		\hrule
+		\vspace{9pt}
 		
 		A továbbiakban feltesszük, hogy \( \mu \) véges. Az alábbi állítást mutatjuk meg.
+		
+		\vspace{3pt}
 		
 		\fbox{\ref{eq:kvázimérték-jellemzése-04} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-02}}
@@ -437,6 +372,19 @@
 			\mu( A ) - \lim_{n \to \infty} \mu( A_n ).
 		\]
 		Innen átrendezéssel adódik a bizonyítandó állítás.
+		
+		\vspace{9pt}
+		\hrule
+		\vspace{9pt}
+		
+		\fbox{\ref{eq:kvázimérték-jellemzése-03} \( \Longrightarrow \)
+			  \ref{eq:kvázimérték-jellemzése-02}}
+		%
+		Ha \( \mu \) véges, akkor
+		\aref{eq:kvázimérték-jellemzése-03} \( \Longrightarrow \)
+		 \ref{eq:kvázimérték-jellemzése-04} \( \Longrightarrow \)
+		 \ref{eq:kvázimérték-jellemzése-02}
+		állítások következménye.
 		
 	\end{proof}
 	
@@ -478,19 +426,6 @@
 	\begin{definition}{Lebesgue-féle kvázimérték}{}
 		Legyen \( \func{ m_p }{ \mathbf{I}^p }{[0, +\infty)} \) az a véges halmazfüggvény, amire
 		\marginnote{
-%			Vagyis amennyiben adottak az
-%			\[
-%				I_0, \dots, I_n \in \mathbf{I}^p \quad (n \in \N)
-%			\]
-%			diszjunkt intervallumok, akkor az
-%			\[
-%			%	A \coloneq \bigcup_{k=0}^n I_k 
-%				A \coloneq I_0 \cup \cdots \cup I_n \in \mathcal{I}^p
-%			\]
-%			halmaz ``kvázimértéke'' legyen
-%			\[
-%				\widetilde{\mu}_p(A) \coloneq \sum_{k=0}^{n} m_p(I_k)
-%			\]
 			Vagyis tetszőlegesen véve egy
 			\[
 				A \in \mathcal{I}^p, \ A = \bigcup_{k=0}^n I_k
@@ -505,25 +440,22 @@
 			m_p \bigl( [\x, \y) \bigr) \coloneq \prod_{k=1}^{p} (y_i - x_i) 
 			\qquad \bigl( [\x, \y) \in \mathbf{I}^p \bigr).
 		\]
-		Ekkor az \( m_p \) halmazfüggvény
+		Ekkor az \( m_p \) halmazfüggvény \( \mathcal{I}^p \)-re történő
 		\[
 			\func{ \widetilde{\mu}_p }{ \mathcal{I}^p }{[0, +\infty)}, \qquad
 			\restr{ \widetilde{\mu}_p }{ \mathbf{I}^p } = m_p.
 		\]
 		kiterjesztését \emph{Lebesgue-féle kvázimértéknek} nevezzük.
 	\end{definition}
-	
-	
-	\newpage
+
 	\begin{theorem}{}{}
-		Az előbb definiált \( \func{ \widetilde{\mu}_p }{ \mathfrak{I}^p }{ [0, +\infty) } \)
+		Az előbb definiált \( \func{ \widetilde{\mu}_p }{ \mathcal{I}^p }{ [0, +\infty) } \)
 		függvény egy kvázimérték.
 	\end{theorem}
-	\begin{proof}
-		Mivel \( \widetilde{\mu}_p \) véges előmérték, 
-		ezért \aref{th:előmérték-kvázimérték-kapcsolata} tétel alapján elegendő azt megmutatni,
-		hogy minden \( \mathfrak{I}^p \)-beli \( A_{n+1} \subseteq A_n \ (n \in \N) \)
-		sorozat esetén
+	\begin{proof}	
+		Mivel a \( \widetilde{\mu}_p \) egy véges előmérték, ezért
+		\aref{th:előmérték-kvázimérték-kapcsolata} tétel miatt elegendő azt megmutatni, 
+		hogy minden \( \mathcal{I}^p \)-beli monoton szűkülő \( (A_n) \) sorozatra
 		\[
 			\bigcap_{n=0}^{\infty} A_n = \emptyset
 			\qquad \Longrightarrow \qquad
@@ -535,16 +467,16 @@
 			\lim_{n \to \infty} \widetilde{\mu}_p( A_n ) =
 			\inf \setc[\big]{ \widetilde{\mu}_p( A_n ) }{ n \in \N } > 0.
 		\]
-		Ekkor megadható olyan \( (B_n) \) halmazsorozat, illetve \( (\delta_n) \) számsorozat, hogy
-		\marginnote{%
-			Tehát \( \func{(B_n)}{\N}{\mathcal{I}^p} \) és \( \func{(\delta_n)}{\N}{\R} \).
-		}[-\baselineskip]
-		\[
+		\newpage
+		Ekkor megadható olyan \( (B_n) \) halmazsorozat, 
+		illetve \( (\delta_n) \) számsorozat, hogy
+		\begin{equation}\label{eq:lebesgue-kvázimérték-01}
 			\overline{B}_n \subseteq A_n
 			\qquad \text{és} \qquad
 			\widetilde{\mu}_p( A_n ) - \widetilde{\mu}_p( B_n ) < \delta_n
 			\qquad (n \in \N).
-		\]
+			\tag{\( * \)}
+		\end{equation}
 		Továbbá legyen
 		\[
 			C_n \coloneq \bigcap_{k=0}^n B_k \qquad (n \in \N)
@@ -560,7 +492,7 @@
 			\qquad \Longrightarrow \qquad
 			\bigcap_{n=0}^{\infty} \overline{C}_n = \emptyset.
 		\]
-		Megmutatjuk, hogy egyetlen \( C_n \) halmaz sem üres.
+		Megmutatjuk, hogy egyetlen egy \( C_n \) halmaz sem üres.
 		Mivel ilyenkor a \( \overline{C}_n \) halmazok sem üresek, 
 		valamint ezek korlátos és zárt, egymásba skatulyázott intervallumok, 
 		ezért a \hyperref[th:cantor-tétel]{Cantor-tétel} alkalmazásával a
@@ -585,29 +517,114 @@
 			\bigcap_{n=0}^{\infty} \overline{C}_n \neq \emptyset
 		\]
 		ellentmondás áll elő.
-		Tehát teljes indukcióval adódik, hogy \( C_n \neq \emptyset \ (n \in \N) \).
-		Ugyanis az \( n = 0 \) alapesetben
-		\[
-			\widetilde{\mu}_p( C_0 ) = 
-			\widetilde{\mu}_p( B_0 ) \geq 
-			\widetilde{\mu}_p( A_0 ) \neq 0
-			\qquad \Longrightarrow \qquad
-			C_0 \neq \emptyset. \ \checkmark
-		\]
-		Továbbá, ha valamely rögzített \( n \in \N \) indexig teljesül az állítás, akkor
-		%
+		Tehát legyen \( n \in \N \) rögzített. Ekkor
 		\begin{align*}
 			\widetilde{\mu}_p \bigl( C_{n + 1} \bigr)
-			&= \widetilde{\mu}_p \bigl( C_n \cap B_{n + 1} \bigr) \\[3pt]
+			&= \widetilde{\mu}_p \bigl( C_n \cap B_{n + 1} \bigr)\\[3pt]
 			&= \widetilde{\mu}_p \bigl( C_n \bigr) + 
 			   \widetilde{\mu}_p \bigl( B_{n + 1} \bigr) - 
-			   \widetilde{\mu}_p \bigl( C_n \cup B_{n + 1} \bigr) \\[3pt]
+			   \widetilde{\mu}_p \bigl( C_n \cup B_{n + 1} \bigr)%
+			   \marginnote{Lásd \hyperref[th:előmérték-szita-formula]{szita-formula}.} \\[3pt]
 			&\geq \widetilde{\mu}_p \bigl( C_n \bigr) +
-			      \widetilde{\mu}_p \bigl( A_{n + 1} \bigr) - \delta_{n + 1} -
-			      \widetilde{\mu}_p \bigl( A_n \bigr)
+			       \widetilde{\mu}_p \bigl( B_{n + 1} \bigr) -
+			       \widetilde{\mu}_p \bigl( A_n \bigr)
+			       \marginnote{%
+						Lásd \hyperref[th:előmérték-monoton]{\( \mu \) monoton}
+					    \( (C_n \cup B_{n + 1} \subseteq A_n) \).} \\[3pt]
+			&> \widetilde{\mu}_p \bigl( C_n \bigr) +
+			   \widetilde{\mu}_p \bigl( A_{n + 1} \bigr) -
+			   \delta_{n + 1} -
+			   \widetilde{\mu}_p \bigl( A_n \bigr).
+			   \marginnote{
+				  Lásd \eqref{eq:lebesgue-kvázimérték-01} becslés átrendezve.}
 		\end{align*}
-		%
+		Ezt átrendezve a soron következő rekurzióhoz jutunk:
+		\[
+			\widetilde{\mu}_p \bigl( C_{n + 1} \bigr) -
+			\widetilde{\mu}_p \bigl( A_{n + 1} \bigr) >
+			\widetilde{\mu}_p \bigl( C_n \bigr) -
+			\widetilde{\mu}_p \bigl( A_n \bigr) -
+			\delta_{n + 1}
+			\qquad (n \in \N).
+		\]
+		Visszafejtve a rekurziót azt kapjuk, hogy tetszőleges \( n \in \N \) indexre
+		\begin{align*}
+			\widetilde{\mu}_p \bigl( C_n \bigr) -
+			\widetilde{\mu}_p \bigl( A_n \bigr) 
+			&> \widetilde{\mu}_p \bigl( C_0 \bigr)
+			 - \widetilde{\mu}_p \bigl( A_0 \bigr)
+			 - {\textstyle \sum_{k=1}^{n} } \delta_k \\
+			&= \widetilde{\mu}_p \bigl( B_0 \bigr)
+			 - \widetilde{\mu}_p \bigl( A_0 \bigr)
+			 - {\textstyle \sum_{k=1}^{n} } \delta_k \\
+			&> \delta_0
+			 - {\textstyle \sum\limits_{k=1}^{n} } \delta_k
+			 > -{\textstyle \sum\limits_{k=0}^{\infty} } \delta_k.
+		\end{align*}
+		Ha most az eddig tetszőleges \( (\delta_n) \) sorozatól megköveteljük, hogy
+		\[
+			\sum_{k=0}^{\infty} \delta_k < \delta
+			\quad \Longrightarrow \quad
+			\widetilde{\mu}_p \bigl( C_n \bigr) > 
+			\widetilde{\mu}_p \bigl( A_n \bigr) - \sum_{k=0}^{\infty} \delta_k > 0
+			\quad \Longrightarrow \quad
+			C_n \neq \emptyset. \ \checkmark
+		\]
 		
+%		Tehát teljes indukcióval adódik, hogy \( C_n \neq \emptyset \ (n \in \N) \).
+%		
+%		\begin{enumerate}[label=\roman*)]
+%			\item
+%			Ugyanis az alapesetben
+%			\[
+%				\widetilde{\mu}_p( C_0 ) = 
+%				\widetilde{\mu}_p( B_0 ) \geq 
+%				\widetilde{\mu}_p( A_0 ) - \delta_ 0 \neq 0
+%				\qquad \Longrightarrow \qquad
+%				C_0 \neq \emptyset. \ \checkmark
+%			\]
+%			
+%			\item
+%			Továbbá, ha valamely rögzített \( n \in \N \) indexig teljesül az állítás, akkor
+%			%
+%			\begin{align*}
+%				\widetilde{\mu}_p \bigl( C_{n + 1} \bigr)
+%				&= \widetilde{\mu}_p \bigl( C_n \cap B_{n + 1} \bigr)\\[3pt]
+%				&= \widetilde{\mu}_p \bigl( C_n \bigr) + 
+%				\widetilde{\mu}_p \bigl( B_{n + 1} \bigr) - 
+%				\widetilde{\mu}_p \bigl( C_n \cup B_{n + 1} \bigr)%
+%				\marginnote{Lásd \hyperref[th:előmérték-szita-formula]{szita-formula}.} \\[3pt]
+%				&\geq \widetilde{\mu}_p \bigl( C_n \bigr) +
+%				\widetilde{\mu}_p \bigl( B_{n + 1} \bigr) -
+%				\widetilde{\mu}_p \bigl( A_n \bigr)
+%				\marginnote{%
+%					Lásd \hyperref[th:előmérték-monoton]{\( \mu \) monoton} 
+%					\( (C_n \cup B_{n + 1} \subseteq A_n) \).} \\[3pt]
+%				&\geq \widetilde{\mu}_p \bigl( C_n \bigr) -
+%				\widetilde{\mu}_p \bigl( A_n \bigr) +
+%				\widetilde{\mu}_p \bigl( A_{n + 1} \bigr) - \delta_{n + 1}
+%				\marginnote{%
+%					Lásd \eqref{eq:lebesgue-kvázimérték-01} becslés átrendezve.} \\[3pt]
+%				&\geq \underbrace{\widetilde{\mu}_p \bigl( C_0 \bigr) -
+%				\widetilde{\mu}_p \bigl( A_0 \bigr)}_{> \delta_0} + \,
+%				\widetilde{\mu}_p \bigl( A_{n + 1} \bigr) - 
+%				\sum_{k=1}^{n + 1} \delta_k \\[3pt]
+%				&\geq \widetilde{\mu}_p \bigl( A_{n + 1} \bigr) - 
+%				\sum_{k=0}^{n + 1} \delta_k
+%				\marginnote{Lásd \( \delta \) definíciója.} \\[3pt]
+%				&\geq \delta - \sum_{k=0}^{\infty} \delta_k
+%			\end{align*}
+%			%
+%			Ha most az eddig tetszőleges \( (\delta_n) \) sorozatól megköveteljük, hogy
+%			\[
+%				\sum_{k=0}^{\infty} \delta_k < \delta
+%				\quad \Longrightarrow \quad
+%				\widetilde{\mu}_p \bigl( C_{n + 1} \bigr) > 0
+%				\quad \Longrightarrow \quad
+%				C_{n + 1} \neq \emptyset. \ \checkmark
+%			\]
+%		\end{enumerate}
+		Ezzel eljutottunk a kívánt ellentmondáshoz.
 	\end{proof}
 	
 \end{document}
