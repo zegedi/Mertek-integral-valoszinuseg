@@ -27,22 +27,6 @@
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
 \subtitle{4. Vizsgatétel}
-\date{2024} % year of defense
-
-% Author's metadata
-\author{Egedi Viktor}
-\degree{programtervező informatikus BSc}
-
-% Superivsor(s)' metadata
-\supervisor{Dr. Simon Péter} % internal supervisor's name
-\affiliation{egyetemi tanár} % internal supervisor's affiliation
-
-% University's metadata
-\university{Eötvös Loránd Tudományegyetem} % university's name
-\faculty{Informatikai Kar} % faculty's name
-\department{Numerikus Analízis Tanszék} % department's name
-\city{Budapest} % city
-\logo{elte_cimer_szines} % logo
 
 % The document
 \begin{document}
@@ -229,6 +213,11 @@
 		\end{enumerate}
 	\end{proof}
 	
+	Tovább ``enyhítjük'' a szóban forgó halmazrendszerekkel szembeni elvárásainkat. 
+	A későbbi alkalmazásokban látni fogjuk, hogy a gyakorlat számára 
+	fontos speciális esetekben még a gyűrű axiómáinál is kevesebbel rendelkező
+	halmazrendszerekből elegendő kiindulnunk. Ezek az úgynevezett félgyűrűk.
+	
 	\begin{definition}{Félgyűrű}{}
 		Azt mondjuk, hogy \( \ring{H} \subseteq \powerset{X} \) egy \emph{félgyűrű}, ha
 		%
@@ -327,13 +316,9 @@
 	
 	\noindent 
 	Könnyen belátható, hogy \( \mathcal{G}(Y) \) valóban gyűrű. 
-	Továbbá ez a legszűkebb olyan gyűrű, ami tartalmazza az \( Y \) halmazrendszer minden elemét, azaz
-	\[
-		\Omega \subseteq \powerset{X} \text{ szigma-algebra}
-		\quad \Longrightarrow \quad
-		\Omega(Y) \subseteq \Omega.
-	\]
+	Továbbá ez a legszűkebb olyan gyűrű, ami tartalmazza az \( Y \) halmazrendszer minden elemét.
 	
+	\newpage
 	\noindent
 	A korábbi halmazstruktúrákkal ellentétben félgyűrűk metszet már nem feltétlenül lesz félgyűrű.
 	Ennél fogva nem értelmezhetőjük az előbbiekhez hasonlóan a generált félgyűrű fogalmát.
@@ -353,11 +338,13 @@
 		\[
 			\ring{G} \coloneq 
 			\setc[\Bigg]{ \bigcup_{k=0}^n H_k }
-			            { H_0, \dots, H_n \in \ring{H} \text{ diszjunktak} \ (n \in \N)}.
+			            { H_0, \dots, H_n \in \ring{H} \text{ páronként diszjunktak} \ (n \in \N)}.
 		\]
 		Azt kell megmutatnunk, hogy \( \ring{G} = \mathcal{G}(\ring{H}) \).
 		
-		\noindent\hrulefill\vspace{6pt}
+		\vspace{6pt}
+		\hrule
+		\vspace{6pt}
 		
 		Először belátjuk, hogy \( \ring{G} \) gyűrű.
 		Legyenek \( A, B \in \ring{G} \) tetszőleges halmazok,
@@ -396,7 +383,9 @@
 		\]
 		is teljesül. Tehát \( \ring{G} \) valóban gyűrű.
 		
-		\noindent\hrulefill\vspace{6pt}
+		\vspace{6pt}
+		\hrule
+		\vspace{6pt}
 		
 		Nyilvánvaló, hogy \( \ring{H} \subseteq \ring{G} \).
 		Mivel a \( \mathcal{G}(\ring{H}) \) gyűrű zárt az unió képzésre, ezért

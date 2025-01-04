@@ -13,35 +13,10 @@
 %\usepackage[newfloat]{minted}
 \usepackage{enumitem}
 
-\makeatletter
-\def\biggg{\bBigg@{3}}
-\def\bigggm{\mathrel\biggg}
-\def\bigggl{\mathopen\biggg}
-\def\bigggr{\mathclose\biggg}
-\def\Biggg{\bBigg@{3.5}}
-\def\Bigggm{\mathrel\Biggg}
-\def\Bigggl{\mathopen\Biggg}
-\def\Bigggr{\mathclose\Biggg}
-\makeatother
-
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
-\date{2024} % year of defense
+\subtitle{\circled{5} Vizsgatétel}
 
-% Author's metadata
-\author{Egedi Viktor}
-\degree{programtervező informatikus BSc}
-
-% Superivsor(s)' metadata
-\supervisor{Dr. Simon Péter} % internal supervisor's name
-\affiliation{egyetemi tanár} % internal supervisor's affiliation
-
-% University's metadata
-\university{Eötvös Loránd Tudományegyetem} % university's name
-\faculty{Informatikai Kar} % faculty's name
-\department{Numerikus Analízis Tanszék} % department's name
-\city{Budapest} % city
-\logo{elte_cimer_szines} % logo
 
 % The document
 \begin{document}
@@ -49,14 +24,15 @@
 	% Set document language
 	\documentlang{hungarian}
 	
+	\section{Halmazfüggvények}
+	
 	Az (absztrakt) halmazok mérését (a mértéküknek az értelmezését) egy
 	\[
 		\funcin{\varphi}{\powerset{X}}{[0, +\infty]}
 	\]
 	függvény segítségével végezzük majd, ahol az \( X \) adott alaphalmaz.
-	Il
 	
-	\begin{definition}{Véges- és szigma-additív halmazfüggvény}{}
+	\begin{definition}{Véges- és szigma-additív halmazfüggvény}{szigma-additiv}
 		Azt mondjuk, hogy a \( \funcin{\varphi}{\powerset{X}}{[0, +\infty]} \) halmazfüggvény
 		\begin{enumerate}
 			\item \emph{(véges) additív}, ha
@@ -72,7 +48,7 @@
 				\sum_{n=0}^\infty \varphi(A_n)
 			\]
 			minden olyan \( A_n \in \dom{\varphi} \ (n \in \N) \) páronként diszjunkt halmazsorozatra fennáll, amelynek az egyesítésére 
-			\( \bigcup\limits_{n=0}^{\infty} A_n \in \dom{\varphi} \) teljesül.
+			\( \bigcup\limits_{n \in \N} A_n \in \dom{\varphi} \) teljesül.
 		\end{enumerate}
 	\end{definition}
 	
@@ -104,15 +80,19 @@
 				\sum_{n=0}^{\infty} \varphi(\emptyset)
 			\]
 			sorösszeg pontosan akkor lesz véges, ha \( \varphi(\emptyset) = 0 \).
-			Ezért bárhogyan véve egy véges \( A_0, \dots, A_n \in \dom{\varphi}\ (n \in \N) \) és páronként diszjunkt halmazrendszert, akkor az 
-			\( A_k \coloneq \emptyset \ (k > n) \) választás mellett
+			Továbbá, amennyiben az
+			\[
+				A_0, \dots, A_n \in \dom{\varphi} \quad (n \in \N)
+			\]
+			páronként diszjunkt halmazrendszert, 
+			akkor az \( A_k \coloneq \emptyset \ (k > n) \) választással
 			\[
 				\varphi \Biggl(\, \bigcup_{k=0}^n        A_k \Biggr) =
 				\varphi \Biggl(\, \bigcup_{k=0}^{\infty} A_k \Biggr) =
 				\sum_{n=0}^{\infty} \varphi(A_k) =
 				\sum_{n=0}^n        \varphi(A_k).
 			\]
-			Ezt pedig azt jelenti, hogy \( \varphi \) additív.
+			Ezt pedig azt jelenti, hogy \( \varphi \) véges additív. \qed
 		\end{enumerate}
 	\end{proof*}
 	
@@ -128,35 +108,37 @@
 			\( \mu(\emptyset) = 0 \), és a \( \mu \) additív.
 		\end{enumerate}
 	\end{definition}
-	
-	\newpage
-	
-	\begin{theorem}{Az előmérték tulajdonságai}{}
+		
+	\begin{theorem}{Az előmérték tulajdonságai}{előmérték-tulajdonságok}
 		Legyen \( \mu \) előmérték a \( \ring{G} \subseteq \powerset{X} \) gyűrűn,
 		\marginnote{Tehát \( \func{\mu}{\ring{G}}{[0, +\infty]} \) egy előmérték.}
 		továbbá \( A, B, A_n \in \ring{G} \ (n \in \N) \).
 		
-		\begin{enumerate}
+		\begin{enumerate}[label=\arabic*.]
 			\item\label{th:előmérték-monoton}
-			\( \mu \) monoton, azaz \( B \subseteq A \) esetén \( \mu(B) \leq \mu(A) \).
+			Ha \( B \subseteq A \), akkor \( \mu(B) \leq \mu(A) \).
+			\marginnote{\ref{th:előmérték-monoton} tulajdonság: \emph{\( \boldsymbol{\mu} \) monoton növő}.}
+			
+			\item\label{th:előmérték-különbség-mértéke}
+			Ha \( B \subseteq A \) és  \( \mu(B) \) véges,
+			akkor \( \mu(A \setminus B) = \mu(A) - \mu(B) \).
+			\marginnote{\ref{th:előmérték-különbség-mértéke} tulajdonság: \emph{\( \boldsymbol{\mu} \) szubtraktív}.}
 			
 			\item\label{th:előmérték-szita-formula}
 			\( \mu(A \cup B) + \mu(A \cap B) = \mu(A) + \mu(B) \).
-			
-			\item\label{th:előmérték-különbség-mértéke}
-			Ha \( \mu(B) \) véges és \( B \subseteq A \),
-			akkor \( \mu(A \setminus B) = \mu(A) - \mu(B) \).
+			\marginnote{\ref{th:előmérték-szita-formula} tulajdonság: \emph{szita-formula}.}
 			
 			\item\label{th:előmérték-véges-szubadditív}
 			Minden \( n \in \N \) indexre 
 			\( \mu \biggl(\, \bigcup\limits_{k=0}^n \! A_k \biggr) \leq \sum\limits_{k=0}^n \mu( A_k ) \).
+			\marginnote{\ref{th:előmérték-véges-szubadditív} tulajdonság: \emph{\( \boldsymbol{\mu} \) szubadditív}.}
 			
 			\item\label{th:előmérték-szubadditívitás-kiterjesztése}
 			Ha az \( (A_n) \) tagjai páronként diszjunktak
 			és \( \bigcup\limits_{n=0}^{\infty} \! A_n \in \ring{G} \), akkor
 			\[
-				\mu \Biggl(\, \bigcup\limits_{n=0}^{\infty} \! A_n \Biggr) \leq 
-				\sum\limits_{n=0}^{\infty} \mu( A_n ).
+				\sum\limits_{n=0}^{\infty} \mu( A_n ) \leq
+				\mu \Biggl(\, \bigcup\limits_{n=0}^{\infty} \! A_n \Biggr).
 			\]
 		\end{enumerate}
 	\end{theorem}
@@ -172,9 +154,15 @@
 			
 			\item Két esetet különböztetünk meg.
 			\begin{enumerate}
-				\item Amennyiben \( \mu(A \cap B) = +\infty \), 
-				akkor az \( A \cap B \subseteq A, B \subseteq A \cup B \) tartalmazások,
-				valamint a \hyperref[th:előmérték-monoton]{\( \mu \) monotonitása} alapján
+				\item 
+				Amennyiben \( \mu(A \cap B) = +\infty \), 
+				\marginnote{
+					Hiszen elmondható, hogy
+					\[
+						A \cap B \subseteq A, B \subseteq A \cup B.
+					\]
+				}
+				akkor a \hyperref[th:előmérték-monoton]{\( \mu \) monotonitása} miatt
 				\[
 					\mu(A \cap B) = \mu(A \cup B) = \mu(A) = \mu(B) = +\infty.\ \checkmark
 				\]
@@ -189,7 +177,7 @@
 			\end{enumerate}
 			
 			\item Az állítás teljes indukcióval igazolható, 
-			felhasználva \ref{th:előmérték-szita-formula}-t.
+			lásd \hyperref[th:előmérték-szita-formula]{szita-formula}.
 			
 			\item Mivel \( A_0, \dots, A_n \ (n \in \N) \) páronként diszjunktak 
 			és \( \mu \) additív, ezért
@@ -210,110 +198,18 @@
 		\end{enumerate}
 	\end{proof}
 	
-	\begin{theorem}{Kvázimértékek ekvivalens jellemzése}{}
-		Legyen \( \mu \) egy előmérték a \( \ring{G} \subseteq \powerset{X} \) gyűrűn,
-		és vegyük az alábbi állításokat.
-		%
-		\begin{enumerate}[label=\alph*)]
-			\item\label{eq:kvázimérték-jellemzése-01} A \( \mu \) kvázimérték.
-			
-			\item\label{eq:kvázimérték-jellemzése-02} 
-			Minden \( \ring{G} \)-beli \( A_n \subseteq A_{n + 1} \ (n \in \N) \) 
-			monoton bővülő halmazsorozatra
-			\[
-				A \coloneq \bigcup_{n=0}^{\infty} A_n \in \ring{G}
-				\qquad \Longrightarrow \qquad
-				\mu(A) = \lim_{n \to \infty} \mu(A_n).
-			\]
-
-			\item\label{eq:kvázimérték-jellemzése-03} 
-			Minden \( \ring{G} \)-beli \( B_{n + 1} \subseteq B_n \ (n \in \N) \)
-			halmazsorozatra, ha \( \mu(B_n) < +\infty \)
-			\[
-				B \coloneq \bigcap_{n=0}^{\infty} B_n \in \ring{G}
-				\qquad \Longrightarrow \qquad
-				\mu(B) = \lim_{n \to \infty} \mu(B_n).
-			\]
-
-			\item\phantomsection\label{eq:kvázimérték-jellemzése-04} 
-			Minden \( \ring{G} \)-beli \( C_{n + 1} \subseteq C_n \ (n \in \N) \)
-			halmazsorozatra, ha \( \mu(C_n) < +\infty \)
-			\[
-				\emptyset = \bigcap_{n=0}^{\infty} C_n \in \ring{G}
-				\qquad \Longrightarrow \qquad
-				\mu(\emptyset) = \lim_{n \to \infty} \mu(C_n) = 0.
-			\]
-		\end{enumerate}
-		%	
-		%			\begin{alignat*}{4}
-			%				A &\coloneq \bigcup_{n=0}^{\infty} A_n \in \ring{G}
-			%				\qquad &&\Longrightarrow \qquad
-			%				& \mu(A) &= \lim_{n \to \infty} \mu(A_n).
-			%			%
-			%				\intertext{%
-				%					\item\label{eq:kvázimérték-jellemzése-03} 
-				%					Minden \( \ring{G} \)-beli \( B_{n + 1} \subseteq B_n \ (n \in \N) \)
-				%					halmazsorozatra, ha \( \mu(B_n) < +\infty \)}
-			%			%
-			%				B &\coloneq \bigcap_{n=0}^{\infty} B_n \in \ring{G}
-			%				\qquad &&\Longrightarrow \qquad
-			%				& \mu(B) &= \lim_{n \to \infty} \mu(B_n).
-			%			%
-			%				\intertext{%
-				%					\item\phantomsection\label{eq:kvázimérték-jellemzése-04} 
-				%					Minden \( \ring{G} \)-beli \( C_{n + 1} \subseteq C_n \ (n \in \N) \)
-				%					halmazsorozatra, ha \( \mu(C_n) < +\infty \)}
-			%			%
-			%				\emptyset &= \bigcap_{n=0}^{\infty} C_n \in \ring{G}
-			%				\qquad &&\Longrightarrow \qquad
-			%				& \mu(\emptyset) &= \lim_{n \to \infty} \mu(C_n) = 0.
-			%			\end{alignat*}
-		Ekkor
-		\begin{enumerate}
-			\item 
-			\ref{eq:kvázimérték-jellemzése-01} \( \Longleftrightarrow \)
-			\ref{eq:kvázimérték-jellemzése-02} \( \Longrightarrow \)
-			\ref{eq:kvázimérték-jellemzése-03} \( \Longleftrightarrow \)
-			\ref{eq:kvázimérték-jellemzése-04};
-			
-			\item ha \( \mu \) véges, akkor még 
-			\ref{eq:kvázimérték-jellemzése-02} \( \Longleftrightarrow \)
-			\ref{eq:kvázimérték-jellemzése-03} is fennáll.
-			\marginnote{Tehát \( \mu(Z) < +\infty \ (Z \in \ring{G}) \).}
-		\end{enumerate}
-	\end{theorem}
-	\begin{proof} \,\\[6pt]
-		
-		\fbox{\ref{eq:kvázimérték-jellemzése-01} \( \Longrightarrow \)
-			  \ref{eq:kvázimérték-jellemzése-02}}
-		%
-		Tekintsük az \( A \) ``határhalmaznak'' az
-		\[
-			A = A_0 \cup (A_1 \setminus A_0) \cup (A_2 \setminus A_1) \cup \cdots
-		\]
-		páronként diszjunkt halmazokból álló felbontását.
-		Mivel \( \mu \) szigma-additív, ezért
-		%
-		\begin{align*}
-			\mu(A)
-			&= \mu(A_0) + \mu(A_1 \setminus A_0) + \mu(A_2 \setminus A_1) + \cdots \\
-			&= \lim_{n \to \infty} \Bigl( 
-			\mu(A_0) + \mu(A_1 \setminus A_0) + \cdots + \mu(A_n \setminus A_{n-1})
-			\Bigr)\\
-			&= \lim_{n \to \infty} \mu \bigl( 
-			A_0 \cup (A_1 \setminus A_0) \cup \cdots \cup (A_n \setminus A_{n-1})
-			\bigr) \\
-			&= \lim_{n \to \infty} \mu (A_n).
-		\end{align*}
-	\end{proof}
+	\section{Kiterjesztések}
 	
-	\newpage
+	A későbbiek során megmutatjuk, 
+	hogy minden gyűrűn értelmezett előmértéket ki lehet kiterjeszteni kvázimértékké, majd azt követően mértékké. 
+	Először is belátjuk, hogy tetszőleges félgyűrűn értelmezett nemnegatív, 
+	additív és az üres halmazhoz nullát rendelő halmazfüggvényt ki tudjuk terjeszteni előmértékké.
 	
-	\begin{theorem}{}{}
+	\begin{lemma}{}{halmazfüggvény-félgyűrűn}
 		Legyen \( \ring{H} \subseteq \powerset{X} \) félgyűrű, 
 		továbbá \( \func{m}{\ring{H}}{[0, +\infty]} \) halmazfüggvény és
 		%
-		\begin{enumerate}
+		\begin{enumerate}[label=\roman*)]
 			\item az \( m \) additív és \( m(\emptyset) = 0 \);
 			\item \( n \in \N, \ H_0, \dots, H_n \in \ring{H} \) páronként diszjunktak;
 			\item \( s \in \N, \ Q_0, \dots, Q_s \in \ring{H} \) páronként diszjunktak.
@@ -325,7 +221,7 @@
 			\qquad \Longrightarrow \qquad
 			\sum_{k=0}^{n} m( H_k ) = \sum_{\ell=0}^{s} m( Q_\ell ).
 		\]
-	\end{theorem}
+	\end{lemma}
 	\begin{proof}
 		Mivel a metszetképzés disztributív az unióra, ezért
 		\begin{alignat*}{5}
@@ -346,21 +242,45 @@
 		\]
 	\end{proof}
 	
+	\noindent
+	\Aref{lem:halmazfüggvény-félgyűrűn} lemma jogalapjául az alábbi lemma szolgál.
+	
+	\begin{lemma}{Félgyűrűvel generált halmazgyűrű szerkezete}{félgyűrűvel-generált-gyűrű}
+		Amennyiben a \( \ring{H} \subseteq \powerset{X} \) egy félgyűrű, 
+		akkor az általa generált gyűrű
+		\[
+			\mathcal{G}(\ring{H}) = 
+			\setc[\Bigg]{ \bigcup_{k=0}^n H_k }
+			            { H_0, \dots, H_n \in \ring{H} \text{ páronként diszjunktak} \ (n \in \N)}.
+		\]
+	\end{lemma}
+	
+	\noindent
+	\Aref{lem:félgyűrűvel-generált-gyűrű} lemma értelmében a továbbiakban feltesszük, hogy
+	\[
+		A \in \mathcal{G}(\ring{H})
+		\quad \iff \quad
+		A = \bigcup_{k=0}^{n} Q_k
+	\]
+	fennáll valamilyen \( n \in \N \) és \( Q_0, \dots, Q_n \in \ring{H} \) páronként diszjunkt halmazok esetén.
+		
 	\newpage
-	\begin{theorem}{}{}
+	\begin{theorem}{}{}		
 		Legyen \( \ring{H} \subseteq \powerset{X} \) félgyűrű, 
-		továbbá \( \func{m}{\ring{H}}{[0, +\infty]} \) additív és \( m(\emptyset) = 0 \).
-		Definiáljuk az 
+		továbbá \( \func{m}{\ring{H}}{[0, +\infty]} \) additív és \( m(\emptyset) = 0 \).\\[6pt]
+		Definiáljuk az alábbi halmazfüggvényt:
 		\[
 			\func{\mu}{\mathcal{G}(\ring{H})}{[0, +\infty]}, \qquad
-			\mu(A) \coloneq \sum_{k=0}^{n} m( H_k ).
+			\mu(A) \coloneq \sum_{k=0}^{n} m( Q_k ).
 		\]
 		Ekkor
 		\begin{enumerate}
 			\item \( \mu \) előmérték, valamint \( \restr{\mu}{\ring{H}} = m \);
 			
 			\item ha \( \lambda \) előmérték \( \mathcal{G}(\ring{H}) \)-n
-			\marginnote{Tehát \( \func{\lambda}{\mathcal{G}(\ring{H})}{[0, +\infty]} \) alakú.}
+			\marginnote{
+				Tehát \( \func{\lambda}{\mathcal{G}(\ring{H})}{[0, +\infty]} \) alakú.
+			}
 			és \( \restr{\lambda}{\ring{H}} = m \), akkor \( \lambda = \mu \);
 			
 			\item ha \( m \) szigma-additív, akkor \( \mu \) kvázi-mérték.
@@ -368,31 +288,52 @@
 	\end{theorem}
 	\begin{proof}\,
 		\begin{enumerate}
-			\item Az állítás nyilvánvalóan igaz.
+			\item Az állítás nyilvánvalóan igaz, lásd \ref{lem:halmazfüggvény-félgyűrűn} lemma.
 			
 			\item Az lemma felhasználásával 
 			
-			\item Legyenek \( A_n \in \mathcal{G}(\ring{H}) \) páronként diszjunkt halmazok 
+			\item Legyenek \( B_n \in \mathcal{G}(\ring{H}) \) páronként diszjunkt halmazok 
+			\marginnote{Igazolni kell, hogy \( \mu \) szigma-additív.}
 			\( (n \in \N) \) és
 			\[
-				A \coloneq \bigcup_{n=0}^{\infty} A_n \in \mathcal{G}(\ring{H}).
+				B \coloneq \bigcup_{n=0}^{\infty} B_n \in \mathcal{G}(\ring{H}).
 			\]
-			Ekkor vannak olyan \( H_0, \dots, H_s \in \ring{H} \) páronként diszjunkt halmazok, hogy
+			Ekkor alkalmas \( H_0, \dots, H_s \in \ring{H} \) páronként diszjunkt halmazokkal
+			\marginnote{
+				Lásd \hyperref[lem:félgyűrűvel-generált-gyűrű]{félgyűrűvel generált gyűrű}.
+			}
 			\[
-				A = \bigcup_{k=0}^{s} H_k \in \mathcal{G}(\ring{H}).
+				B = \bigcup_{k=0}^{s} H_k
 			\]
-			Ugyan ez elmondható az \( A_n \) halmazokra is, vagyis
+			Ugyan ez elmondható a \( B_n \) halmazokra is, vagyis
+			\marginnote{
+				Az eddigieket összevetve kapjuk, hogy
+				\[
+					B = \bigcup_{n=0}^{\infty} \bigcup_{j=0}^{p_n} H_{n_j}.
+				\]
+			}
 			\[
-				A_n = \bigcup_{j=0}^{p_n} H_{nj} \quad (n \in \N)
+				B_n = \bigcup_{j=0}^{p_n} H_{nj} \quad (n \in \N)
 			\]
 			valamilyen \( H_{n0}, \dots, H_{np_n} \in \ring{H} \) páronként diszjunkt halmazokkal.
+			\marginnote{
+				Ugyanis minden \( k = 0,\dots,s \) indexre
+				\[
+					H_k = 
+					H_k \cap B =
+				%	H_k \cap \bigcup_{n=0}^{\infty} \bigcup_{j=0}^{p_n} H_{n_j}.
+					\bigcup_{n=0}^{\infty} \bigcap_{j=0}^{p_n} (H_{n_j} \cap H_k).
+				\]
+				Ez pedig páronként diszjunkt felbontás.
+			}
+			Így
 			\begin{align*}
-				\mu(A)
+				\mu(B)
 				 = \sum_{k=0}^{s} m( H_k )
 				&= \sum_{k=0}^{s} \sum_{n=0}^{\infty} \sum_{j=0}^{p_n} m( H_{nj} \cap H_k ) \\
 				&= \sum_{n=0}^{\infty} \sum_{j=0}^{p_n} \sum_{k=0}^{s} m( H_{nj} \cap H_k ) 
-				%= \sum_{n=0}^{\infty} m( A_n )
-				 = \sum_{n=0}^{\infty} \mu( A_n ).
+				%= \sum_{n=0}^{\infty} m( B_n )
+				 = \sum_{n=0}^{\infty} \mu( B_n ).
 			\end{align*}
 		\end{enumerate}
 	\end{proof}

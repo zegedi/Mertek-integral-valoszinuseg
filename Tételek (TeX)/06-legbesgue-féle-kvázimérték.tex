@@ -27,22 +27,6 @@
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
 \subtitle{\circled{6} Vizsgatétel}
-\date{2024} % year of defense
-
-% Author's metadata
-\author{Egedi Viktor}
-\degree{programtervező informatikus BSc}
-
-% Superivsor(s)' metadata
-\supervisor{Dr. Simon Péter} % internal supervisor's name
-\affiliation{egyetemi tanár} % internal supervisor's affiliation
-
-% University's metadata
-\university{Eötvös Loránd Tudományegyetem} % university's name
-\faculty{Informatikai Kar} % faculty's name
-\department{Numerikus Analízis Tanszék} % department's name
-\city{Budapest} % city
-\logo{elte_cimer_szines} % logo
 
 % The document
 \begin{document}
@@ -269,8 +253,7 @@
 			}
 		\end{enumerate}
 	\end{theorem}
-	\begin{proof} \,\\[6pt]
-		
+	\begin{proof}\,\\[6pt]
 		\fbox{\ref{eq:kvázimérték-jellemzése-01} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-02}}
 		%
@@ -285,7 +268,7 @@
 				A_n = \bigcup_{k=0}^n D_k \quad (n \in \N)
 				\tag{\( * \)}\label{eq:A_n-előállítása}
 			\]
-			is teljesül, hiszen az \( (A_n) \) halmazsorozat monoton bővül.
+			is igaz, hiszen az \( (A_n) \) monoton bővül.
 %			\begin{align*}
 %				\mu(A)
 %				&= \mu \Biggl( \, \bigcup_{n=0}^{\infty} D_n \Biggr)
@@ -314,7 +297,9 @@
 		Kihasználtuk, hogy \( \mu \) szigma- és véges additív, 
 		valamint a \eqref{eq:A_n-előállítása} egyenlőséget.
 		
-		\noindent\rule{\linewidth}{0.4pt}\\
+		\vspace{9pt}
+		\hrule
+		\vspace{9pt}
 		
 		\fbox{\ref{eq:kvázimérték-jellemzése-02} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-01}}
@@ -340,7 +325,7 @@
 		\[
 			\mu \Biggl( \, \bigcup_{n=0}^{\infty} X_n \Biggr) =
 			\mu (A) \overset{\text{\ref{eq:kvázimérték-jellemzése-02}}}{=}
-			\lim_{n \to \infty} \mu( A_n ) \overset{\eqref{eq:mu-an-additív}}{=}
+			\lim_{n \to \infty} \mu( A_n ) \overset{\text{\ref{eq:mu-an-additív}}}{=}
 			\lim_{n \to \infty} \sum_{k=0}^{n} \mu( X_k ) =
 			\sum_{k=0}^{\infty} \mu( X_k ).
 		\]
@@ -361,8 +346,12 @@
 		\begin{proof*}
 			Mivel a \( \mu \) monoton, ezért \( \mu(Z) \leq \mu(W) \), 
 			ahonnan \( \mu(Z) \) véges mivolta következik.
-			Továbbá a második állítás minden előmértékre igaz.
+			Továbbá a második állítás minden előmértékre igaz. \qed
 		\end{proof*}
+		
+		\vspace{9pt}
+		\hrule
+		\vspace{9pt}
 		
 		\fbox{\ref{eq:kvázimérték-jellemzése-02} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-03}}
@@ -434,7 +423,20 @@
 		\fbox{\ref{eq:kvázimérték-jellemzése-04} \( \Longrightarrow \)
 			  \ref{eq:kvázimérték-jellemzése-02}}
 		%
-		Ugyanis
+		Ha az \( (A_n) \) sorozat monoton bővülve tart az \( A \)-hoz, akkor a
+		\[
+			C_n \coloneq A \setminus A_n \in \ring{G} \qquad (n \in \N)
+		\]
+		sorozat monoton szűkülve tart az üres halmazhoz.
+		Mivel \( \mu \) véges, így
+		\[
+			0 = 
+			\mu( \emptyset ) =
+			\lim_{n \to \infty} \mu( C_n ) =
+			\lim_{n \to \infty} \mu( A \setminus A_n ) =
+			\mu( A ) - \lim_{n \to \infty} \mu( A_n ).
+		\]
+		Innen átrendezéssel adódik a bizonyítandó állítás.
 		
 	\end{proof}
 	

@@ -99,6 +99,28 @@
 % ------------------------------
 
 % ------------------------------
+% URL references
+% dvipdfm-hez
+%\newcommand{\hyperrefComp}{dvipdfm}
+% pdflatex-hez
+\newcommand{\hyperrefComp}{}
+
+\RequirePackage[pdfborder={0 0 0}, unicode, pdfusetitle, \hyperrefComp]{hyperref}
+\RequirePackage[all]{hypcap}
+\RequirePackage{url}
+\RequirePackage{bookmark}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=red,
+	filecolor=magenta,      
+	urlcolor=cyan,
+	pdftitle={Overleaf Example},
+	pdfpagemode=FullScreen,
+}
+% ------------------------------
+
+% ------------------------------
 % Metadata
 \DeclareDocumentCommand{\author}{m}{\newcommand{\authorname}{#1}\renewcommand{\@author}{#1}}
 \NewDocumentCommand{\degree}{m}{\newcommand{\degreename}{#1}}
@@ -358,6 +380,7 @@
 \RequirePackage{centernot} % Középre igazított áthúzás szimbólum.
 \RequirePackage{colonequals}
 \RequirePackage{nicematrix}
+\RequirePackage{nicefrac}
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 % ------------------------------
 
@@ -755,28 +778,6 @@
 \definecolor{codecomment}{rgb}{0,0.6,0}
 \definecolor{codestring}{rgb}{0.58,0,0.82}
 \colorlet{todobackg}{orange!10}
-% ------------------------------
-
-% ------------------------------
-% URL references
-% dvipdfm-hez
-%\newcommand{\hyperrefComp}{dvipdfm}
-% pdflatex-hez
-\newcommand{\hyperrefComp}{}
-
-\RequirePackage[pdfborder={0 0 0}, unicode, pdfusetitle, \hyperrefComp]{hyperref}
-\RequirePackage[all]{hypcap}
-\RequirePackage{url}
-\RequirePackage{bookmark}
-
-\hypersetup{
-	colorlinks=true,
-	linkcolor=red,
-	filecolor=magenta,      
-	urlcolor=cyan,
-	pdftitle={Overleaf Example},
-	pdfpagemode=FullScreen,
-}
 % ------------------------------
 
 % ------------------------------

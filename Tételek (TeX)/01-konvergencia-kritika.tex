@@ -12,17 +12,9 @@
 % See elteikthesis_minted.tex for example
 %\usepackage[newfloat]{minted}
 \usepackage{enumitem}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows.meta}
 
-\makeatletter
-\def\biggg{\bBigg@{3}}
-\def\bigggm{\mathrel\biggg}
-\def\bigggl{\mathopen\biggg}
-\def\bigggr{\mathclose\biggg}
-\def\Biggg{\bBigg@{3.5}}
-\def\Bigggm{\mathrel\Biggg}
-\def\Bigggl{\mathopen\Biggg}
-\def\Bigggr{\mathclose\Biggg}
-\makeatother
 
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
@@ -33,13 +25,24 @@
 	
 	% Set document language
 	\documentlang{hungarian}
-	%\documentlang{english}
 	
 	\section{Függvények lokális oszcillációja}
 	
 	\begin{definition}{Oszcilláció halmazon, lokális oszcilláció}{oszcilláció}
 		Legyen \( \funcin{f}{\R}{\R} \), és
 		\( A \subseteq \R \) olyan halmaz, hogy \( A \cap \dom{f} \neq \emptyset \).
+		\marginnote{
+			Legyen \( \func{f}{[a, b]}{\R} \) korlátos függvény,
+			\[
+				\tau \coloneq \{ a = x_0 < \cdots < x_n = b \}
+			\]
+			egy felosztás. Ekkor
+			\[
+				\omega(f, \tau) \coloneq 
+				\sum_{ I \in \mathcal{F}(\tau) } \mathcal{O}(f, I) {\cdot} \abs{ I }
+			\]
+			az \( f \) függvény \emph{oszcillációs összege}.
+		}
 		Ekkor
 		\[
 			\mathcal{O}(f, A) \coloneq
@@ -120,44 +123,34 @@
 	\newpage
 	\section{Konvergencia}
 	
-%	Az \( f \) függvényt sorozatnak nevezzük, amennyiben \( \dom{f} = \N \). Ekkor a sorozat
-%	\[
-%		f_n \coloneq f(n) \qquad (n \in \N)
-%	\]
-%	helyettesítési értékét az \( f \) sorozat \( n \)-edik (vagy \( n \) indexű) tagjának nevezzük, és a sorozat jelölésére a függvényeknél használt \( f \) szimbólum helyett az \( (f_n) \) jelölés használjuk.
-%	
-%	Attól függően, hogy az egyes tagok milyen halmazból vannak, különböző jelzőket használunk a sorozat megnevezésekor. Például azt mondjuk, hogy \( (f_n) \) számsorozat, ha minden tagja szám. Vagy azt mondjuk, hogy \( (f_n) \) halmazsorozat, ha minden tagja halmaz.
-%	Hasonló elv szerint értelmezzük a függvénysorozatokat.
-	
-	A továbbiakban legyen \( [a, b] \subset \R \) egy korlátos és zárt intervallum.
-	
 	\begin{definition}{Függvénysorozat, pontonkénti konvergencia}{}
-		Azt mondjuk, hogy az \( (f_n) \) egy \emph{függvénysorozat}, ha
+		Azt mondjuk, hogy az \( (f_n) \) egy \emph{függvénysorozat}, 
+		ha egy \( \mathcal{D} \neq \emptyset \) halmazzal
 		\[
-			\func{f_n}{[a, b]}{\R} \qquad (n \in \N).
+			\func{f_n}{\mathcal{D}}{\R} \qquad (n \in \N).
 		\]
 		Az \( (f_n) \) függvénysorozat \emph{pontonként konvergens}, 
-		ha minden \( x \in [a,b] \) helyen az \( \bigl( f_n(x) \bigr) \) számsorozat konvergens. 
-		Ekkor az \( f \) \emph{határfüggvénye}
+		ha az \( \bigl( f_n(x) \bigr) \) sorozat minden \( x \in \mathcal{D} \) esetén konvergens. 
+		Ekkor az \( f \) \emph{határfüggvénye} legyen
 		\[
-			f(x) \coloneq \lim_{n \to \infty} f_n(x) \qquad \bigl( x \in [a, b] \bigr).
+			f(x) \coloneq \lim_{n \to \infty} f_n(x) \qquad (x \in \mathcal{D}).
 		\]
 	\end{definition}
 	
-	\begin{notes}
-		\item Az általunk vizsgált függvénysorozatok nagyon speciálisak, tudniillik
-		\[
-			\dom{f_n} = [a, b] \qquad (n \in \N).
-		\]
-		
-		\item Az \( (f_n) \) függvénysorozat \( x \in [a, b] \) pontbeli konvergenciája azt jelenti, hogy
-		\[
-			\forall \varepsilon > 0 \text{-hoz }\
-			\exists N \in \N,\
-			\forall n \in \N \ \text{ és } \ n > N \colon \qquad
-			\abs\big{ f_n(x) - f(x) } < \varepsilon.
-		\]
-	\end{notes}
+%	\begin{notes}
+%		\item Az általunk vizsgált függvénysorozatok nagyon speciálisak, tudniillik
+%		\[
+%			\dom{f_n} = [a, b] \qquad (n \in \N).
+%		\]
+%		
+%		\item Az \( (f_n) \) függvénysorozat \( x \in \mathcal{D} \) pontbeli konvergenciája azt jelenti, hogy
+%		\[
+%			\forall \varepsilon > 0 \text{-hoz }\
+%			\exists N \in \N,\
+%			\forall n \in \N \ \text{ és } \ n > N \colon \qquad
+%			\abs\big{ f_n(x) - f(x) } < \varepsilon.
+%		\]
+%	\end{notes}
 	
 	\noindent 
 	Legyen adott az \( f_n \in \Riem{[a, b]} \ (n \in \N) \) függvényeknek a konvergens sorozata.\\
@@ -165,10 +158,15 @@
 	\noindent
 	\underline{\textbf{Kérdések:}}
 	
-	\begin{enumerate}
-		\item Konvergens-e az integrálokból képzett \( \left( \int_a^b f_n \right) \) számsorozat?
-		\item Igaz-e, hogy az \( f \) határfüggvény Riemann-integrálható?
-		\item Ha az előbbi két kérdésre igen a válasz, akkor fennáll-e az
+	\begin{enumerate}[label=\arabic*.]
+		\item\label{eq:kérdések-01}
+		Konvergens-e az integrálokból képzett \( \left( \int_a^b f_n \right) \) számsorozat?
+		
+		\item\label{eq:kérdések-02}
+		Igaz-e, hogy az \( f \) határfüggvény Riemann-integrálható?
+		
+		\item\label{eq:kérdések-03}
+		Ha az előbbi két kérdésre igen a válasz, akkor fennáll-e az
 		\marginnote{
 			Másképp fogalmazva teljesül-e az
 			\[
@@ -184,99 +182,94 @@
 	
 	\noindent
 	\underline{\textbf{Válaszok:}} Minden további feltétel nélkül ezek nem teljesülnek.
+	Ellenpéldák.
 	
-	Megmutatjuk, hogy egy Riemann-integrálható tagokból álló \( (f_n) \) függvénysorozat pontonkénti konvergenciája nem elégséges a határfüggvény Riemann-integrálhatóságához.
-	
-	Legyen \( (r_n) \) a \( [0, 1] \) intervallumbeli racionális számoknak egy sorozata megszámlálhatóan végtelen [0,1]-beli racionális szám van, ezért sorozatba rendezhetőek), továbbá legyen
-	\marginnote{
-		Ismert megszámlálhatóan végtelen \( [0, 1] \)-beli racionális szám van, 
-		ezért ezek sorozatba rendezhetőek.
-	}
-	\[
-		f_n(x) \coloneq 
-		\begin{cases}
-			1, & \text{ha } x \in    \{ r_0, \dots, r_n \} \\
-			0, & \text{ha } x \notin \{ r_0, \dots, r_n \}
-		\end{cases}
-		\quad \bigl( x \in [0, 1],\ n \in \N \bigr).
-	\]
-	Ekkor minden \( n \in \N \) index esetén az \( f_n \) függvény csak véges sok pontban nem nulla, ezért \( f_n \in \Riem{[0, 1]} \).
-	Továbbá az \( (f_n) \) pontonként konvergens és a határfüggvénye
-	\[
-		D(x) \coloneq 
-		\lim_{n \to \infty} f_n(x) =
-		\begin{cases}
-			1, \quad \text{ha } x \in    \Q \\
-			0, \quad \text{ha } x \notin \Q
-		\end{cases}
-		\quad \bigl( x \in [0, 1] \bigr).
-	\]
-	Ez pedig a híres \emph{Dirichlet-függvény} és ismeretes, hogy \( D \notin \Riem{[0, 1]} \).
-	
-	Megmutatjuk, hogy egy Riemann-integrálható tagokból álló \( (f_n) \) függvénysorozat pontonkénti konvergenciája nem elégséges a határátmenet és az integrálás operátornak a felcserélhetőségéhez.
-	
-	Jelöljön \( \func{(a_n)}{\N}{\R} \) egy számsorozatot, és tekintsük a következő függvénysorozatot.
-	\[
-		f_n(x) \coloneq
-		\begin{cases}
-			a_n , & \text{ha } 0   \leq x < 1/n \\
-			0   , & \text{ha } 1/n \leq x < 1   \\
-		\end{cases}
-		\qquad (1 \leq n \in \N).
-	\]
-	Ekkor \( (f_n) \) pontonként konvergens és a határfüggvénye \( f \equiv 0 \). Nyilvánvaló, hogy
-	%
-	\begin{alignat*}{3}
-		f \in \Riem{[0, 1]}&
-		\qquad \text{ és } \qquad &&
-		\int\limits_0^1 \lim_{n \to \infty} f_n(x) \dd{x} =
-		\int\limits_0^1 0 \dd{x} =
-		0.\\
+	\begin{enumerate}[label=\alph*)]
+		\item 
+		Legyen \( (r_n) \) a \( [0, 1] \) intervallumbeli racionális számoknak egy sorozata, és
+		\[
+			f_n(x) \coloneq 
+			\begin{cases}
+				1, & \text{ha } x \in    \{ r_0, \dots, r_n \} \\
+				0, & \text{ha } x \notin \{ r_0, \dots, r_n \}
+			\end{cases}
+			\quad \bigl( x \in [0, 1],\ n \in \N \bigr).
+		\]
+		Ezek a függvények mind Riemann-integrálhatóak, továbbá
+		\[
+			D(x) \coloneq 
+			\lim_{n \to \infty} f_n(x) =
+			\begin{cases}
+				1, \quad \text{ha } x \in    \Q \\
+				0, \quad \text{ha } x \notin \Q
+			\end{cases}
+			\quad \bigl( x \in [0, 1] \bigr).
+		\]
+		Ez pedig a híres \emph{Dirichlet-függvény}, amiről ismeretes, 
+		\marginnote{
+			Vagyis \aref{eq:kérdések-02} kérdésre nem a válasz!
+		}
+		hogy \( D \notin \Riem{[0, 1]} \).
+		
+		\item 
+		Jelöljön \( \func{(a_n)}{\N}{\R} \) egy számsorozatot, és tekintsük a következőket
+		\[
+			f_n(x) \coloneq
+			\begin{cases}
+				a_n  & (0 \leq x < 1/n) \\
+				0    & (1/n \leq x < 1)
+			\end{cases}
+			\qquad (1 \leq n \in \N).
+		\]
+		Ekkor \( (f_n) \) pontonként konvergens és a határfüggvénye \( f \equiv 0 \). Nyilván
 		%
-		\intertext{%
-			Mivel \( f_n \) szakaszonként folytonos minden \( 1 \leq n \in \N \) indexre, ezért}
-		%
-		f_n \in \Riem{[0, 1]}&
-		\qquad \text{ és } \qquad&&
-		\int\limits_0^1 f_n(x) \dd{x} =
-		\int\limits_0^{\frac{1}{n}} a_n \dd{x} + \int\limits_{\frac{1}{n}}^1 0 \dd{x} =
-		\frac{a_n}{n}.
-	\end{alignat*}
-	%
-	Ennek az integrálsorozatnak a határértéke pedig függ az \( (a_n) \) megválasztásától:
-	\[
-		\lim_{n \to \infty} \int\limits_0^1 f_n(x) \dd{x} =
-		\lim_{n \to \infty} \frac{a_n}{n} =
-		\begin{cases}
-			       c \in \R, & \text{ha } a_n \coloneq c {\cdot} n  \\
-			\hfill + \infty, & \text{ha } a_n \coloneq n^2 \\
-			\hfill \nexists, & \text{ha } a_n \coloneq (-1)^n {\cdot} n.
-		\end{cases}
-	\]
+		\begin{alignat*}{3}
+			f \in \Riem{[0, 1]}&
+			\qquad \text{ és } \qquad &&
+			\int_0^1 \lim_{n \to \infty} f_n(x) \dd{x} =
+			\int_0^1 0 \dd{x} =
+			0.\\
+			%
+			\intertext{%
+				Mivel \( f_n \) szakaszonként folytonos minden \( 1 \leq n \in \N \) indexre,
+				ezért}
+			%
+			f_n \in \Riem{[0, 1]}&
+			\qquad \text{ és } \qquad&&
+			\int_0^1 f_n(x) \dd{x} =
+			\int_0^{\frac{1}{n}} a_n \dd{x} + \int_{\frac{1}{n}}^1 0 \dd{x} =
+			\frac{a_n}{n}.
+		\end{alignat*}
+		Vagyis az \( (a_n) \) sorozattól függően nem biztos 
+		\ref{eq:kérdések-01} és \ref{eq:kérdések-03} teljesülni fog.
+	\end{enumerate}
 	
+	\newpage
 	\begin{definition}{Egyenletes konvergencia}{}
 		Azt mondjuk, hogy az \( (f_n) \) függvénysorozat \emph{egyenletesen konvergál} az
 		\[
-			\func{f}{[a, b]}{\R}
+			\func{f}{\mathcal{D}}{\R}
 		\]
-		határfüggvényhez, amennyiben 
+		függvényhez, 
+		ha bármely \( \varepsilon > 0 \)-hoz van olyan \( N \in \N \) küszöbindex, hogy
 		\[
-			\forall \varepsilon > 0 \text{-hoz }\
-			\exists N \in \N \
-			\forall n \in \N,\ n > N\ \text{ és } \forall x \in [a, b] \colon \qquad
+%			\forall \varepsilon > 0 \text{-hoz }\
+%			\exists N \in \N \
+			\forall n \in \N,\ n > N\ \text{és} \ \forall x \in \mathcal{D} \colon \qquad
 			\abs\big{ f_n(x) - f(x) } < \varepsilon.
 		\]
 	\end{definition}
-	
-	\newpage
 		
 	\begin{theorem}{}{}
 		Legyen \( \func{f_n}{[a, b]}{\R} \) egy függvénysorozat \( (n \in \N) \).
 		Tegyük fel, hogy
 		%
-		\begin{enumerate}[label=(\roman*)]
-			\item minden \( n \in \N \) index esetén \( f_n \in \Riem{[a, b]} \),
-			\item az \( (f_n) \) egyenletesen konvergál az \( f \coloneq \lim(f_n) \) határfüggvényhez.
+		\begin{enumerate}[label=\roman*)]
+			\item\label{eq:integrálható-függvénysorozat-01}
+			minden \( n \in \N \) index esetén \( f_n \in \Riem{[a, b]} \),
+			
+			\item\label{eq:integrálható-függvénysorozat-02}
+			az \( (f_n) \) egyenletesen konvergál az \( f \coloneq \lim(f_n) \) határfüggvényhez.
 		\end{enumerate}
 		%
 		Ekkor \( f \in \Riem{[a, b]} \) és az 
@@ -295,26 +288,31 @@
 	\begin{proof}\,\\[6pt]
 		%
 		\fbox{\( 1. \)} 
-		Legyen \( I \subseteq [a, b] \) egy intervallum és \( n \in \N \). Ekkor
+		Legyen \( I \subseteq [a, b] \) egy intervallum és \( n \in \N \). 
+		Ekkor minden \( x, y \in I \)-re
 		\[
 			\abs\big{ f(x) - f(y) } \leq
 			\abs\big{ f(x) - f_n(x) }   + 
 			\abs\big{ f_n(x) - f_n(y) } + 
-			\abs\big{ f_n(y) - f(y) }
-		%	\quad (x, y \in I).
+			\abs\big{ f_n(y) - f(y) }.
 		\]
-		bármely \( x, y \in I \) esetén fennáll.
-		Mivel az \( (f_n) \) függvénysorozat egyenletesen konvergens,
-		ezért minden \( \varepsilon > 0 \)-hoz van olyan \( N \in \N \) küszöbindex, hogy
+		Továbbá \aref{eq:integrálható-függvénysorozat-02} feltétel miatt
+		minden \( \varepsilon > 0 \)-hoz van olyan \( N \in \N \) küszöbindex:
+%		Mivel az \( (f_n) \) függvénysorozat egyenletesen konvergens,
+%		ezért minden \( \varepsilon > 0 \)-hoz van olyan \( N \in \N \) küszöbindex, hogy
 		\[
 			\abs\big{ f_n(t) - f(t) } < \varepsilon
 			\qquad (t \in I,\ N < n \in \N).
 		\]
 		Ebből következik, hogy
-		%
-		\begin{equation}\label{eq:oszcillációs-becslés}
+		\[
 			\abs\big{ f(x) - f(y) } < 2 \varepsilon + \abs\big{ f_n(x) - f_n(y) }
 			\qquad (x, y \in I, \ N < n \in \N).
+		\]
+		Innen szuprémumot véve kapjuk, hogy
+		\begin{equation}\label{eq:oszcillációs-becslés}
+			\mathcal{O}(f, I) < 2 \varepsilon + \mathcal{O}(f_n, I)
+			\qquad (N < n \in \N).
 			\tag{\( * \)}
 		\end{equation}
 		
@@ -326,53 +324,35 @@
 		
 		% ----------------------------------------------------------------------------		
 		
-		\fbox{\( 2. \)} 
-		%
-		Vegyünk egy \( \tau = \{ a = x_0 < x_1 < \dots < x_s = b \} \) felosztást és vizsgáljuk az
-		\[
-			\omega(f, \tau) = \sum_{k=0}^{s-1} O_k(f) {\cdot} \abs{I_k}
-		\]
-		oszcillációs összeget, ahol tetszőleges \( k = 0,1,\dots,s-1 \) mellett legyen
-		\[
-			I_k \coloneq [x_k, x_{k + 1}], \qquad
-			O_k(f) \coloneq \sup 
-			\Bigl\{ \abs\big{f(x) - f(y)} \ \colon\, x, y \in I_k \Bigr\}.
-		%	\quad (k = 0,1,\dots,s-1).
-		\]
-		Ha most veszünk egy rögzített \( N < n \in \N \) indexet, 
-		akkor \eqref{eq:oszcillációs-becslés} alapján
-		\[
-			O_k(f) < 2\varepsilon + O_k(f_n) \qquad (k = 0,1,\dots,s-1).
-		\]
-		Ennél fogva teljesül az alábbi becslés:
-		%
+		\fbox{\( 2. \)}
+		Ekkor a \eqref{eq:oszcillációs-becslés} becslés felhasználásával
 		\marginnote{
+			Az alkalmazott becslések részleseten:
 			\begin{align*}
-				\omega(f, \tau) 
-			%	&=    \sum_{k=0}^{s-1} O_k(f) {\cdot} \abs{I_k} \\
-				&\leq \sum_{k=0}^{s-1} \bigl( 2\varepsilon + O_k(f_n) \bigr) {\cdot} \abs{I_k} \\
-				&=    2 \varepsilon \sum_{k=0}^{s-1}    \abs{I_k} 
-				 +    \sum_{k=0}^{s-1} O_k(f_n) {\cdot} \abs{I_k} \\
-				&= 2\varepsilon (b - a) + \omega(f_n, \tau).
+				\omega(f, \tau)
+				&\overset{\text{\ref{eq:oszcillációs-becslés}}}{<}
+				\sum_{I \in \mathcal{F}(\tau)} 
+				\bigl( 2 \varepsilon + \mathcal{O}(f_n, I) \bigr) {\cdot} \abs{I} \\[3pt]
+				&= 2\varepsilon \sum_{\mathclap{I \in \mathcal{F}(\tau)}} \abs{I}
+				 + \sum_{\mathclap{I \in \mathcal{F}(\tau)}} 
+				   \mathcal{O}(f_n, I) {\cdot} \abs{I} \\[3pt]
+				&= 2\varepsilon (b-a) + \omega(f_n, \tau) \\[3pt]
+				&< 2\varepsilon (b-a) + \varepsilon.
 			\end{align*}
-			és itt
-			\[
-				\sum_{k=0}^{s-1} \abs{I_k} =
-				\sum_{k=0}^{s-1} (x_{k + 1} - x_k) =
-				b - a.
-			\]
 		}
+		bármilyen \( \tau \subset [a, b] \) felosztás esetén
 		\[
-			\omega(f, \tau) \leq
-			%	&=    \sum_{k=0}^{s-1} O_k(f) {\cdot} \abs{I_k} \\
-			\sum_{k=0}^{s-1} \bigl( 2\varepsilon + O_k(f_n) \bigr) {\cdot} \abs{I_k} =
-			2\varepsilon (b - a) + \omega(f_n, \tau).
+			\omega(f, \tau) = 
+			\sum_{I \in \mathcal{F}(\tau)} \mathcal{O}(f, I) {\cdot} \abs{I} <
+			2\varepsilon (b - a) + \omega(f_n, \tau)
+			\qquad (N < n \in \N).
 		\]
-		Mivel az \( f_n \) integrálható, ezért megadható olyan \( \mu \subset [a, b] \) felosztás, hogy
+		Mivel az \( f_n \) integrálható, 
+		ezért megadható olyan \( \tau \subset [a, b] \) felosztás, hogy
 		\[
-			\omega(f_n, \mu) < \varepsilon
+			\omega(f_n, \tau) < \varepsilon
 			\qquad \Longrightarrow \qquad
-			\smash{\uwave{\omega(f, \mu) \leq \varepsilon \bigl( 2(b-a) + 1 \bigr)}}.
+			\smash{\uwave{\omega(f, \tau) < \varepsilon \bigl( 2(b-a) + 1 \bigr)}}.
 		\]
 		Következésképpen \( f \in \Riem{[a, b]} \).
 		
@@ -393,62 +373,258 @@
 			\varepsilon (b - a).
 		%	\qquad (N < n \in \N).
 		\]
-		Ez pontosan azt jelenti, hogy az \( \left( \int_a^b f_n \right) \) integrálsorozat konvergens és
-		\[
-			\lim_{n \to \infty} \int_a^b f_n = \int_a^b f.
-		\]
+		Ez pontosan azt jelenti, hogy az \( \left( \int_a^b f_n \right) \) integrálsorozat konvergens.
 	\end{proof}
 	
-	\section{A teljesség kérdése}
+	\newpage
+	\section{Teljesség}
 	
-	Legyen \( f, g \in \Riem{[a, b]} \) és értelmezzük az \( f \) és \( g \) függvények ``távolságát'' a
+	Legyen \( f, g \in \Riem{[a, b]} \) és értelmezzük az \( f \) és \( g \) 
+	függvények ``távolságát'' a
 	\[
 		\varrho(f, g) \coloneq \int_a^b \abs\big{f(x) - g(x)} \dd{x}.
 	\]
-	leképezés segítségével.
+	leképezés segítségével. Megjegyezzük, hogy \( \varrho \) egy úgynevezett félmetrika.\\
 	
-	Legyen
+	\noindent
+	\underline{\textbf{Kérdés:}} 
+	Amennyiben az \( f_n \in \Riem{[a, b]} \ (n \in \N) \) függvénysorozatra igaz, hogy
+	\[
+		\int_a^b \abs{f_n - f_m} \longrightarrow 0 \qquad (m, n \to \infty),
+	\]
+	akkor van olyan \( f \in \Riem{[a, b]} \) függvény, amelyre
+	\[
+		\int_a^b \abs{f_n - f} \longrightarrow 0 \qquad (n \to \infty)
+	\]
+	teljesül? Ezt nevezzük \emph{Cauchy-kritériumnak}.\\
+	
+	\noindent
+	\underline{\textbf{Válasz:}} Nem, mert megmutatható az alábbi ellenpélda.
+	\marginnote{
+		\centering
+		
+		% Define the variable n.
+		\pgfmathsetmacro{\n}{5}
+		\pgfmathsetmacro{\x}{0.5}
+		\pgfmathsetmacro{\fx}{1/(sqrt(\x))}
+		\pgfmathsetmacro{\sqrtN}{sqrt(\n)}
+		\pgfmathsetmacro{\overN}{0.2}
+		
+		\begin{tikzpicture}[scale=0.7]
+			\begin{axis}[
+				axis lines = middle,
+				font=\large,
+				xlabel = $x$,
+				ylabel = $y$,
+				xmin=0,
+				xmax=1.1,
+				ymin=0,
+				ymax=2.5,
+				xtick={\overN, \x, 1}, 
+				xticklabels={$\nicefrac{1}{n}$, $x$, 1}, 
+				ytick={0, 1, \fx, \sqrtN},
+				yticklabels={$0$, $1$, $\dfrac{1}{\sqrt{x}}$, $\sqrt{n}$}, 
+				xlabel style={xshift=75pt, yshift=-6pt},
+				ylabel style={xshift=-7pt, yshift=60pt},
+				samples=100,
+				enlarge y limits = true,
+				]
+				
+				\addplot[thick, gray, dashed] coordinates {(\overN,0) (\overN,\sqrtN)};
+				\addplot[thick, gray, dashed] coordinates {(0,1) (1,1)};
+				
+				\addplot[thick, gray] coordinates {(\x, 0) (\x,\fx)};
+				\addplot[thick, gray] coordinates {(0,\fx) (\x,\fx)};
+				
+				% Plot for the function 1/sqrt(x) (for 1/n < x < 1)
+				\addplot[ultra thick, blue, domain=\overN:1] {1/sqrt(x)};
+				
+				% Plot for the function sqrt(n) (for 0 < x < 1/n)
+				\addplot[ultra thick, blue] coordinates {(0,\sqrtN) (\overN,\sqrtN)};
+				
+				% Adding a point at the origin (0, 0) 
+				\addplot[only marks, blue, thin] coordinates {(\overN, \sqrtN)};
+				
+				% Adding a point at the origin (0, 0) 
+				\addplot[only marks, blue, thin] coordinates {(\x, \fx)};
+			\end{axis}
+		\end{tikzpicture}
+		\captionof{figure}{Az \( (f_n) \) sorozat egyik tagja.}
+		\label{fig:cauchy-ellenpélda-01}
+	}[-2\baselineskip]
+	Legyen (lásd \ref{fig:cauchy-ellenpélda-01}. ábra)
 	\[
 		f_n(x) \coloneq 
 		\begin{cases}
-			\sqrt{n}           , & \text{ha }           0  \leq x \leq \dfrac{1}{n} \\[12pt]
-			\dfrac{1}{\sqrt{x}}, & \text{ha } \dfrac{1}{n}    < x \leq 1
+			\sqrt{n}            & \quad (0   \leq x \leq 1/n) \\[3pt]
+			\dfrac{1}{\sqrt{x}} & \quad (1/n \leq x \leq 1  )
 		\end{cases}
 		\qquad (n \in \N).
 	\]
-	
-	Indirekt tegyük fel, hogy az \( (f_n) \) függvénysorozat konvergens és legyen 
+	Ekkor szakaszonkénti integrálással adódik, hogy
 	\[
+		\int_a^b \abs\big{f_n - f_m} \longrightarrow 0 \qquad (m, n \to \infty).
+	\]
+	Indirekt tegyük fel, hogy az \( (f_n) \) függvénysorozat konvergens és legyen 
+	%
+	\begin{equation*}\label{eq:teljesség-01}
+		f \in \Riem{[0, 1]}, \quad
 		\int_0^1 \abs\big{f_n - f} \longrightarrow 0
 		\qquad (n \to \infty).
-	\]
+		\tag{\( ** \)}
+	\end{equation*}
+	%
 	Ekkor minden olyan \( 0 < x < 1 \) helyen, ahol az \( f \) folytonos, szükségképpen
 	\[
 		f(x) = \dfrac{1}{\sqrt{x}}.
 	\]
-	Különben tegyük fel, hogy valamilyen \( \xi \in (0, 1) \) folytonossági helyen
+	Ugyanis indirekt tegyük fel, hogy valamilyen \( \xi \in (0, 1) \) folytonossági helyen
 	\[
 		f(\xi) \neq \dfrac{1}{\sqrt{\xi}}
 		\qquad \Longrightarrow \qquad 
-		\abs\bigg{ f(\xi) - \dfrac{1}{\sqrt{\xi}} } > 0.
+		3\varepsilon \coloneq \abs\bigg{ f(\xi) - \dfrac{1}{\sqrt{\xi}} } > 0.
 	\]
-	Mivel \( f \in \ContAt{\xi} \), ezért bármely \( \varepsilon > 0 \)-hoz van olyan \( \delta > 0 \)
-	Ekkor a folytonosság alapján elmondható, valamilyen \( \delta > 0 \) sugárral 
-	\( [\xi - \delta, \xi + \delta] \subset \)
+	Mivel \( f \in \ContAt{\xi} \),
+	\marginnote{
+		\centering
+		
+		\pgfmathsetmacro{\xiValue}{0.5}
+		\pgfmathsetmacro{\deltaValue}{0.25}
+%		\pgfmathsetmacro{\epsilonValue}{0.20}
+		\pgfmathsetmacro{\intervalLower}{\xiValue - \deltaValue}
+		\pgfmathsetmacro{\intervalUpper}{\xiValue + \deltaValue}
+		\pgfmathsetmacro{\xiFunctionValueA}{0.6}
+		\pgfmathsetmacro{\xiFunctionValueB}{1/sqrt(\xiValue)}
+		\pgfmathsetmacro{\epsilonValue}{abs(\xiFunctionValueA - \xiFunctionValueB)/3}
+		
+		\begin{tikzpicture}[scale=0.7]
+			\begin{axis}[
+				axis lines = middle,
+				font=\large,
+				xlabel = $x$,
+				ylabel = $y$,
+				xmin=0, xmax=1.1, ymin=0, ymax=2,
+				xtick={0, \intervalLower, \xiValue, \intervalUpper, 1}, 
+				xticklabels={0, $\xi - \delta$, $\xi$, $\xi + \delta$, 1}, 
+				ytick={\xiFunctionValueA, \xiFunctionValueB},
+				yticklabels={$f(\xi)$, $\dfrac{1}{\sqrt{\xi}}$}, 
+				xlabel style={xshift=75pt, yshift=-6pt},
+				ylabel style={xshift=-7pt, yshift=60pt},
+				samples=100,
+				enlarge y limits = true,
+				]
+				
+				
+				% Adding a point at the origin (0, 0) 
+				\addplot[thick, gray, dashed] coordinates 
+				{(\intervalLower, 0) (\intervalLower, \xiFunctionValueB + \epsilonValue)};
+				
+				\addplot[thick, gray, dashed] coordinates 
+				{(\intervalUpper, 0) (\intervalUpper, \xiFunctionValueB + \epsilonValue)};
+				
+				\addplot[thick, gray, dashed] coordinates 
+				{(0, \xiFunctionValueA - \epsilonValue) (\intervalLower, \xiFunctionValueA - \epsilonValue)};
+				
+				\addplot[thick, gray, dashed] coordinates 
+				{(0, \xiFunctionValueA + \epsilonValue) (\intervalLower, \xiFunctionValueA + \epsilonValue)};
+				
+				\addplot[thick, gray, dashed] coordinates 
+				{(0, \xiFunctionValueB - \epsilonValue) (\intervalLower, \xiFunctionValueB - \epsilonValue)};
+				
+				\addplot[thick, gray, dashed] coordinates 
+				{(0, \xiFunctionValueB + \epsilonValue) (\intervalLower, \xiFunctionValueB + \epsilonValue)};
+				
+				\draw[decorate, decoration={brace,amplitude=4pt,mirror}] 
+				(axis cs:\intervalUpper + 0.01,\xiFunctionValueB - \epsilonValue) -- 
+				(axis cs:\intervalUpper + 0.01,\xiFunctionValueB) 
+				node[midway,xshift=10pt] {$\varepsilon$};
+				
+				\draw[decorate, decoration={brace,amplitude=4pt}] 
+				(axis cs:\intervalUpper + 0.01,\xiFunctionValueB + \epsilonValue) -- 
+				(axis cs:\intervalUpper + 0.01,\xiFunctionValueB) 
+				node[midway,xshift=10pt] {$\varepsilon$};
+				
+				\draw[decorate, decoration={brace,amplitude=4pt,mirror}] 
+				(axis cs:\intervalUpper + 0.01,\xiFunctionValueA - \epsilonValue) -- 
+				(axis cs:\intervalUpper + 0.01,\xiFunctionValueA) 
+				node[midway,xshift=10pt] {$\varepsilon$};
+				
+				\draw[decorate, decoration={brace,amplitude=4pt}] 
+				(axis cs:\intervalUpper + 0.01,\xiFunctionValueA + \epsilonValue) -- 
+				(axis cs:\intervalUpper + 0.01,\xiFunctionValueA) 
+				node[midway,xshift=10pt] {$\varepsilon$};
+				
+				\draw[Bracket-, ultra thick, blue] 
+				(axis cs:\intervalLower,0) -- (axis cs:\intervalLower + 0.01,0);
+				\draw[-Bracket, ultra thick, blue] 
+				(axis cs:\intervalUpper - 0.01,0) -- (axis cs:\intervalUpper,0);
+				
+				\draw[fill=gray!20, draw=gray, thick] 
+				(axis cs:\intervalLower, \xiFunctionValueA + \epsilonValue) rectangle 
+				(axis cs:\intervalUpper, \xiFunctionValueA - \epsilonValue);
+				
+				\draw[fill=gray!20, draw=gray, thick] 
+				(axis cs:\intervalLower, \xiFunctionValueB + \epsilonValue) rectangle 
+				(axis cs:\intervalUpper, \xiFunctionValueB - \epsilonValue);
+				
+				\addplot[only marks, blue, thick] coordinates {(\xiValue, \xiFunctionValueA)};
+				\addplot[only marks, blue, thick] coordinates {(\xiValue, \xiFunctionValueB)};
+				
+				\addplot[ultra thick, blue, dashed] coordinates 
+				{(0, \xiFunctionValueA) (\xiValue, \xiFunctionValueA)};
+			
+				\addplot[ultra thick, blue, dashed] coordinates 
+				{(0, \xiFunctionValueB) (\xiValue, \xiFunctionValueB)};
+			\end{axis}
+		\end{tikzpicture}
+		\captionof{figure}{Az \( f(\xi) \) érték környezete.}
+		\label{fig:cauchy-ellenpélda-02}
+	}[-7.82\baselineskip]
+	ezért megadható olyan \( \delta > 0 \) sugár, amivel (lásd \ref{fig:cauchy-ellenpélda-02}. ábra)
 	\[
-		\abs\bigg{ f(t) - \dfrac{1}{\sqrt{t}} } \geq \varepsilon
-		\qquad \bigl( t \in [\xi - \delta,\, \xi + \delta] \bigr).
+		t \in [\xi - \delta,\, \xi + \delta] \subset [0, 1]
+		\qquad \Longrightarrow \qquad 
+		\abs\bigg{ f(t) - \dfrac{1}{\sqrt{t}} } \geq \varepsilon.
+%		\qquad \bigl( t \in [\xi - \delta,\, \xi + \delta] \subset \bigr).
 	\]
-	Legyen \( N \in \N \) olyan küszöbindex, hogy \( \)
+	Legyen \( N \in \N \) olyan küszöbindex, hogy \( 1 / N < \delta - \xi \).
+	Ekkor minden \( n > N \) indexre
 	\[
 		\int\limits_0^1 \abs\big{f_n - f} \geq
-		\int\limits_{\xi - \delta}^{\xi + \delta} \abs\big{f_n(t) - f(t)} \dd{t} \geq
+		\int\limits_{\xi - \delta}^{\xi + \delta} \abs\bigg{ f(t) - \dfrac{1}{\sqrt{t}} } \dd{t} \geq
 		\int\limits_{\xi - \delta}^{\xi + \delta} \varepsilon \dd{t} =
 		2\delta {\cdot} \varepsilon > 0.
 	\]
-	vagyis
+	Vagyis az alábbi ellentmondásra jutunk
 	\[
-		\int_0^1 \abs\big{f_n - f} \nrightarrow 0 
+		\int_0^1 \abs\big{f_n - f} \centernot{\longrightarrow} 0 
 		\qquad (n \to \infty).
 	\]
+	Térjünk vissza a \eqref{eq:teljesség-01} ponthoz.
+	\marginnote{
+		\begin{theo*}[Lebesgue-kritérium]\label{th:lebesgue-kritérium}
+			A
+			\[
+				g \in \Riem{[a,b]}
+			\]
+			feltétel azzal ekvivalens, hogy az
+			\[
+				\mathcal{A}_g \coloneq
+				\setc[\big]{ x \in [a,b] }{ g \notin \ContAt{x} }
+			\]
+			szakadási helyek halmaza nullamértékű.
+		\end{theo*}
+	}[-1.6\baselineskip]
+	A \hyperref[th:lebesgue-kritérium]{Lebesgue-kritérium} miatt az \( f \in \Riem{[0, 1]} \) függvény szakadási helyeinek a halmaza nullamértékű. Mivel tetszőleges \( r \in (0, 1) \) esetén a \( (0, r) \)
+	intervallum nem nullamértékű, ezért ez tartalmaz folytonossági pontot.
+	Azaz van olyan \( \xi_r \in (0, r) \) pont, hogy
+	\[
+		f \in \ContAt{\xi_r}
+		\qquad \Longrightarrow \qquad 
+		f(\xi_r) = 
+		\frac{1}{\sqrt{ \xi_r }} >
+		\frac{1}{\sqrt{ r }} \longrightarrow +\infty
+		\qquad (r \to 0).
+	\]
+	Ebből következik, hogy az \( f \) függvény nem korlátos, ezért \( f \notin \Riem{[0, 1]} \).
 \end{document}
