@@ -29,7 +29,7 @@
 	\begin{theorem}{Kvázimérték kiterjesztése mértékké}{}
 		Legyen \( X \) egy halmaz, 
 		\( \ring{G} \subseteq \powerset{X} \) gyűrű, 
-		\( \func{ \widetilde{\mu} }{ \ring{G} }{ [0, +\infty] } \) kvázimérték.\\[3pt]
+		\( \func{ \widetilde{\mu} }{ \ring{G} }{ [0, +\infty] } \) kvázimérték.\\[6pt]
 		Ekkor van olyan \( \Omega \subseteq \powerset{X} \) \( \sigma \)-algebra és 
 		\( \func{ \mu }{ \Omega }{ [0, +\infty] } \) mérték, hogy 
 		\[
@@ -37,6 +37,53 @@
 			\qquad \text{és} \qquad
 			\widetilde{\mu} = \restr{\mu}{\ring{G}}.
 		\]
+	\end{theorem}
+	
+	\begin{definition}{Külső mérték, \( \boldsymbol{\mu^*} \)-mérhető}{}
+		Legyen \( X \) egy halmaz, 
+		valamint \( \func{\mu^*}{ \powerset{X} }{ \overline{\R} } \) olyan halmazfüggvény, ami
+		\begin{enumerate}
+			\item 
+			\textbf{nemnegatív}, azaz \( \mu^* \geq 0 \);
+			
+			\item 
+			\textbf{eltűnik \( \boldsymbol{\emptyset} \)-ban}, azaz
+			\( \mu^*(\emptyset) = 0 \);
+			
+			\item 
+			\textbf{monoton}, 
+			azaz minden \( B \subseteq A \) esetén \( \mu^*(B) \leq \mu^*(A) \);
+			
+			\item
+			\textbf{\( \boldsymbol{\sigma}\)-szubadditív}, 
+			azaz minden \( A_n \ (n \in \N ) \) halmazsorozat esetén
+			\[
+			\mu^* \Biggl( \, \bigcup\limits_{n=0}^\infty A_n \Biggr) \leq 
+			\sum\limits_{n=0}^{\infty} \mu^*(A_n).
+			\]
+		\end{enumerate}
+		Ekkor azt mondjuk, hogy a \( \mu^* \) halmazfüggvény egy \emph{külső mérték}.\\[6pt]
+		Továbbá egy \( A \in \powerset{X} \) halmazt \emph{\( \boldsymbol{\mu^*} \)-mérhetőnek}
+		\marginnote{
+			Ekvivalens, hogy minden \( B \in \powerset{X} \)-re
+			\[
+				\mu^*(B) \geq \mu^*(B \cap A) + \mu^*(B \setminus A).
+			\]
+		}
+		nevezünk, amennyiben
+		\[
+			\forall B \in \powerset{X} \ \colon \quad
+			\mu^*(B) = \mu^*(B \cap A) + \mu^*(B \setminus A).
+		\]
+	\end{definition}
+	
+	\begin{theorem}{Caratheodory-tétel}{caratheodory}
+		Legyen \( X \) egy halmaz, 
+		\( \func{\mu^*}{ \powerset{X} }{ \overline{\R} } \) külső mérték, valamint	
+		\[
+			\Omega \coloneq \setc[\big]{ A \in \powerset{X} }{ A \ \mu^* \text{-mérhető} }.
+		\]
+		Ekkor \( \Omega \) szigma-algebra és \( \mu \coloneq \restr{\mu^*}{\Omega} \) mérték.
 	\end{theorem}
 	
 	\section{A kiterjesztés egyértelműsége}
@@ -53,6 +100,7 @@
 	Felmerül a kérdés, hogy vajon a \( \ring{G} \) gyűrű által generált \( \Omega( \ring{G} ) \) szigma-algebrára hányféleképpen terjeszthetjük ki \( \widetilde{\mu} \)-t?
 	Teljesül az egyértelmű kiterjeszthetőség?
 	
+	\newpage
 	\begin{example}
 		Legyen \( X \neq \emptyset \) tetszőleges halmaz,
 		és tekintsük a \( \ring{G} = \{ \emptyset \} \) triviális gyűrűt,
@@ -73,12 +121,11 @@
 			\mu_1 \neq \mu_2, \qquad 
 			\restr{ \mu_1 }{ \ring{G} } = \restr{ \mu_2 }{ \ring{G} }.
 		\]
-		\null\hfill \( \blacksquare \)
 	\end{example}
 	
 	\begin{definition}{Szigma-véges halmazfüggvény}{}
 		Legyen \( X \) adott halmaz, 
-		valamint \( \funcin{\varphi}{\powerset{X}}{[0, +\infty]} \) halmazfüggvény.\\[3pt]
+		valamint \( \funcin{\varphi}{\powerset{X}}{[0, +\infty]} \) halmazfüggvény.\\[6pt]
 		Azt mondjuk, hogy \( \varphi \) \emph{szigma-véges} 
 		(röviden \emph{\( \boldsymbol{\sigma} \)-véges}), amennyiben
 		\[
@@ -91,7 +138,7 @@
 	
 	\begin{theorem}{Szigma-véges kvázimérték kiterjesztése}{}
 		Legyen \( \ring{G} \subseteq \powerset{X} \) gyűrű, 
-		valamint \( \func{ \widetilde{\mu} }{ \ring{G} }{ [0, +\infty] } \) egy kvázimérték.\\[3pt]
+		valamint \( \func{ \widetilde{\mu} }{ \ring{G} }{ [0, +\infty] } \) egy kvázimérték.\\[6pt]
 		Amennyiben \( \widetilde{\mu} \) szigma-véges, akkor egyértelműen létezik olyan
 		\[
 			\func{ \mu }{ \Omega(\ring{G}) }{ [0, +\infty] }
@@ -100,76 +147,176 @@
 	%	vagyis \( \widetilde{\mu} = \restr{ \mu }{ \ring{G} } \).
 	\end{theorem}
 	
-	\newpage
-	\section{Lebesgue-mérték}
+	\section{Teljes mérték}
 	
-	A továbbiakban legyen \( p \in \posN \) egy rögzített kitevő, valamint az
+	\begin{definition}{Teljes mérték}{}
+		Legyen \( (X, \Omega, \mu) \) egy mértéktér.
+		Azt mondjuk, hogy \( \mu \) \emph{teljes}, ha minden
+		\[
+			A \in \Omega, \ \mu(A) = 0
+		\]
+		nullamértékű halmazra esetén a \( B \subset A \) halmaz is mérhető, azaz \( B \in \Omega \).
+	\end{definition}
+	
+	\begin{stat*}
+		A \hyperref[th:caratheodory]{Caratheodory-tételben} szereplő 
+		\( \mu = \restr{\mu^*}{\Omega} \) mérték teljes.
+	\end{stat*}
+	\begin{proof*}
+		Legyen \( A \in \Omega, \ \mu(A) = 0 \) és 
+		vegyünk egy tetszőleges \( B \subset A \) halmazt.\\[3pt]
+		Azt kell megmutatnunk, hogy \( B \) egy \( \mu^* \)-mérhető halmaz.
+		Ehhez vegyük észre, hogy
+		\[
+			0 \leq \mu^*(B) \leq \mu^*(A) = \mu(A) = 0
+			\quad \Longrightarrow \quad
+			\mu^*(B) = 0.
+		\]
+		Ha \( Z \subseteq X \) egy tetszőleges halmaz, akkor
+		\[
+			0 \leq 
+			\mu^*(Z \cap B) \leq 
+			\mu^*(B) =
+			0
+			\quad \Longrightarrow \quad
+			\mu^*(Z \cap B) = 0.
+		\]
+		Innen rögtön adódik, hogy
+		\[
+			\mu^*(Z \cap B) + \mu^*(Z \setminus B) \leq
+			\mu^*(Z).
+		\]
+		Ez pedig azzal ekvivalens, hogy \( B \) valóban \( \mu^* \)-mérhető.
+		Tehát \( B \in \Omega \). \qed
+	\end{proof*}
+	
+	\newpage
+	\section{Lebesgue--mérték}
+	
+	Legyen \( p \in \posN \) egy rögzített kitevő. 
+	Ekkor az \( \x, \y \in \R^p, \ \x < \y \) vektorok esetén az
 	\[
-		\x = (x_1, \dots, x_p), \ \y = (y_1, \dots, y_p) \in \R^p
-	\]
-	vektorok körében definiáljuk a komponensenkénti rendezést az alábbi módon:
-	\[
-		\begin{alignedat}{3}
-			\x &\leq \y \quad &&\ratio \Longleftrightarrow \quad x_i &&\leq y_i \\[3pt]
-			\x &<    \y \quad &&\ratio \Longleftrightarrow \quad x_i &&<    y_i
-		\end{alignedat}
-		\qquad (i = 1,\dots, p).
-	\]
-	Amennyiben \( \x < \y \), akkor az
-	\[
-		[\x, \y) \coloneq 
-		\setc[\big]{ \vb{z} \in \R^p }{ \x \leq \vb{z} < \y } =
-		[ x_1, y_1 ) \times \cdots \times [x_p, y_p )
+	[\x, \y) \coloneq 
+	\setc[\big]{ \vb{z} \in \R^p }{ \x \leq \vb{z} < \y }
 	\]
 	halmazt az \( \x, \y \) végpontú, balról zárt és jobbról nyílt (\( p \)-dimenziós) intervallumnak nevezzük. Könnyen belátható ilyenkor, hogy az
 	\[
-		\mathbf{I}^p \coloneq 
-		\setc[\Big]{ \emptyset,\, [\x, \y) }{ \x, \y \in \R^p \,\text{ és }\, \x < \y }
+	\mathbf{I}^p \coloneq 
+	\setc[\Big]{ \emptyset,\, [\x, \y) }{ \x, \y \in \R^p \,\text{ és }\, \x < \y }
 	\]
 	halmazrendszer egy félgyűrű. Tekintsük az \( \mathbf{I}^p \) által generált gyűrűt, vagyis az
 	\[
-		\mathcal{I}^p \coloneq 
-		\mathcal{G}( \mathbf{I}^p ) =
-		\setc[\Bigg]{ A \coloneq \bigcup_{k=0}^n I_k }
-		{ I_0, \dots, I_n \in \mathbf{I}^p \text{ diszjunktak } (n \in \N) }
+	\mathcal{I}^p \coloneq 
+	\mathcal{G}( \mathbf{I}^p ) =
+	\setc[\Bigg]{ \bigcup_{k=0}^n I_k }
+	{ I_0, \dots, I_n \in \mathbf{I}^p \text{ páronként diszjunktak } (n \in \N) }
 	\]
 	halmazt.
+	Ezek segítségével definiáljuk az \( \mathbf{I}^p \)-n az alábbi additív halmazfüggvényt.
+	\[
+		m_p( \emptyset ) \coloneq 0, \qquad
+		m_p \bigl( [\x, \y) \bigr) \coloneq \prod_{i=1}^{p} (y_i - x_i) \qquad
+		( \x, \y \in \R^p, \ \x < \y)
+	\]
 	
 	\begin{theorem}{}{}
-		Definiáljuk a
-		\[
-			m_p( \emptyset ) \coloneq 0, \qquad
-			m_p \bigl( [\x, \y) \bigr) \coloneq \prod_{i=1}^{p} (y_i - x_i)
-		\]
-		Ekkor egyértelműen létezik olyan 
-		\( \func{ \widetilde{\mu}_p }{\mathcal{I}^p}{[0, +\infty]} \) kvázimérték, hogy
-		\[
-			m_p = \restr{ \widetilde{\mu}_p }{ \mathbf{I}^p }
-		\]
+		Egyetlen olyan
+		\( \func{ \widetilde{\mu}_p }{\mathcal{I}^p}{[0, +\infty)} \) kvázimérték létezik, amire
+		\( m_p = \restr{ \widetilde{\mu}_p }{ \mathbf{I}^p } \).
 	\end{theorem}
 	
-	\begin{theorem}{}{}
-		Tekintsük az alábbi külső mértéket.
-		\[
-			\mu_p^*( A ) \coloneq
-			\inf \setc[\Bigg]{ \sum_{n=0}^{\infty} A_n }
-			                 { \func{(A_n)}{\N}{\mathcal{I}^p}, \ A \subseteq \bigcup_{n=0}^{\infty} A_n }
-			\qquad (A \subseteq \R^p)
-		\]
-		Ekkor
-		\[
-			\widehat{\Omega}_p \coloneq
-		%	\setc[\Big]{ A \subseteq \R^p }
-		%	           { \mu_p^*( B ) = \mu_p^*( B \cap A ) + \mu_p^*( B \setminus A ) \ (B \subseteq \R^p) }
-			\setc[\Big]{ A \subseteq \R^p }
-			           { \text{az } A \ \mu_p^* \text{-mérhető} }
-		\]
-		halmaz szigma-algebra, 
-		valamint \( \widehat{ \mu }_p \coloneq \restr{ \mu_p^* }{ \widehat{\Omega}_p } \) mérték.
-	\end{theorem}
+	
+	\vspace{3pt}
+	\noindent
+	Ezt az egyértelműen létező \( \widetilde{\mu}_p \) függvényt 
+	\emph{Lebesgue-kvázimértéknek} hívjuk. 
+	Ha
+	\[
+		A \in \mathcal{I}^p
+		\quad \iff \quad
+		A = \bigcup_{k=0}^{n} I_k
+	\]
+	valamilyen \( I_0, \dots, I_n \in \mathbf{I}^p \) páronként diszjunkt intervallumok esetén, akkor
+	\[
+		\widetilde{\mu}_p(A) = \sum_{k=0}^{n} m_p(I_k).
+	\]
 	
 	\begin{definition}{Lebesgue-mérték}{}
-		
+		Tekintsük a soron következő külső mértéket:
+		\[
+			\mu_p^*( A ) \coloneq
+			\inf \setc[\Bigg]{ \sum_{n=0}^{\infty} \widetilde{\mu}_p(A_n) }
+			                 { \func{(A_n)}{\N}{\mathcal{I}^p}, \ A \subseteq \bigcup_{n=0}^{\infty} A_n }
+			\quad (A \subseteq \R^p).
+		\]
+		Legyen az úgynevezett \emph{Lebesgue-mérhető} halmazok szigma-algebrája
+		\[
+			\widehat{\Omega}_p \coloneq
+			\setc[\Big]{ A \subseteq \R^p }{ \text{az } A \ \mu_p^* \text{-mérhető} }.
+		\]
+		Ekkor a \( \widehat{ \mu }_p \coloneq \restr{ \mu_p^* }{ \widehat{\Omega}_p } \) 
+		függvényt az \( \R^p \)-beli \emph{Lebesgue-mértéknek} hívjuk.
 	\end{definition}
+	
+	\begin{note}
+		A \( \widehat{ \mu }_p \) mérték szigma-véges és teljes.
+	\end{note}
+	
+	\newpage
+	\section{Lebesgue--Stieltjes-mérték}
+	
+	Legyen \( \func{\varphi}{\R}{\R} \) egy tetszőleges monoton növő, balról folytonos függvény,
+	\[
+		m_\varphi( \emptyset ) = 0, \quad
+		m_\varphi \bigr( [a, b) \bigr) \coloneq \varphi(b) - \varphi(a) \qquad 
+		(a, b \in \R, \ a < b).
+	\]
+	
+	\begin{theorem}{}{}
+		Egyetlen olyan
+		\( \func{ \widetilde{\mu}_\varphi }{\mathcal{I}}{[0, +\infty)} \) kvázimérték létezik, amire
+		\( m_\varphi = \restr{ \widetilde{\mu}_\varphi }{ \mathbf{I} } \).
+	\end{theorem}
+	
+	\vspace{3pt}
+	\noindent
+	Ezt az egyértelműen létező \( \widetilde{\mu}_p \) függvényt 
+	\emph{Lebesgue-kvázimértéknek} hívjuk. 
+	Ha
+	\[
+		A \in \mathcal{I}
+		\quad \iff \quad
+		A = \bigcup_{k=0}^{n} I_k
+	\]
+	valamilyen \( I_0, \dots, I_n \in \mathbf{I} \) páronként diszjunkt intervallumok esetén, akkor
+	\[
+		\widetilde{\mu}_\varphi(A) = \sum_{k=0}^{n} m_\varphi(I_k).
+	\]
+	
+	\vspace{3pt}
+	\noindent
+	Alkalmazzuk a \hyperref[th:caratheodory]{Caratheodory-tételt}
+	az \( \widehat{\mu}_\varphi \) Stieltjes-féle kvázimértékre.
+	
+	\begin{definition}{Lebesgue--Stieltjes-mérték}{}
+		Tekintsük a soron következő külső mértéket:
+		\[
+			\mu_\varphi^*( A ) \coloneq
+			\inf \setc[\Bigg]{ \sum_{n=0}^{\infty} \widetilde{\mu}_\varphi(A_n) }
+			{ \func{(A_n)}{\N}{\mathcal{I}}, \ A \subseteq \bigcup_{n=0}^{\infty} A_n }
+			\quad (A \subseteq \R).
+		\]
+		Legyen a \emph{Lebesgue--Stieltjes-mérhető} halmazok szigma-algebrája
+		\[
+		\widehat{\Omega}_\varphi \coloneq
+		\setc[\Big]{ A \subseteq \R }{ \text{az } A \ \mu_\varphi^* \text{-mérhető} }.
+		\]
+		Ekkor a \( \widehat{ \mu }_\varphi \coloneq \restr{ \mu_\varphi^* }{ \widehat{\Omega}_\varphi } \) 
+		függvény az \( \R \)-beli \emph{Lebesgue--Stieltjes-mérték}.
+	\end{definition}
+	
+	\begin{note}
+		A \( \widehat{ \mu }_\varphi \) mérték szigma-véges és teljes.
+	\end{note}
 	
 \end{document}

@@ -74,6 +74,39 @@
 		\end{enumerate}
 	\end{stat*}
 	
+	\begin{lemma}{Young-egyenlőtlenség}{young}
+		Legyenek az \( 1 \leq p, q \leq +\infty \) számok konjugált kitevők, azaz
+		\[
+			\frac{1}{p} + \frac{1}{q} = 1.
+		\]
+		Ekkor tetszőleges \( a, b \in [0, +\infty) \) választása mellett
+		\[
+			ab \leq \frac{a^p}{p} + \frac{b^q}{q}.
+		\]
+	\end{lemma}
+	\begin{proof}
+		Ha \( a = 0 \) vagy \( b = 0 \), akkor az állítás nyilvánvalóan igaz.\\[6pt]
+		Különben a logaritmusfüggvény szigorú monotonitása miatt
+		\[
+			\ln( a \cdot b ) \leq
+			\ln \biggl( \frac{a^p}{p} + \frac{b^q}{q} \biggr)
+		\]
+		ekvivalens a bizonyítandó állítással.
+		Viszont az \( \ln \) függvény konkáv, ezért
+		\marginnote{
+			Ugyanis az alábbi egy konvex kombiácó:
+			\[
+			\frac{a^p}{p} + \frac{b^q}{q}.
+			\]
+		}
+		\[
+		\ln \biggl( \frac{a^p}{p} + \frac{b^q}{q} \biggr) \geq
+		\frac{1}{p} \ln a^p + \frac{1}{q} \ln b^q =
+		\ln a + \ln b =
+		\ln( a \cdot b ). \ \checkmark
+		\]
+	\end{proof}
+	
 	\newpage
 	\begin{theorem}{Normák határértéke}{}
 		Legyen \( (X, \Omega, \mu) \) mértéktér, 
@@ -130,6 +163,11 @@
 			\quad \Longrightarrow \quad
 			\lim_{p \to \infty} \norm{f}_p = +\infty.
 		\]
+		
+		\vspace{3pt}
+		\hrule
+		\vspace{9pt}
+		
 		Mivel \aref{eq:lp-norma-határérték-01} állítást már igazoltuk,
 		ezért a továbbiakban feltehető, hogy
 		\marginnote{
@@ -194,38 +232,6 @@
 	
 	\section{Egyenlőtlenségek}
 	
-	\begin{lemma}{Young-egyenlőtlenség}{young}
-		Legyenek \( 1 < p, q < +\infty \). 
-		Ekkor minden \( a, b \in [0, +\infty) \) esetén
-		\[
-			\frac{1}{p} + \frac{1}{q} = 1 
-			\qquad \Longrightarrow \qquad
-			ab \leq \frac{a^p}{p} + \frac{b^q}{q}.
-		\]
-	\end{lemma}
-	\begin{proof}
-		Mivel a logaritmusfüggvény szigorúan monoton, ezért
-		\[
-			\ln( a \cdot b ) \leq
-			\ln \biggl( \frac{a^p}{p} + \frac{b^q}{q} \biggr)
-		\]
-		ekvivalens a bizonyítandó állítással.
-		Viszont az \( \ln \) függvény konkáv, ezért
-		\marginnote{
-			Ugyanis az alábbi egy konvex kombiácó:
-			\[
-				\frac{a^p}{p} + \frac{b^q}{q}.
-			\]
-		}
-		\[
-			\ln \biggl( \frac{a^p}{p} + \frac{b^q}{q} \biggr) \geq
-			\frac{1}{p} \ln a^p + \frac{1}{q} \ln b^q =
-			\ln a + \ln b =
-			\ln( a \cdot b ). \ \checkmark
-		\]
-	\end{proof}
-	
-	\newpage
 	\begin{theorem}{Hölder--egyenlőtlenség}{hölder}
 		Legyenek az \( 1 \leq p, q \leq +\infty \) számok konjugált kitevők, azaz
 		\[
@@ -320,7 +326,7 @@
 				\norm{f + g}_1 =
 				\int \abs{f + g} \dd{\mu} \leq
 				\int \abs{f} \dd{\mu} + \int \abs{g} \dd{\mu} =
-				\norm{f}_1 + \norm{g}_1.
+				\norm{f}_1 + \norm{g}_1. \ \checkmark
 			\]
 			
 			\item Legyen \( p = +\infty \). Ekkor a végtelen-norma értelmezése miatt
@@ -332,7 +338,7 @@
 			majdnem mindenhol igaz, ahonnan a definíció szerint
 			\[
 				\norm{f + g}_\infty \leq
-				\norm{f}_\infty + \norm{f}_\infty.
+				\norm{f}_\infty + \norm{f}_\infty. \ \checkmark
 			\]
 			
 			\item
@@ -395,7 +401,7 @@
 				&=    \norm{f + g}_p^{p / r}
 				\cdot \bigl( \norm{f}_p + \norm{g}_p \bigr).
 			\end{align*}
-			Innen átrendezés, majd egyszerűsítés után adódik az állítás.
+			Innen átrendezés, majd egyszerűsítés után adódik az állítás. \ \checkmark
 		\end{enumerate}
 	\end{proof}
 	
@@ -437,25 +443,37 @@
 			
 			\item
 			Nyilván feltehető, hogy \( 1 < p < q < +\infty \).
-			Legyen \( f \in \Lebesgue[\infty] \). Ekkorű
+			Legyen \( f \in \Lebesgue[\infty] \). Ekkor
 			\[
 				\norm{f}_q^q =
 				\int \abs{f}^q \dd{\mu} \leq
 				\norm{f}_\infty^q \cdot \int 1 \dd{\mu} =
 				\norm{f}_\infty^q \cdot \mu(X).
 			\]
-			Tehát \( f \in \Lebesgue[q] \).
+			Tehát \( f \in \Lebesgue[q] \). A többi hasonlóan igazolható.
 			
-			Ha most \( f \in \Lebesgue[q] \), 
-			akkor a \hyperref[th:hölder]{Hölder-egyenlőtlenség}
-			\[
-				\norm{f}_p =
-				\biggl( \int \abs{f}^p \cdot 1 \dd{\mu} \biggr)^{\tfrac{1}{p}} =
-				\norm\big{\abs{f}^p \cdot 1 }_1
-				\leq
-				\norm\big{ \abs{f}^p }_{\frac{q}{p}} \cdot \norm{ 1 }_{1 - \frac{q}{p}}.
-			\]
+%			\hrule
+			
+%			Ha most \( f \in \Lebesgue[q] \), 
+%			akkor a \hyperref[th:hölder]{Hölder-egyenlőtlenség}
+%			\[
+%				\norm{f}_p =
+%				\biggl( \int \abs{f}^p \cdot 1 \dd{\mu} \biggr)^{\tfrac{1}{p}} =
+%				\norm\big{\abs{f}^p \cdot 1 }_1
+%				\leq
+%				\norm\big{ \abs{f}^p }_{\frac{q}{p}} \cdot \norm{ 1 }_{1 - \frac{q}{p}}.
+%			\]
 		\end{enumerate}
 	\end{proof}
+	\begin{note}
+		Ha a \( \mu \) nem véges, akkor lehet példát mutatni olyan terekre, ahol
+		\[
+			\Lebesgue[1] \subseteq
+			\Lebesgue[p] \subseteq
+			\Lebesgue[q] \subseteq
+			\Lebesgue[\infty].
+		\]
+		\qed
+	\end{note}
 	
 \end{document} 

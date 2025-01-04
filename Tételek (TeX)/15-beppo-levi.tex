@@ -186,7 +186,7 @@
 	\begin{theorem}{}{}
 		 Legyen \( (X, \Omega, \mu) \) egy mértéktér, 
 		 valamint \( f, g \in \StepFuncPlus \) adott függvények.
-		 \begin{enumerate}
+		 \begin{enumerate}[label=\arabic*.]
 		 	\item\label{eq:majdnem-mindenhol-01}
 		 	\( \displaystyle \int f \dd{\mu} = 0 \iff f = 0 \) majdnem mindenhol.
 		 	
@@ -200,8 +200,8 @@
 		 \end{enumerate}
 	\end{theorem}
 	\begin{proof}
-		\Aref{eq:majdnem-mindenhol-01} állítás bizonyítása.
-		
+		\Aref{eq:majdnem-mindenhol-01} állítás bizonyítása.\\[6pt]
+		%
 		\Ifstep Tekintsük a \( \{ f > q \} \) nívóhalmazt, ahol \( q > 0 \) rögzített. Ekkor
 		\[
 			f \geq q \cdot \chi_{\{ f > q \}}
@@ -233,7 +233,9 @@
 			\lim_{n \to \infty} \Bigl( n \cdot \mu \bigl( \{ f > 0 \} \bigr) \Bigr) = 0.
 		\]
 		
-		\noindent\rule{\linewidth}{0.4pt}\\
+		\vspace{6pt}
+		\hrule
+		\vspace{9pt}
 		
 		\Aref{eq:majdnem-mindenhol-02} állítás bizonyítása.
 		Tetszőleges \( q > 0 \) számmal, hogy \( f \geq q {\cdot} \chi_{\{ f = +\infty \}} \).
@@ -241,10 +243,13 @@
 			0 \leq
 			q \cdot \mu\bigl( \{ f = +\infty \} \bigr) \leq 
 			\int f \dd{\mu}
+			< +\infty,
 		\]
 		ahonnan \( \mu \bigl( \{ f = +\infty \} \bigr) = 0 \).
 		
-		\noindent\rule{\linewidth}{0.4pt}\\
+		\vspace{6pt}
+		\hrule
+		\vspace{9pt}
 		
 		\Aref{eq:majdnem-mindenhol-03} állítás bizonyítása.
 		Tekintsük az \( f \) függvény alábbi felbontását:
@@ -282,37 +287,30 @@
 		\]
 	\end{proof}
 	
-	
-	\begin{lemma}{Fatou--lemma}{}
-		Legyen \( (X, \Omega, \mu) \) egy mértéktér, 
-		\( \func{(h_n)}{\N}{\StepFuncPlus}\) függvénysorozat. 
-		Ekkor
-		\[
-			\liminf(h_n) \in \StepFuncPlus
-			\qquad \text{és} \qquad
-			\int \liminf_{n \to \infty} h_n \dd{\mu} \leq \liminf_{n \to \infty} \int h_n \dd{\mu}.
-		\]
-	\end{lemma}
 	\begin{lemma}{Fatou--lemma}{}
 		Legyen \( (X, \Omega, \mu) \) mértéktér, 
 		valamint \( \func{(h_n)}{\N}{\StepFuncPlus} \) egy függvénysorozat.
-		\begin{enumerate}
+		\begin{enumerate}[label=\alph*)]
 			\item\label{eq:fatou-01}
-			Ekkor \( \liminf(h_n) \in \StepFuncPlus \) és
+			Ekkor
 			\[
+				\liminf(h_n) \in \StepFuncPlus
+				\qquad \text{és} \qquad
 				\int \liminf_{n \to \infty} h_n \dd{\mu} \leq 
 				\liminf_{n \to \infty} \int h_n \dd{\mu}.
 			\]
 			
 			\item\label{eq:fatou-02}
-			Ha létezik olyan \( F \in \StepFuncPlus \) függvény, hogy
+			Tegyük fel, hogy létezik olyan \( F \in \StepFuncPlus \) függvény, amire
 			\[
 				\int F \dd{\mu} < +\infty
 				\qquad \text{és} \qquad
-				h_n \leq F \ \mu \text{-m.m.} \qquad (n \in \N)
+				h_n \leq F \ \mu \text{-m.m.} \qquad (n \in \N).
 			\]
-			akkor
+			Ekkor
 			\[
+				\limsup(h_n) \in \StepFuncPlus
+				\qquad \text{és} \qquad
 				\limsup_{n \to \infty} \int h_n \dd{\mu} \leq 
 				\int \limsup_{n \to \infty} h_n \dd{\mu}.
 			\]
@@ -320,10 +318,10 @@
 	\end{lemma}
 	
 	\begin{proof}
-		asdf
+		\Aref{eq:fatou-01} állítás bizonyításához legyen
 		\[
 			\liminf(h_n) = 
-			\lim \bigl( \inf_{k \geq n} h_k \bigr) \eqcolon
+			\lim_{n \to \infty} \Bigl( \,\inf_{k \geq n} h_k \Bigr) \eqcolon
 			\lim( f_n ).
 		\]
 		Itt \( (f_n) \) egy \( \StepFuncPlus \)-beli monoton növő sorozat, 
@@ -342,21 +340,22 @@
 		}
 		ezért az integrál monotonitása miatt
 		\[
-			\lim_{n \to \infty} \int f_n \dd{\mu}. \leq
+			\lim_{n \to \infty} \int f_n \dd{\mu} \leq
 			\lim_{n \to \infty} \biggl( \inf_{k \geq n} \int h_k \dd{\mu} \biggr) =
 			\liminf_{n \to \infty} \int h_n \dd{\mu}.
 		\]
 		
-		\noindent\rule{\linewidth}{0.4pt}\\
+		\vspace{6pt}
+		\hrule
+		\vspace{9pt}
 		
-		\Aref{eq:fatou-02} állítás bizonyítását nem részletezzük.
-		
+		\Aref{eq:fatou-02} állítás bizonyítását nem részletezzük.\\[6pt]
 		Csupán megjegyezzük, hogy az \( F \) függvény \( \mu \)-m.m. majorálja a \( (h_n) \) sorozat tagjait, vagyis egy alkalmas \( A \in \Omega \) mérhető halmazzal
 		\[
 			\mu(A) = 0, \quad 
 			h_n(x) \leq F(x) < +\infty \qquad (n \in \N, \ x \in X \setminus A).
 		\]
-		Ezek után alkalmazva \aref{eq:fatou-01} állítást az
+		Ezek után alkalmazzuk \aref{eq:fatou-01} állítást az
 		\[
 			F - h_n {\cdot} \chi_C \in \StepFuncPlus \qquad (n \in \N)
 		\]

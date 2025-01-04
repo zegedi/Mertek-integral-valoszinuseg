@@ -15,7 +15,7 @@
 
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
-\subtitle{14. Vizsgatétel}
+\subtitle{\circled{14} Vizsgatétel}
 
 
 % The document
@@ -39,22 +39,24 @@
 		\mathcal{I} \coloneq
 		\mathcal{G}( \mathbf{I} ).
 	\]
-	\begin{definition}{Borel--mérhető függvény}{}	
-		Legyen \( (X, \Omega) \) mérhető tér, valamint \( \func{f}{X}{\R} \) egy függvény.\\[3pt]
+	\begin{definition}{Mérhető függvény}{}	
+		Legyen \( (X, \Omega) \) mérhető tér, valamint \( \func{f}{X}{\R} \) egy függvény.\\[6pt]
 		Azt mondjuk, hogy az \( f \) függvény \emph{mérhető} (vagy \emph{Borel--mérhető}), ha
 		\[
-		f^{-1}[A] \coloneq
-		\setc[\big]{ x \in X }{ f(x) \in A } \in \Omega
-		\qquad \bigl( A \in \Omega_1 \bigr).
+			f^{-1}[A] \coloneq
+			\setc[\big]{ x \in X }{ f(x) \in A } \in \Omega
+			\qquad \bigl( A \in \Omega_1 \bigr).
 		\]
 	\end{definition}
 	
 	\begin{definition}{Lépcsősfüggvény}{}
-		Legyen \( (X, \Omega) \) egy mérhető tér, valamint \( \func{f}{X}{\R} \) egy függvény.\\[3pt]
+		Legyen \( (X, \Omega) \) mérhető tér, valamint \( \func{f}{X}{\R} \) egy függvény.\\[6pt]
 		Azt mondjuk, hogy \( f \) egy \emph{lépcsősfüggvény}, 
 		ha mérhető és \( \rng{f} \) véges.
 	\end{definition}
 	
+	\vspace{6pt}
+	\noindent
 	Egy \( f \) leképezés pontosan akkor lépcsősfüggvény, ha kifejezhető az
 	\[
 		f = \sum_{y \in \rng{f}} y {\cdot} \chi_{\{ f = y \}}
@@ -84,7 +86,7 @@
 				\]
 				szintén \( \StepFuncPos \)-beli függvény.
 			\end{stat*}
-		}
+		}[-1.8\baselineskip]
 		Ekkor
 		\begin{enumerate}
 			\item \( \displaystyle \int (\alpha \cdot f) \dd{\mu} = \alpha \cdot \int f \dd{\mu} \);
@@ -102,7 +104,7 @@
 			f_n \in \StepFuncPos, \quad f_n \leq f_{n + 1} \qquad (n \in \N).
 		\]
 		Ha valamilyen \( g \in \StepFuncPos \) függvény
-		esetén \( g \leq \sup\limits_{n \in \N} f_n \). Ekkor
+		esetén \( g \leq \sup\limits_{n \in \N} f_n \), akkor
 		\[
 			\int g \dd{\mu} \leq \sup_{n} \int f_n \dd{\mu}.
 		\]
@@ -132,9 +134,6 @@
 			Mivel az \( (f_n) \) sorozat monoton nő, ezért az \( (A_n) \) monoton bővül. \checkmark
 			
 			\item Ha \( x \in X \) tetszőleges, akkor
-%			\marginnote{
-%				Itt lehet, hogy \( g(x) = 0 \) vagy \( g(x) > 0 \).
-%			}
 			\[
 				c \cdot g(x) \leq g(x) \leq \sup_{n \in \N} f_n(x).
 			\]
@@ -147,30 +146,6 @@
 			\]
 			Tehát az \( (A_n) \) halmazsorozat valóban \( X \)-hez tart. \checkmark
 		\end{enumerate}
-			
-%		Ugyanis, ha veszünk egy tetszőleges \( x \in X \) pontot, akkor két eset lehetséges.
-%		\begin{enumerate}
-%			\item Ha \( g(x) = 0 \), akkor
-%			\[
-%				0 = c \cdot g(x) \leq f_n(x)
-%				\quad \Longrightarrow \quad
-%				x \in A_n \qquad (n \in \N).
-%			\]
-%			
-%			\item Ha \( g(x) > 0 \), akkor van olyan \( N \in \N \) küszöbindex, hogy
-%			\marginnote{
-%				Ugyanis az \( (f_n) \) sorozat monoton nő és
-%				\[
-%					c \cdot g(x) < g(x) \leq \sup_{n \in \N} f_n(x).
-%				\]
-%				Mivel az \( (f_n) \) sorozat monoton nő, ezért 
-%			}
-%			\[
-%				c \cdot g(x) \leq f_n(x)
-%				\quad \Longrightarrow \quad
-%				x \in A_n \qquad (N < n \in \N).
-%			\]
-%		\end{enumerate}
 		
 		Mivel \( \mu \) mérték, valamint bármely \( Z \in \Omega \) esetén 
 		az \( (A_n \cap Z) \nearrow Z \), ezért
@@ -178,7 +153,9 @@
 			\mu(A_n \cap Z) \longrightarrow \mu(Z) \quad (n \to \infty). \tag{\( * \)}
 		\end{equation}
 		
-		\noindent\rule{\linewidth}{0.4pt}\\
+		\vspace{6pt}
+		\hrule
+		\vspace{9pt}
 		
 		Vegyük észre, hogy a korábbiak értelmében fennáll az alábbi becslés:
 		\marginnote{
@@ -196,27 +173,9 @@
 		\[
 			f_n \geq c \cdot g \cdot \chi_{A_n} \qquad (n \in \N).
 		\]
-%		Ha pedig figyelembe vesszük a \( g \) függvény karakterisztikus alapját, akkor
-%		\[
-%			f_n \geq 
-%		%	c \cdot \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \}} {\cdot} \chi_{A_n} =
-%			c \cdot \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \} \cap A_n}
-%			\qquad (n \in \N).
-%		\]
 		Felhasználva a \( g \) karakterisztikus alapját, 
 		valamint az integrál additivitását
-%		\marginnote{
-%			Ugyanis
-%			\begin{align*}
-%				\int g {\cdot} \chi_{A_n} \dd{\mu}
-%				&= \int \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \}} {\cdot} \chi_{A_n} \dd{\mu} \\
-%			%	&= \int \sum_{y \in \rng{g}} y {\cdot} \chi_{\{ g = y \} \cap A_n} \dd{\mu} \\
-%				&= \sum_{y \in \rng{g}} \int y {\cdot} \chi_{\{ g = y \} \cap A_n} \dd{\mu} \\
-%				&= \sum_{y \in \rng{g}} y {\cdot} \mu \bigl( \{ g = y \} \cap A_n \bigr) \\
-%			\end{align*}
-%		}
 		\[
-		%	\alpha \coloneq 
 			\sup_{n} \int f_n \dd{\mu} \geq
 			\int f_n \dd{\mu} \geq 
 			c \cdot \int g {\cdot} \chi_{A_n} \dd{\mu} = 
@@ -228,8 +187,6 @@
 			\sup_{n} \int f_n \dd{\mu} \geq 
 			c \cdot \sum_{y \in \rng{g}} y {\cdot} \mu\bigl( \{ y = g \} \bigr) =
 			c \cdot \int g \dd{\mu}.
-%			\qquad \Longrightarrow \qquad
-%			\alpha \geq \int g \dd{\mu}.
 		\]
 	\end{proof}
 	\newpage
@@ -245,36 +202,32 @@
 			\sup_{n} \int f_n \dd{\mu} = 
 			\lim_{n \to \infty} \int f_n \dd{\mu}.
 		\]
-		Összefoglalva az alábbi következményhez jutunk.
-		
-		\begin{theo*}
-			\[
-				g \leq \lim_{n \to \infty} f_n
-				\qquad \Longrightarrow \qquad
-				\int g \dd{\mu} \leq \lim_{n \to \infty} \int f_n \dd{\mu}.
-			\]
-		\end{theo*}
+		Tehát valójában az integrálsorozat határértékére adtunk egy alsó becslést. \qed 
 	\end{note}
 	
-	Az előző tétel alapján elmondható, hogy tetszőleges
-	\[
-		f_n, g_n \in \StepFuncPos, \quad f_n \leq f_{n + 1}, \quad g_n \leq g_{n + 1} \qquad (n \in \N)
-	\]
-	függvénysorozatot, amelyek a határértéke azonos, azaz
-	\[
-		\sup_{n \in \N} f_n = 
-		\lim_{n \to \infty} f_n = 
-		\lim_{n \to \infty} g_n = 
-		\sup_{n \in \N} g_n.
-	\]
-	Ekkor a hozzájuk tartozó integrálsorozatok határértékei is megegyeznek, vagyis
-	\[
-	%	\sup_{n} \int f_n \dd{\mu} = 
-		\lim_{n \to \infty} \int f_n \dd{\mu} = 
-		\lim_{n \to \infty} \int g_n \dd{\mu}.
-	%	\sup_{n} \int g_n \dd{\mu}.
-	\]
-	\begin{prf*}
+	\begin{theo*}
+		Az előző tétel alapján elmondható, hogy tetszőleges
+		\[
+			f_n, g_n \in \StepFuncPos, \quad 
+			f_n \leq f_{n + 1}, \quad 
+			g_n \leq g_{n + 1} \qquad (n \in \N)
+		\]
+		függvénysorozatot, amelyek a határértéke azonos, azaz
+		\[
+			\sup_{n \in \N} f_n = 
+			\lim_{n \to \infty} f_n = 
+			\lim_{n \to \infty} g_n = 
+			\sup_{n \in \N} g_n.
+		\]
+		Ekkor a hozzájuk tartozó integrálsorozatok határértékei is megegyeznek, vagyis
+		\[
+		%	\sup_{n} \int f_n \dd{\mu} = 
+			\lim_{n \to \infty} \int f_n \dd{\mu} = 
+			\lim_{n \to \infty} \int g_n \dd{\mu}.
+		%	\sup_{n} \int g_n \dd{\mu}.
+		\]
+	\end{theo*}
+	\begin{proof*}
 		Ugyanis egy rögzített \( m \in \N \) index esetén
 		\[
 			g_m \leq \sup_{n \in \N} g_n = \sup_{n \in \N} f_n.
@@ -291,7 +244,8 @@
 			\qquad \Longrightarrow \qquad
 			\boxed{\sup_{m} \int g_m \dd{\mu} = \sup_{n} \int f_n \dd{\mu}}.
 		\]
-	\end{prf*}
+		\qed
+	\end{proof*}
 	
 	\noindent
 	Mindez azt jelenti, hogy egy monoton növekedő \( \StepFuncPos \)-beli függvényekhez tartozó 
@@ -306,7 +260,7 @@
 			\setc[\big]{ \func{f}{X}{\overline{\R}} }
 			     { f = \lim(f_n), \text{ ahol } (f_n) \nearrow, \ \StepFuncPos \text{-beli}}.
 		\]
-		Ha \( f \in \StepFuncPlus \), valamint egy \( \func{(f_n)}{\N}{\StepFuncPos} \) sorozattal,
+		Ha \( f \in \StepFuncPlus \) és egy \( \func{(f_n)}{\N}{\StepFuncPos} \) sorozattal,
 		\( f = \lim(f_n) \), akkor legyen
 		\[
 			\int f \dd{\mu} \coloneq 
@@ -314,6 +268,7 @@
 		\]
 		az \( f \) függvény \( \mu \) mérték szerinti \emph{integrálja}.
 	\end{definition}
+	\newpage
 	
 	\begin{notes}
 		\item 
@@ -328,6 +283,7 @@
 			\qquad \Longrightarrow \qquad
 			\StepFuncPos \subset \StepFuncPlus.
 		\]
+		Következésképpen az integrálja
 		\[
 		%	\StepFuncPos \text{-beli} \longrightarrow
 			\underset{
@@ -349,8 +305,9 @@
 	\end{notes}
 	
 	\begin{theorem}{Az \( \StepFuncPlus \) szerkezete}{}
-		Az \( \func{f}{X}{[0, +\infty]} \) függvény pontosan akkor eleme \( \StepFuncPlus \)-nak, 
-		ha mérhető, így
+		Az \( \func{f}{X}{[0, +\infty]} \) függvény pontosan akkor eleme 
+		\( \StepFuncPlus \)-nak, 
+		ha mérhető:
 		\[
 			\StepFuncPlus =
 			\setc[\big]{ \func{f}{X}{\overline{ \R }} }{ \text{az } f \geq 0 \text{ mérhető}}
@@ -367,7 +324,7 @@
 				\]
 				szintén \( \StepFuncPlus \)-beli függvény.
 			\end{stat*}
-		}[-\baselineskip]
+		}[-1.7\baselineskip]
 		Ekkor
 		\begin{enumerate}
 			\item \( \displaystyle \int (\alpha \cdot f) \dd{\mu} = \alpha \cdot \int f \dd{\mu} \);

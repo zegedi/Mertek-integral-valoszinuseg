@@ -114,7 +114,7 @@
 	\section{Fubini-tétel}
 	
 	\noindent
-	Amennyiben adott az \( \func{f}{X}{\overline{\R}} \) kétváltozós függvény 
+	Legyen a korábbi \( \func{f}{X}{\overline{\R}} \) kétváltozós függvény 
 	és \( x \in X_1, y \in X_2 \) esetén
 	%
 	\begin{alignat*}{3}
@@ -130,14 +130,20 @@
 		Ha az \( f \) mérhető, akkor az \( f_x, f^y \) parciális függvények is mérhetőek.
 	\end{statement}
 	
-	Az előző állítás következménye, hogy amennyiben az \( f \) mérhető és nemnegatív,
-	azaz \( f \in \StepFuncPlus \)
+	\vspace{6pt}
+	\noindent
+	Legyen az előbbi parciális függvények esetén
+	\begin{alignat*}{3}
+		\func{\phi_f}{X_1}{\overline{\R}},& \quad 
+		&{} \phi_f(x) &\coloneq \int f_x \dd{\mu_2} \qquad &&(x \in X_1), \\[3pt]
+		\func{\phi^f}{X_2}{\overline{\R}},& \quad 
+		&{} \phi^f(y) &\coloneq \int f^y \dd{\mu_1} \qquad &&(y \in X_2).
+	\end{alignat*}
 	
 	\begin{theorem}{Tonelli-tétel}{tonelli}
-		Legyen \( (X, \Omega, \mu) \)
-		az \( (X_i, \Omega_i, \mu_i) \ (i=1,2) \) szigma-véges mértékterek szorzattere.
+		Ekkor
 		\begin{enumerate}[label=\alph*)]
-			\item \( \varphi_f \in \StepFuncPlus(\mu_1), \ \varphi^f \in \StepFuncPlus(\mu_2) \).
+			\item \( \phi_f \in \StepFuncPlus(\mu_1), \ \phi^f \in \StepFuncPlus(\mu_2) \).
 			\item
 		\end{enumerate}
 		\[
@@ -147,12 +153,14 @@
 		\]
 	\end{theorem}
 	
-	Amennyiben az 
+	\vspace{6pt}
+	\noindent
+	Amennyiben alkalmazzuk a hagyományos
 	\[
 		\int f \dd{\mu} = 
 		\int f(x, y) \dd{x} \dd{y}
 	\]
-	jelölést alkalmazzuk, akkor a Tonelli-tétel értelmében
+	jelölést, akkor a \hyperref[th:tonelli]{Tonelli-tétel} értelmében
 	\[
 		\int \biggl( \int f(x, y) \dd{x} \biggr) \dd{y} =
 		\int \biggl( \int f(x, y) \dd{y} \biggr) \dd{x}.
@@ -160,7 +168,8 @@
 	
 	\begin{theorem}{Fubini-tétel}{}
 		Legyen \( \func{f}{X}{\overline{\R}} \) egy Lebesgue-integrálható függvény, 
-		azaz \( f \in \Lebesgue(\mu) \). Ekkor
+		azaz \( f \in \Lebesgue(\mu) \).\\[6pt]
+		Ekkor az alábbiak igazak.
 		\begin{enumerate}[label*=\alph*)]
 			\item \( \mu_1 \)-m.m. \( x \in X_1 \) elemre \( f_x \in \Lebesgue(\mu_2) \).
 			\item \( \mu_2 \)-m.m. \( y \in X_2 \) elemre \( f^y \in \Lebesgue(\mu_1) \).

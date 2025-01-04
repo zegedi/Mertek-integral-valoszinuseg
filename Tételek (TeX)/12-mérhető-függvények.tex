@@ -41,7 +41,7 @@
 		\mathcal{I} \coloneq
 		\mathcal{G}( \mathbf{I} ) = 
 		\setc[\Bigg]{ \bigcup_{k=0}^{n} I_k }
-		            { I_0, \dots, I_n \in \mathbf{I} \text{ diszjunktak } (n \in \N) }.
+		            { I_0, \dots, I_n \in \mathbf{I} \text{ páronként diszjunktak } (n \in \N) }.
 	\]
 	Vezessük be a \emph{kibővített valós számok} halmazát
 	\[
@@ -62,12 +62,13 @@
 	
 	\begin{note}
 		Világos, hogy minden \( A \subseteq \R \) Borel-mérhető halmaz egyben kibővített 
-		értelemben is Borel-mérhető. Továbbá valóban az említett fogalom kibővítéséről beszélhetünk, ugyanis az
+		értelemben is Borel-mérhető. 
+		Továbbá valóban az említett fogalom kibővítéséről beszélhetünk, ugyanis az
 		\[
 			\{ -\infty \}, \{ +\infty \}, \{ -\infty, +\infty \} \subseteq \overline{ \R }
 		\]
 		halmazok minden .
-		Tehát egy \( A \subseteq \overline{ \R } \) halmaz pontosan akkor Borel--mérhető, ha
+		Egy \( A \subseteq \overline{ \R } \) halmaz pontosan akkor Borel--mérhető, ha
 		\[
 			A = B \cup C
 		\]
@@ -76,11 +77,8 @@
 	\end{note}
 	
 	\begin{definition}{Borel--mérhető függvény}{}
-%		Legyen \( X \neq \emptyset \) egy adott halmaz, 
-%		\( \Omega \subseteq \powerset{X} \) szigma-algebra.
-%		
 		Legyen \( (X, \Omega) \) mérhető tér, 
-		valamint \( \func{f}{X}{\overline{\R}} \) egy függvény.\\
+		valamint \( \func{f}{X}{\overline{\R}} \) egy függvény.\\[6pt]
 		Azt mondjuk, hogy az \( f \) függvény \emph{mérhető} (vagy \emph{Borel--mérhető}), ha
 		\[
 			f^{-1}[A] \coloneq
@@ -88,13 +86,28 @@
 			\qquad \bigl( A \in \overline{\Omega}_1 \bigr).
 		\]
 	\end{definition}
-	\begin{note}
-		Szóban, az \( f \) függvény pontosan akkor mérhető, 
-		ha minden kibővített értelemben Borel-mérhető \( A \)
-		halmaz \( f^{-1}[A] \) ősképe az \( \Omega \)-ban van.
-	\end{note}
+%	\begin{note}
+%		Szóban, az \( f \) függvény pontosan akkor mérhető, 
+%		ha minden kibővített értelemben Borel-mérhető \( A \)
+%		halmaz \( f^{-1}[A] \) ősképe az \( \Omega \)-ban van.
+%	\end{note}
+
+	\begin{example}
+		Legyen \( (X, \Omega) \) mérhető tér, \( A \subseteq X \) egy halmaz. Ekkor
+		\[
+			\func{\chi_A}{X}{\R}, \qquad
+			\chi_A(x) \coloneq 
+			\left\{
+			\begin{aligned}
+				1, & \quad \text{ha } x \in A, \\
+				0, & \quad \text{ha } x \notin A, \\
+			\end{aligned}
+			\right.
+		\]
+		az \( A \) halmaz \emph{karakterisztikus függvénye}.
+		Ekkor \( \chi_A \) mérhető \( \iff \) \( A \in \Omega \). \qed
+	\end{example}
 	
-	\newpage
 	\begin{theorem}{Mérhető függvények tulajdonságai}{}
 		Legyen \( (X, \Omega) \) egy mérhető tér, 
 		valamint \( \func{f, f_n, g}{X}{\overline{\R}} \ (n \in \N) \).
@@ -122,8 +135,16 @@
 			
 			\item
 			Ha \( (f_n) \) mérhető függvényeknek a sorozata, akkor a
+			\marginnote{
+				Az itt szereplő függvények:
+				\begin{align*}
+					\limsup (f_n) 
+					&\coloneq \lim_{n \to \infty} \biggl( \, \sup_{k \geq n} f_k \biggr), \\
+					\liminf (f_n) 
+					&\coloneq \lim_{n \to \infty} \biggl( \, \inf_{k \geq n} f_k \biggr).
+				\end{align*}
+			}
 			\[
-			%	\limsup (f_n) \coloneq \lim \Bigl( \inf_{k \geq n} f_k \Bigr)
 				\sup_{n \in \N}(f_n), \quad
 				\inf_{n \in \N}(f_n), \quad
 				\limsup(f_n), \quad
@@ -143,15 +164,16 @@
 	\newpage
 	
 	\begin{theorem}{Jegorov--tétel}{}
-		Legyen \( (X, \Omega, \mu) \) egy mértéktér, ahol a \( \mu \) mérték véges.\\
-		Ha a mérhető függvényekből álló \( \func{f_n}{X}{\R} \ (n \in \N) \) sorozata pontonként tart az
+		Legyen \( (X, \Omega, \mu) \) egy mértéktér, ahol \( \mu \) véges mérték,
+		\( \func{f_n}{X}{\R} \ (n \in \N) \).\\[6pt]
+		Ha \( (f_n) \) mérhető függvényeknek a sorozata pontonként konvergál az
 		\[
 			f(x) \coloneq \lim_{n \to \infty} f_n(x) \in \R \qquad (x \in X)
 		\]
 		határfüggvényhez, 
-		akkor tetszőleges \( \varepsilon > 0 \) számhoz megadható olyan 
-		\( X_\varepsilon \in \Omega \) halmaz, hogy
-		\begin{enumerate}
+		akkor tetszőleges \( \varepsilon > 0 \) számhoz van olyan 
+		\( X_\varepsilon \in \Omega \), hogy
+		\begin{enumerate}[label=\alph*)]
 			\item az \( (f_n) \) sorozat az \( X_\varepsilon \) halmazon 
 			egyenletesen konvergál az \( f \)-hez;
 			\item \( \mu( X \setminus X_\varepsilon ) < \varepsilon \).

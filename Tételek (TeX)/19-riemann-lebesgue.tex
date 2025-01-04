@@ -26,11 +26,11 @@
 	
 	\section{Emlékeztető}
 	
-	as
+	Alkalmazni fogjuk az alábbi tételt.
 	
 	\begin{theorem}{Kis Lebesgue-tétel}{kis-lebesgue}
 		Legyen \( (X, \Omega, \mu) \) mértéktér, \( \mu \) véges, 
-		valamint az \( f_n \in \Lebesgue \ (n \in \N) \) olyan függvénysorozat, 
+		valamint az \( f_n \in \Lebesgue \ (n \in \N) \) egy olyan függvénysorozat, 
 		amelyre a következők igazak:
 		\begin{enumerate}[label=\roman*)]
 			\item
@@ -73,7 +73,7 @@
 		\Lebesgue[p][a, b] \subset
 		\Lebesgue[1][a, b].
 	\]
-	a szigorú értelemben vett tartalmazások
+	a szigorú értelemben vett tartalmazások.
 	
 	\begin{theorem}{Riemann--Lebesgue-tétel}{}
 		Bármely \( \func{f}{[a, b]}{\R} \) Riemann-integrálható függvényre
@@ -84,6 +84,7 @@
 			\ \longleftarrow \ \text{Lebesgue-integrál}.
 		\]
 	\end{theorem}
+	
 	\begin{proof}
 		Vegyünk egy \( \tau \coloneq \{ x_0, \dots, x_s \} \subseteq [a, b] \) felosztást és legyen
 		\[
@@ -97,6 +98,9 @@
 			\end{alignedat}
 			\qquad (i = 0,\dots,s-1).
 		\]
+		
+		\newpage
+		
 		Vezessük be az alábbi függvényeket
 		\begin{align*}
 			\varphi &\coloneq
@@ -114,12 +118,18 @@
 			\int \Phi \dd{\mu} = S(f, \tau).
 		\]
 		Továbbá az \( \StepFunc \)-beli integrál definíció miatt világos, hogy
-		\[
-			\int \varphi \dd{\mu} = 
+		\begin{align*}
+			\int \varphi \dd{\mu} &= 
 			s(f, \tau) = 
-			\sum_{i=0}^{s-1} m_i {\cdot} \bigl( x_{i+1} - x_i \bigr)
-			\int \Phi \dd{\mu} = S(f, \tau).
-		\]
+			\sum_{i=0}^{s-1} m_i {\cdot} \bigl( x_{i+1} - x_i \bigr), \\
+			\int \Phi \dd{\mu} &= 
+			S(f, \tau) = 
+			\sum_{i=0}^{s-1} M_i {\cdot} \bigl( x_{i+1} - x_i \bigr).
+		\end{align*}
+		
+		\vspace{6pt}
+		\hrule
+		\vspace{9pt}
 		
 		Vegyünk egy minden határon túl finomodó felosztássorozat, azaz legyen
 		\[
@@ -148,7 +158,6 @@
 			\qquad (n \in \N).
 			\tag{\( * \)}
 		\end{equation}
-		\newpage
 		Mivel két lépcsősfüggvény különbsége továbbra is lépcsősfüggvény, 
 		ezért a \( (\Phi_n - \varphi_n) \) sorozat \( \StepFuncPos \)-beli függvényekből álló monoton csökkenő sorozat.
 		\[
@@ -180,6 +189,11 @@
 			f = g \coloneq \lim(\varphi_n) \quad \mu \text{-m.m.}
 			\tag{\( ** \)}
 		\end{equation*}
+		
+		\vspace{6pt}
+		\hrule
+		\vspace{9pt}
+				
 		Igazoljuk, hogy \( f \in \Lebesgue[\infty][a, b] \).
 		Ehhez azt kell megmutatni, hogy az \( f \) korlátos és mérhető.
 		Nyilván az előbbi fennáll, hiszen csakis a korlátos függvények Riemann-integrálhatóak.
@@ -223,6 +237,10 @@
 %			\end{tikzpicture}
 %		\end{equation*}
 
+		\vspace{6pt}
+		\hrule
+		\vspace{9pt}
+
 		Már csak az integrálok egyenlőségét kell megmutatni.
 		Ehhez ismételten a kis Lebesgue-tétel alkalmazzuk, 
 		most viszont az \( (\varphi_n) \) függvénysorozatra.
@@ -234,19 +252,7 @@
 	\end{proof}
 	
 	\begin{notes}
-		\item
-		Mivel a Lebesgue-féle \( \mu \) mérték véges, ezért fennállnak az
-		\[
-			\Lebesgue[\infty][a, b] \subset
-			\Lebesgue[q][a, b] \subset
-			\Lebesgue[p][a, b] \subset
-			\Lebesgue[1][a, b]
-		\]
-		szigorú értelemben vett tartalmazások, ahol a kitevők sorrendje
-		\[
-			1 < p < q < +\infty.
-		\]
-		
+
 		\item
 		Megmutatjuk, hogy nem minden Lebesgue-integrálható függvény Riemann-integrálható, 
 		tehát a Lebesgue-integrál valóban kiterjesztése a Riemann-féle megközelítésnek.

@@ -15,7 +15,7 @@
 
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
-\subtitle{20. Vizsgatétel}
+\subtitle{\circled{21} Vizsgatétel}
 
 
 % The document
@@ -24,7 +24,7 @@
 	% Set document language
 	\documentlang{hungarian}
 	
-	\section{Emlékeztető}
+	\section{Abszolút folytonosság}
 	
 	\begin{definition}{Súlyfüggvény}{}
 		Legyen \( (X, \Omega, \mu) \) mértéktér, 
@@ -38,23 +38,21 @@
 		leképezést \emph{súlyfüggvénynek} nevezzük.
 	\end{definition}
 	
-	\begin{note}
-		Amennyiben az \( A \in \Omega \) halmaz nullamértékű, akkor
-		\[
-			f {\cdot} \chi_A = 0 \ \mu \text{-m.m.}
-			\quad \Longrightarrow \quad
-			\mu_f(A) = 
-			\int f {\cdot} \chi_A \dd{\mu} =
-			0.
-		\]
-	\end{note}
+%	\begin{note}
+%		Amennyiben az \( A \in \Omega \) halmaz nullamértékű, akkor
+%		\[
+%			f {\cdot} \chi_A = 0 \ \mu \text{-m.m.}
+%			\quad \Longrightarrow \quad
+%			\mu_f(A) = 
+%			\int f {\cdot} \chi_A \dd{\mu} =
+%			0.
+%		\]
+%	\end{note}
 	
 	\begin{statement}{}{}
 		Legyen \( (X, \Omega, \mu) \) mértéktér, \( f \in \StepFuncPlus \).
 		Ekkor a \( \mu_f \) súlyfüggvény mérték.
 	\end{statement}
-	
-	\section{Abszolút folytonosság}
 	
 	\begin{definition}{}{}
 		Legyen \( (X, \Omega) \) mérhető tér, 
@@ -119,7 +117,7 @@
 			\lim_{n \to \infty} \nu(X_n) \geq 
 			\varepsilon > 0.
 		\]
-		Ez viszont ellentmondás.
+%		Ez viszont ellentmondás.
 		
 		\Backifstep Triviális, ha ugyanis egy \( A \in \Omega \) halmazra \( \mu(A) = 0 \), 
 		akkor a feltevés szerint tetszőleges \( \varepsilon > 0 \)-hoz megadható olyan \( \delta > 0 \), amivel

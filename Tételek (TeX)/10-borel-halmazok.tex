@@ -26,12 +26,28 @@
 	
 	\section{Borel--halmazok}
 	
-	\begin{definition}{Borel--halmaz, Lebesgue--halmaz}{}
+	Legyen \( p \in \posN \) egy rögzített kitevő. 
+	Ekkor az \( \x, \y \in \R^p, \ \x < \y \) vektorok esetén az
+	\[
+		[\x, \y) \coloneq 
+		\setc[\big]{ \vb{z} \in \R^p }{ \x \leq \vb{z} < \y }
+	\]
+	halmazt az \( \x, \y \) végpontú, balról zárt és jobbról nyílt (\( p \)-dimenziós) intervallumnak nevezzük. Könnyen belátható ilyenkor, hogy az
+	\[
+		\mathbf{I}^p \coloneq 
+		\setc[\Big]{ \emptyset,\, [\x, \y) }{ \x, \y \in \R^p \,\text{ és }\, \x < \y }
+	\]
+	halmazrendszer egy félgyűrű. Tekintsük az \( \mathbf{I}^p \) által generált gyűrűt, vagyis az
+	\[
+		\mathcal{I}^p \coloneq 
+		\mathcal{G}( \mathbf{I}^p ) =
+		\setc[\Bigg]{ \bigcup_{k=0}^n I_k }
+		{ I_0, \dots, I_n \in \mathbf{I}^p \text{ páronként diszjunktak } (n \in \N) }
+	\]
+	halmazt.
+	
+	\begin{definition}{Borel--halmaz}{}
 		Az \( \R^p \)-beli \emph{Borel--halmazok} rendszere az alábbi szigma-algebra:
-		\[
-			\Omega_p \coloneq \Omega( \mathcal{I}^p ) = \Omega( \mathbf{I}^p ).
-		\]
-		Az \( \R^p \)-beli \emph{Lebesgue--halmazok} rendszere az alábbi szigma-algebra:
 		\[
 			\Omega_p \coloneq \Omega( \mathcal{I}^p ) = \Omega( \mathbf{I}^p ).
 		\]
@@ -39,15 +55,12 @@
 	
 	Vezessük be a soron következő \( \R^p \)-beli halmazrendszereket:
 	\[
-		\mathcal{T}_p \coloneq \setc[\big]{ A \subseteq \R^p }{ A \text{ nyílt} }, \quad
-		\mathcal{C}_p \coloneq \setc[\big]{ B \subseteq \R^p }{ B \text{ zárt} }, \quad
+		\mathcal{T}_p \coloneq \setc[\big]{ A \subseteq \R^p }{ A \text{ nyílt} }, \qquad
+		\mathcal{C}_p \coloneq \setc[\big]{ B \subseteq \R^p }{ B \text{ zárt} },
+	\]
+	\[
 		\mathcal{K}_p \coloneq \setc[\big]{ K \subseteq \R^p }{ K \text{ kompakt} }.
 	\]
-	\begin{alignat*}{2}
-		\mathcal{T}_p &\coloneq \Bigl\{ A &&\subseteq \R^p \ \colon A \text{ nyílt} \Bigr\}, \\
-		\mathcal{C}_p &\coloneq \Bigl\{ B &&\subseteq \R^p \ \colon B \text{ zárt} \Bigr\}, \\
-		\mathcal{K}_p &\coloneq \Bigl\{ K &&\subseteq \R^p \ \colon K \text{ kompakt} \Bigr\}.
-	\end{alignat*}
 	
 	\begin{statement}{}{}
 		A \( p \)-dimenziós Borel--halmazok rendszerére az alábbi egyenlőségek igazak:
@@ -60,33 +73,34 @@
 	\end{statement}
 	\begin{proof}
 		Mivel minden \( \R^p \)-beli kompakt halmaz korlátos és zárt, ezért
-		\marginnote{
-			\( A \subseteq \R^p \) kompakt \( \iff \) \( A \) korlátos és zárt.
-		}
 		\[
 			\mathcal{K}_p \subset \mathcal{C}_p \subseteq \Omega( \mathcal{C}_p )
 			\qquad \Longrightarrow \qquad
 			\Omega( \mathcal{K}_p ) \subseteq \Omega( \mathcal{C}_p ).
 		\]
 		Ha \( B \in \mathcal{C}_p \) zárt halmaz, 
-		akkor alk \( (B_n) \) kompakt halmazokból képzett
+		akkor alkalmas \( (B_n) \) kompakt halmazokkal
 		\marginnote{
-			Hiszen \( A_n \subset A \ (n \in \N) \) korlátos és zárt.
+			Például legyenek ezek a halmazok
+			\[
+				B_n \coloneq \setc[\Big]{ \x \in B }{ \norm{\x} \leq n } \quad (n \in \N).
+			\]
 		}
 		\[
-			B_n \coloneq \setc[\big]{ \x \in B }{ \norm{\x} \leq n } \quad (n \in \N)
-			B = \bigcup_{n=0}^{\infty} B_n
+			B = \bigcup_{n \in \N} B_n
 			\qquad \Longrightarrow \qquad
 			B \in \Omega( \mathcal{K}_p )
-		\]
-		Mivel minden szigma-algebra zárt a megszámlálható unióra, ezért
-		\[
-			B \in \Omega( \mathcal{K}_p )
-			\quad \Longrightarrow \quad
-			\mathcal{C}_p \subseteq \Omega( \mathcal{K}_p )
-			\quad \Longrightarrow \quad
+			\qquad \Longrightarrow \qquad
 			\Omega( \mathcal{C}_p ) \subseteq \Omega( \mathcal{K}_p ).
 		\]
+%		Mivel minden szigma-algebra zárt a megszámlálható unióra, ezért
+%		\[
+%			B \in \Omega( \mathcal{K}_p )
+%			\quad \Longrightarrow \quad
+%			\mathcal{C}_p \subseteq \Omega( \mathcal{K}_p )
+%			\quad \Longrightarrow \quad
+%			\Omega( \mathcal{C}_p ) \subseteq \Omega( \mathcal{K}_p ).
+%		\]
 		
 		Ha \( A \in \mathcal{T}_p \) nyílt halmaz, akkor a komplementere zárt.
 		\marginnote{

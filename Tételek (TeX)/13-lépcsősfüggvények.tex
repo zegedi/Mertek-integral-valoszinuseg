@@ -15,7 +15,7 @@
 
 % Document's metadata
 \title{Mérték, integrál, valószínűség} % title
-\subtitle{12. Vizsgatétel}
+\subtitle{13. Vizsgatétel}
 
 
 % The document
@@ -62,7 +62,7 @@
 		%		\( \Omega \subseteq \powerset{X} \) szigma-algebra.
 		%		
 		Legyen \( (X, \Omega) \) mérhető tér, 
-		valamint \( \func{f}{X}{\overline{\R}} \) egy függvény.\\[3pt]
+		valamint \( \func{f}{X}{\overline{\R}} \) egy függvény.\\[6pt]
 		Azt mondjuk, hogy az \( f \) függvény \emph{mérhető} (vagy \emph{Borel--mérhető}), ha
 		\[
 		f^{-1}[A] \coloneq
@@ -70,27 +70,39 @@
 		\qquad \bigl( A \in \overline{\Omega}_1 \bigr).
 		\]
 	\end{definition}
-	\begin{note}
-		Szóban, az \( f \) függvény pontosan akkor mérhető, 
-		ha minden kibővített értelemben Borel-mérhető \( A \)
-		halmaz \( f^{-1}[A] \) ősképe az \( \Omega \)-ban van.
-	\end{note}
+	\begin{example}
+		Legyen \( (X, \Omega) \) mérhető tér, \( A \subseteq X \) egy halmaz. Ekkor
+		\[
+		\func{\chi_A}{X}{\R}, \qquad
+		\chi_A(x) \coloneq 
+		\left\{
+		\begin{aligned}
+			1, & \quad \text{ha } x \in A, \\
+			0, & \quad \text{ha } x \notin A, \\
+		\end{aligned}
+		\right.
+		\]
+		az \( A \) halmaz \emph{karakterisztikus függvénye}.
+		Ekkor \( \chi_A \) mérhető \( \iff \) \( A \in \Omega \). \qed
+	\end{example}
 	
 	\newpage
 	\section{Lépcsősfüggvények}
 	
 	\begin{definition}{Lépcsősfüggvény}{}
 		Legyen \( (X, \Omega, \mu) \) egy mértéktér, 
-		valamint \( \func{f}{X}{\R} \) egy függvény.\\[3pt]
+		valamint \( \func{f}{X}{\R} \) egy függvény.\\[6pt]
 		Azt mondjuk, hogy \( f \) egy \emph{lépcsősfüggvény}, 
 		ha mérhető és \( \rng{f} \) véges.
 	\end{definition}
 	
-	Egy \( f \) leképezés pontosan akkor lépcsősfüggvény, ha
+	\vspace{6pt}
+	\noindent
+	Egy \( f \) leképezés pontosan akkor lépcsősfüggvény, ha felírható
 	\[
 		f = \sum_{i=0}^{n} \alpha_i {\cdot} \chi_{A_i}
 	\]
-	módon írható fel, 
+	módon, 
 	valamilyen \( \alpha_0, \dots, \alpha_n \in \R \) 
 	és \( A_0, \dots, A_n \in \Omega \) esetén.
 	Speciálisan az
@@ -100,7 +112,7 @@
 	alakot \emph{kanonikus előállításnak} nevezzük. Továbbá legyen
 	\[
 		\StepFunc \coloneq \setc[\big]{ \func{f}{X}{\R} }{ f \text{ lépcsős}}, \qquad
-		\StepFuncPlus \coloneq \setc[\big]{ f \in \StepFunc }{ f \geq 0 }. 
+		\StepFuncPos \coloneq \setc[\big]{ f \in \StepFunc }{ f \geq 0 }. 
 	\]
 	
 	\begin{statement}{Lépcsősfüggvények alaptulajdonságai}{lépcsősfüggvény-műveletek}
@@ -111,13 +123,13 @@
 		függvények valamennyien az \( \StepFunc \) osztályban vannak.
 	\end{statement}
 	
-	\noindent 
+	\vspace{6pt}
+	\noindent
 	A továbbiakban nemnegatív lépcsősfüggvényeket fogunk tekinteni.
-	Nyilvánvaló módon \aref{st:lépcsősfüggvény-műveletek} állítás ekkor is igaz marad, 
-	midőn az \( \alpha \geq 0 \).
 	
 	\begin{definition}{Nemnegatív lépcsősfüggvény integrálja}{}
-		Egy \( f \in \StepFuncPlus \) függvény (\( \mu \) mérték szerinti) \emph{integrálja} alatt az
+		Egy \( f \in \StepFuncPos \) függvény (\( \mu \) mérték szerinti) 
+		\emph{integrálja} alatt az
 		\[
 			\int f \dd{\mu} \coloneq
 			\sum_{y \in \rng{f}} y {\cdot} \mu \bigl( \{ f = y \} \bigr)
@@ -126,7 +138,7 @@
 	\end{definition}
 	
 	\begin{theorem}{Az integrál alaptulajdonságai}{}
-		Tekintsük az \( f, g \in \StepFuncPlus \) függvényeket és az \( \alpha \geq 0 \) számot. Ekkor
+		Tekintsük az \( f, g \in \StepFuncPos \) függvényeket és az \( \alpha \geq 0 \) számot. Ekkor
 		\begin{enumerate}
 			\item \( \displaystyle \int (\alpha \cdot f) \dd{\mu} = \alpha \cdot \int f \dd{\mu} \);
 			\item \( \displaystyle \int (f + g) \dd{\mu} = \int f \dd{\mu} + \int g \dd{\mu} \);

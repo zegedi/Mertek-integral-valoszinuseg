@@ -445,6 +445,7 @@
 	attach boxed title to top text left={yshift*=-\tcboxedtitleheight/2},
 	boxed title style={colback=yellow!95!black},
 	theorem number and name, % Először tételszám, majd cím
+	after skip=6pt plus 2pt,
 }{def}
 
 
@@ -466,6 +467,7 @@
 	attach boxed title to top text left={yshift*=-\tcboxedtitleheight/2},
 	boxed title style={colback=green!95!black},
 	theorem number and name, % Először tételszám, majd cím
+	after skip=6pt plus 2pt,
 }{th}
 
 \newtcbtheorem[
@@ -483,6 +485,7 @@
 	attach boxed title to top text left={yshift*=-\tcboxedtitleheight/2},
 	boxed title style={colback=green!95!black},
 	theorem number and name, % Először tételszám, majd cím
+	after skip=6pt plus 2pt,
 }{st}
 
 \newtcbtheorem[
@@ -500,6 +503,7 @@
 	attach boxed title to top text left={yshift*=-\tcboxedtitleheight/2},
 	boxed title style={colback=green!95!black},
 	theorem number and name, % Először tételszám, majd cím
+	after skip=6pt plus 2pt,
 }{lem}
 
 %\newtcbtheorem[

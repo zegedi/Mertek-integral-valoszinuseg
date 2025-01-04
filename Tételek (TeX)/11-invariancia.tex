@@ -23,21 +23,71 @@
 	% Set document language
 	\documentlang{hungarian}
 	
+	\section{Emlékeztető}
+	
+	Legyen \( p \in \posN \) egy rögzített kitevő. 
+	Ekkor az \( \x, \y \in \R^p, \ \x < \y \) vektorok esetén az
+	\[
+		[\x, \y) \coloneq 
+		\setc[\big]{ \vb{z} \in \R^p }{ \x \leq \vb{z} < \y }
+	\]
+	halmazt az \( \x, \y \) végpontú, balról zárt és jobbról nyílt (\( p \)-dimenziós) intervallumnak nevezzük. Könnyen belátható ilyenkor, hogy az
+	\[
+		\mathbf{I}^p \coloneq 
+		\setc[\Big]{ \emptyset,\, [\x, \y) }{ \x, \y \in \R^p \,\text{ és }\, \x < \y }
+	\]
+	halmazrendszer egy félgyűrű. Tekintsük az \( \mathbf{I}^p \) által generált gyűrűt, vagyis az
+	\[
+		\mathcal{I}^p \coloneq 
+		\mathcal{G}( \mathbf{I}^p ) =
+		\setc[\Bigg]{ \bigcup_{k=0}^n I_k }
+		{ I_0, \dots, I_n \in \mathbf{I}^p \text{ páronként diszjunktak } (n \in \N) }
+	\]
+	halmazt.
+	
+	\begin{definition}{Borel--halmaz}{}
+		Az \( \R^p \)-beli \emph{Borel--halmazok} rendszere az alábbi szigma-algebra:
+		\[
+		\Omega_p \coloneq \Omega( \mathcal{I}^p ) = \Omega( \mathbf{I}^p ).
+		\]
+	\end{definition}
+	
 	\section{Invariancia}
 	
-	Legyen \( 1 \leq p \in \N \) egy tetszőleges kitevő.
+	Definiáljuk egy tetszőleges \( A \in \Omega_p \) Borel-halmaz és \( \vb{a} \in \R^p \) vektor esetén az
+	\[
+		\vb{a} + A  \coloneq \setc{ \vb{a} + \x }{ \x \in \vb{a} }, \qquad
+		-A \coloneq \setc{ -\x }{ \x \in \vb{a} }
+	\]
+	halmazokat. Ekkor igazak a soron következő invariancia tulajdonságok.
 	
-	\begin{statement}{Eltolás és tükrözés invariancia}{}
-		Legyen \( A \in \Omega_p \) tetszőleges Borel-halmaz, 
-		valamint \( \vb{a} \in \R^p \) egy vektor. Ekkor
-		\begin{enumerate}
+	\begin{statement}{Eltolás és tükrözés invariancia}{eltolás-tükrözés-invariancia}
+		Legyen \( \mu_p \) az \( \R^p \)-beli Lebesgue--Borel-mérték.
+		Ekkor az alábbiak igazak.
+		\begin{enumerate}[label=\alph*)]
 			\item
-			\emph{Eltolás invariancia:}
-			\( \vb{a} + A \in \Omega_p \) 
-			\quad és \quad 
-			\( \mu_p( \vb{a} + A ) = \mu_p(A) \).
+			\emph{Eltolás invariancia:} 
+			bármely \( A \in \Omega_p \) halmazra és \( \vb{a} \in \R^p \) vektorra
+			\[
+				\vb{a} + A \in \Omega_p
+				\qquad \text{és} \qquad
+				\mu_p( \vb{a} + A ) = \mu_p(A).
+			\]
+			
+			\item
+			\emph{Tükrözés invariancia:} 
+			tetszőleges \( A \in \Omega_p \) halmaz esetén
+			\[
+				-A \in \Omega_p
+				\qquad \text{és} \qquad
+				\mu_p( -A ) = \mu_p(A).
+			\]
 		\end{enumerate}
 	\end{statement}
+	
+	\begin{note}
+		Ugyanez fennáll a \( \widehat{\mu}_p \) Lebesgue-mérték esetén is.
+	\end{note}
 	
 	\newpage
 	\section{Példa nem Borel-mérhető halmazra}
@@ -58,30 +108,38 @@
 			\item A \( \sim \) ekvivalenciareláció.
 			\item Bármely \( A \) ekvivalenciaosztály esetén \( A \cap [0, 1) \neq \emptyset \).
 		\end{enumerate}
-		Ezt felhasználva legyen \( K \) az a halmaz, 
+		Ezt felhasználva legyen \( K \subseteq [0, 1) \) az a halmaz, 
 		ami minden ekvivalenciaosztályból pontosan egy elemet tartalmaz és más eleme nincsen.
 		Ekkor
 		\[
 			\R = \bigcup_{r \in \Q} (r + K)
 		\]
-		és ez páronként diszjunkt felbontás.
+		és ez páronként diszjunkt felbontás. Ekkor \( K \notin \Omega_1 \).
 		
-		Végül indirekt tegyük fel, hogy \( K \in \Omega_1 \). Ekkor
+		\vspace{9pt}
+		\hrule
+		\vspace{9pt}
+		
+		Végül indirekt tegyük fel, hogy \( K \in \Omega_1 \).
+		Ekkor az \hyperref[st:eltolás-tükrözés-invariancia]{eltolás invariancia} miatt
 		\[
 			\mu_1( \R ) = 
 			+\infty =
 			\sum_{r \in \Q} \mu_1(r + K) = 
 			\sum_{r \in \Q} \mu_1(K).
 		\]
-		Innen egyszerűen adódik, hogy \( \mu_1(K) > 0 \). Ugyanakkor
+		Innen egyszerűen adódik, hogy \( \mu_1(K) > 0 \). Ugyanakkor legyen
 		\[
-			B \coloneq \Q \cap [0, 1)
-			\quad \Longrightarrow \quad
+			B \coloneq \Q \cap [0, 1).
+		\]
+		Ekkor \( \mu_1 \) monotonitása miatt
+		\[
 			\bigcup_{r \in B} (r + K) \subseteq [0, 2)
 			\quad \Longrightarrow \quad
 			\mu_1(B) \leq 2.
 		\]
-		Viszont
+		Viszont az \hyperref[st:eltolás-tükrözés-invariancia]{eltolás invariancia} alapján
+		ellentmondásra jutunk:
 		\[
 			\mu_1(B) =
 			\sum_{r \in B} \mu_1(r + K) =
