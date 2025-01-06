@@ -212,7 +212,11 @@
 	
 	\begin{theorem}{Az \( \Lebesgue[p] \) teljessége}{lp-teljes}
 		Legyen \( (X, \Omega, \mu) \) mértéktér, 
-		valamint \( 1 \leq p \leq +\infty \) esetén \( f_n \in \Lebesgue[p] \ (n \in \N) \).
+		valamint \( 1 \leq p \leq +\infty \) esetén \( f_n \in \Lebesgue[p] \ (n \in \N) \).\\[6pt]
+		Tegyük fel, hogy bármely \( \varepsilon > 0 \)-hoz van olyan \( N \in \N \) küszöbindex, hogy
+		\[
+			\norm{f_m - f_n}_p < \varepsilon \qquad (m,n > N).
+		\]
 		Ekkor van olyan \( f \in \Lebesgue[p] \) függvény,
 		hogy \( \lim\limits_{n \to \infty} \norm{f - f_n}_p = 0 \).
 	\end{theorem}
