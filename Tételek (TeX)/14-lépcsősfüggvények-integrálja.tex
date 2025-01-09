@@ -206,13 +206,13 @@
 	\end{note}
 	
 	\begin{theo*}
-		Az előző tétel alapján elmondható, hogy tetszőleges
+		Vegyünk két tetszőleges
 		\[
 			f_n, g_n \in \StepFuncPos, \quad 
 			f_n \leq f_{n + 1}, \quad 
 			g_n \leq g_{n + 1} \qquad (n \in \N)
 		\]
-		függvénysorozatot, amelyek a határértéke azonos, azaz
+		függvénysorozatot, amelyek határértéke azonos, azaz
 		\[
 			\sup_{n \in \N} f_n = 
 			\lim_{n \to \infty} f_n = 
@@ -220,11 +220,16 @@
 			\sup_{n \in \N} g_n.
 		\]
 		Ekkor a hozzájuk tartozó integrálsorozatok határértékei is megegyeznek, vagyis
+		\marginnote{
+			Ugyanezt szuprémummal kifejezve
+			\[
+				\sup_{n} \int f_n \dd{\mu} =
+				\sup_{n} \int g_n \dd{\mu}.
+			\]
+		}
 		\[
-		%	\sup_{n} \int f_n \dd{\mu} = 
 			\lim_{n \to \infty} \int f_n \dd{\mu} = 
 			\lim_{n \to \infty} \int g_n \dd{\mu}.
-		%	\sup_{n} \int g_n \dd{\mu}.
 		\]
 	\end{theo*}
 	\begin{proof*}
