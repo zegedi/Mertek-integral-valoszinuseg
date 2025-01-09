@@ -166,7 +166,7 @@
 	\begin{theorem}{Jegorov--tétel}{}
 		Legyen \( (X, \Omega, \mu) \) egy mértéktér, ahol \( \mu \) véges mérték,
 		\( \func{f_n}{X}{\R} \ (n \in \N) \).\\[6pt]
-		Ha \( (f_n) \) mérhető függvényeknek a sorozata pontonként konvergál az
+		Ha az \( (f_n) \) mérhető függvényeknek a sorozata pontonként konvergál az
 		\[
 			f(x) \coloneq \lim_{n \to \infty} f_n(x) \in \R \qquad (x \in X)
 		\]
@@ -213,7 +213,7 @@
 		ezért \( \mu(X_{n, k}) \longrightarrow 0 \ (n \to \infty) \). Vagyis
 		\[
 			\exists	n_k \in \N \colon \quad
-			\mu(X_{n, k}) < \frac{\varepsilon}{2^{k + 1}}.
+			\mu(X_{n, k}) < \frac{\varepsilon}{2^{k}}.
 		\]
 		Ez alapján tekintsük a következő halmazat:
 		\[
@@ -236,7 +236,7 @@
 		\[
 			\mu( X \setminus X_\varepsilon ) \leq 
 		%	\mu \Biggl( \, \bigcup_{k=1}^{\infty} \mu(X_{n_k}, k) \Biggr) \leq
-			\sum_{k = 1}^{\infty} \mu(X_{n_k}, k) <
+			\sum_{k = 1}^{\infty} \mu(X_{n_k, k}) <
 			\varepsilon \cdot \sum_{k = 1}^{\infty} \frac{1}{2^k} =
 			\varepsilon.
 		\]
