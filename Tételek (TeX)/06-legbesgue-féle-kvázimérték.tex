@@ -120,7 +120,10 @@
 	\,\vspace{-\baselineskip}
 	
 	\begin{theorem}{}{előmérték-kvázimérték-kapcsolata}
-		Legyen \( \mu \) egy előmérték a \( \ring{G} \subseteq \powerset{X} \) gyűrűn,
+%		Legyen \( \mu \) egy előmérték a \( \ring{G} \subseteq \powerset{X} \) gyűrűn,
+%		\marginnote{Vagyis \( \func{\mu}{\ring{G}}{[0, +\infty]} \) alakú függvény.}
+%		és vegyük az alábbi állításokat.
+		Legyen \( \mu \) előmérték a \( \ring{G} \subseteq \powerset{X} \) gyűrűn,
 		\marginnote{Vagyis \( \func{\mu}{\ring{G}}{[0, +\infty]} \) alakú függvény.}
 		és vegyük az alábbi állításokat.
 		%
@@ -161,7 +164,7 @@
 			Minden \( \ring{G} \)-beli \( C_{n + 1} \subseteq C_n \ (n \in \N) \)
 			halmazsorozatra, ha \( \mu(C_n) < +\infty \)
 			\[
-				\emptyset = \bigcap_{n=0}^{\infty} C_n \in \ring{G}
+				\emptyset = \bigcap_{n=0}^{\infty} C_n
 				\qquad \Longrightarrow \qquad
 				\mu(\emptyset) = \lim_{n \to \infty} \mu(C_n) = 0.
 			\]
@@ -340,7 +343,7 @@
 		Ekkor
 		\[
 			0 = 
-			\mu( \emptyset ) =
+			\mu( \emptyset ) \overset{\text{\ref{eq:kvázimérték-jellemzése-04}}}{=}
 			\lim_{n \to \infty} \mu( C_n ) =
 			\lim_{n \to \infty} \mu( B_n \setminus B ) =
 			\lim_{n \to \infty} \mu( B_n ) - \mu(B).
@@ -366,7 +369,7 @@
 		Mivel \( \mu \) véges, így
 		\[
 			0 = 
-			\mu( \emptyset ) =
+			\mu( \emptyset ) \overset{\text{\ref{eq:kvázimérték-jellemzése-04}}}{=}
 			\lim_{n \to \infty} \mu( C_n ) =
 			\lim_{n \to \infty} \mu( A \setminus A_n ) =
 			\mu( A ) - \lim_{n \to \infty} \mu( A_n ).
@@ -557,7 +560,7 @@
 			&= \widetilde{\mu}_p \bigl( B_0 \bigr)
 			 - \widetilde{\mu}_p \bigl( A_0 \bigr)
 			 - {\textstyle \sum_{k=1}^{n} } \delta_k \\
-			&> \delta_0
+			&> -\delta_0
 			 - {\textstyle \sum\limits_{k=1}^{n} } \delta_k
 			 > -{\textstyle \sum\limits_{k=0}^{\infty} } \delta_k.
 		\end{align*}
