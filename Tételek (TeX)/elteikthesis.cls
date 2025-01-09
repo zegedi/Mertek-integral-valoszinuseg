@@ -763,9 +763,9 @@
 
 % ------------------------------
 % Tárgymutató létrehozása.
-\RequirePackage[xindy]{imakeidx}
-\makeindex[options=-C utf8 -L hungarian,name=nevmutato,title=Névmutató,columns=1]
-\makeindex[options=-C utf8 -L hungarian]
+% \RequirePackage[xindy]{imakeidx}
+% \makeindex[options=-C utf8 -L hungarian,name=nevmutato,title=Névmutató,columns=1]
+% \makeindex[options=-C utf8 -L hungarian]
 % ------------------------------
 
 % ------------------------------

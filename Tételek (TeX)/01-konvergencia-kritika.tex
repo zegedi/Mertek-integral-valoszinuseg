@@ -212,12 +212,64 @@
 		hogy \( D \notin \Riem{[0, 1]} \).
 		
 		\item 
-		Jelöljön \( \func{(a_n)}{\N}{\R} \) egy számsorozatot, és tekintsük a következőket
+		Jelöljön \( \func{(a_n)}{\N}{\R} \) egy számsorozatot, és legyen (lásd \ref{fig:konvergencia-ellenpélda-01}. ábra)
+		\marginnote{
+			\centering
+			
+			% Define the variable n.
+			\pgfmathsetmacro{\an}{1.5}
+			\pgfmathsetmacro{\overN}{0.45}
+			
+			\begin{tikzpicture}[scale=0.7]
+				\begin{axis}[
+					axis lines = middle,
+					font=\large,
+					xlabel = $x$,
+					ylabel = $y$,
+					xmin=0,
+					xmax=1.1,
+					ymin=0,
+					ymax=1.6,
+					xtick={\overN, 1}, 
+					xticklabels={$\nicefrac{1}{n}$, 1}, 
+					ytick={\an},
+					yticklabels={$a_n$}, 
+					xlabel style={xshift=75pt, yshift=-6pt},
+					ylabel style={xshift=-7pt, yshift=60pt},
+					samples=100,
+					enlarge y limits = true,
+					]
+					
+					% Fill in the region under the graph.
+					\draw[fill=gray!20] (axis cs:0, 0) rectangle (axis cs:\overN, \an);
+					
+					% Add the Dasherd line.
+					% \addplot[thick, gray, dashed] coordinates {(\overN,0) (\overN, \an)};
+					
+					% Plot for the function a_n (for 0 <= x < 1/n).
+					\addplot[ultra thick, blue] coordinates {(0,\an) (\overN,\an)};
+					
+					% Plot for the function 0 (for 1/n <= x < 1).
+					\addplot[ultra thick, blue] coordinates {(\overN, 0) (1, 0)};
+					
+					% Adding a point at the origin (0, 0) 
+					\addplot[only marks, blue, thin] coordinates {(0, \an)};
+					\addplot[only marks, blue, thin, fill=white, mark options={line width=1pt}] coordinates {(\overN, \an)};
+					\addplot[only marks, blue, thin] coordinates {(\overN, 0)};
+					\addplot[only marks, blue, thin] coordinates {(1, 0)};
+					
+					% Adding a point at the origin (0, 0).
+					% \draw[only marks, black] (axis cs:0, 0) node[anchor=west] {0};
+				\end{axis}
+			\end{tikzpicture}
+			\captionof{figure}{Az \( (f_n) \) sorozat egyik tagja.}
+			\label{fig:konvergencia-ellenpélda-01}
+		}[-\baselineskip]
 		\[
 			f_n(x) \coloneq
 			\begin{cases}
-				a_n  & (0 \leq x < 1/n) \\
-				0    & (1/n \leq x < 1)
+				a_n  & \text{ha } x \in [0, \nicefrac{1}{n}) \\
+				0    & \text{ha } x \in [\nicefrac{1}{n}, 1]
 			\end{cases}
 			\qquad (1 \leq n \in \N).
 		\]
@@ -276,7 +328,7 @@
 		integrálok \( \left( \int_a^b f_n \right) \) sorozata konvergens, valamint
 		%
 		\marginnote{
-			Másképp fogalmazva teljesjül, hogy
+			Másképp fogalmazva teljesül, hogy
 			\[
 				\int_a^b \lim_{n \to \infty} f_n = \lim_{n \to \infty} \int_a^b f_n.
 			\]
@@ -392,7 +444,7 @@
 	\[
 		\int_a^b \abs{f_n - f_m} \longrightarrow 0 \qquad (m, n \to \infty),
 	\]
-	akkor van olyan \( f \in \Riem{[a, b]} \) függvény, amelyre
+	akkor van-e olyan \( f \in \Riem{[a, b]} \) függvény, amelyre
 	\[
 		\int_a^b \abs{f_n - f} \longrightarrow 0 \qquad (n \to \infty)
 	\]
@@ -456,8 +508,8 @@
 	\[
 		f_n(x) \coloneq 
 		\begin{cases}
-			\sqrt{n}            & \quad (0   \leq x \leq 1/n) \\[3pt]
-			\dfrac{1}{\sqrt{x}} & \quad (1/n \leq x \leq 1  )
+			\sqrt{n}            & \quad \text{ha } x \in [0, \nicefrac{1}{n}) \\[6pt]
+			\dfrac{1}{\sqrt{x}} & \quad \text{ha } x \in [\nicefrac{1}{n}, 1]
 		\end{cases}
 		\qquad (n \in \N).
 	\]
@@ -602,7 +654,7 @@
 	\]
 	Térjünk vissza a \eqref{eq:teljesség-01} ponthoz.
 	\marginnote{
-		\begin{theo*}[Lebesgue-kritérium]\label{th:lebesgue-kritérium}
+		\begin{theo*}[Lebesgue-kritérium]{\phantomsection\label{th:lebesgue-kritérium}}
 			A
 			\[
 				g \in \Riem{[a,b]}
@@ -612,7 +664,7 @@
 				\mathcal{A}_g \coloneq
 				\setc[\big]{ x \in [a,b] }{ g \notin \ContAt{x} }
 			\]
-			szakadási helyek halmaza nullamértékű.
+			halmaza nullamértékű és \( g \) korlátos.
 		\end{theo*}
 	}[-1.6\baselineskip]
 	A \hyperref[th:lebesgue-kritérium]{Lebesgue-kritérium} miatt az \( f \in \Riem{[0, 1]} \) függvény szakadási helyeinek a halmaza nullamértékű. Mivel tetszőleges \( r \in (0, 1) \) esetén a \( (0, r) \)
