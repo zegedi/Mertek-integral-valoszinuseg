@@ -105,19 +105,19 @@
 	\newpage
 	\begin{definition}{Lépcsősfüggvény}{}
 		Legyen \( [a,b] \subseteq \R \) korlátos és zárt intervallum, az
-		 \( \func{f}{[a, b]}{\R} \) korlátos.\\[6pt]		
+		\( \func{f}{[a, b]}{\R} \) korlátos.\\[6pt]		
 		Azt mondjuk, hogy az \( f \) egy \emph{lépcsősfüggvény}, ha van olyan
 		\[
 			a = x_0 < x_1 < \cdots < x_n = b
 		\]
-		felosztás, valamint \( c_0, \dots, c_n \in \R \) konstansok, 
-		hogy minden \( k = 0,\dots,n \)-ra
+		felosztás és \( c_0, \dots, c_{n-1} \in \R \) konstansok, 
+		hogy minden \( k = 0,\dots,n-1 \)-ra
 		\[
 			f(x) = c_k \qquad ( x_k < x < x_{k+1} ).
 		\]
 		Ekkor az előbbi \( f \) lépcsősfüggvény \emph{integrálja} legyen
 		\[
-			\int_a^b f \coloneq \sum_{k=0}^{s-1} c_k {\cdot} (x_{k + 1} - x_k) \in \R.
+			\int_a^b f \coloneq \sum_{k=0}^{n-1} c_k {\cdot} (x_{k + 1} - x_k) \in \R.
 		\]
 	\end{definition}
 	
